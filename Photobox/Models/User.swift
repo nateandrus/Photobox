@@ -14,14 +14,14 @@ class User {
     static let typeKey = "User"
     fileprivate static let usernameKey = "username"
     fileprivate static let profileImageKey = "profileImage"
-    fileprivate static let creatorReferenceKey = "creatorReference"
+    static let creatorReferenceKey = "creatorReference"
 
     var username: String
-    var profileImage: UIImage
+    var profileImage: UIImage?
     let ckRecord: CKRecord.ID
     let creatorReference: CKRecord.Reference
     
-    init(username: String, profileImage: UIImage, ckRecord: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), creatorReference: CKRecord.Reference) {
+    init(username: String, profileImage: UIImage? = nil, ckRecord: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), creatorReference: CKRecord.Reference) {
         self.username = username
         self.profileImage = profileImage
         self.ckRecord = ckRecord

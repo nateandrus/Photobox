@@ -338,19 +338,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Hap-p9-fzz">
-                            <size key="itemSize" width="129" height="126"/>
+                            <size key="itemSize" width="141" height="135"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionViewCell" id="CiH-wn-p5O">
-                                <rect key="frame" x="0.0" y="0.0" width="129" height="126"/>
+                                <rect key="frame" x="0.0" y="0.0" width="141" height="135"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="129" height="126"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="141" height="135"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XTS-Mx-vbm">
+                                            <rect key="frame" x="0.0" y="0.0" width="141" height="135"/>
+                                        </imageView>
+                                    </subviews>
                                 </view>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="XTS-Mx-vbm" secondAttribute="bottom" id="MXC-vy-o2c"/>
+                                    <constraint firstItem="XTS-Mx-vbm" firstAttribute="top" secondItem="CiH-wn-p5O" secondAttribute="top" id="eSi-Rm-fcc"/>
+                                    <constraint firstAttribute="trailing" secondItem="XTS-Mx-vbm" secondAttribute="trailing" id="eht-x2-Na9"/>
+                                    <constraint firstItem="XTS-Mx-vbm" firstAttribute="leading" secondItem="CiH-wn-p5O" secondAttribute="leading" id="iwd-wG-jdu"/>
+                                </constraints>
                             </collectionViewCell>
                         </cells>
                         <connections>

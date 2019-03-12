@@ -14,9 +14,19 @@ class UserProfileViewController: UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var pastEventsTableView: UITableView!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateViews()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         pastEventsTableView.delegate = self
+    }
+    
+    func updateViews() {
+        userProfileImageView.image = UserController.shared.loggedInUser?.profileImage
+        usernameLabel.text = UserController.shared.loggedInUser?.username
     }
     
     // MARK: - Navigation

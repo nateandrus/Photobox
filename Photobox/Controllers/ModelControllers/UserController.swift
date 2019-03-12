@@ -10,12 +10,6 @@ import Foundation
 import CloudKit
 
 class UserController {
-    
-    static let shared = UserController()
-    
-    var loggedInUser: User?
-    
-    let publicDB = CKContainer.default().publicCloudDatabase
-    
+
 }
 
