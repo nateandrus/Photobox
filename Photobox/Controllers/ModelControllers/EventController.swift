@@ -6,7 +6,8 @@
 //  Copyright © 2019 Nathan Andrus. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import CloudKit
 
 class EventController {
     
@@ -15,8 +16,19 @@ class EventController {
     var events: [Event] = []
     
     //CRUD Functions
+    //create
+    func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String) {
+        let newEvent = Event(eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: <#T##CKRecord.Reference#>)
+    }
     
+    //read
+    func fetchEvents() {
+        
+    }
     
+    //update
+    
+    //delete
     
     
 }

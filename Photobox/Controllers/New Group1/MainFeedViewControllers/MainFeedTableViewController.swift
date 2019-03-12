@@ -24,7 +24,7 @@ class MainFeedTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as?  EventTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as? EventTableViewCell
         let event = EventController.shared.events[indexPath.row]
         cell?.eventCellLanding = event
         return cell ?? UITableViewCell()
