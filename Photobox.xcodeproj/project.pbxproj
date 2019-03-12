@@ -14,8 +14,10 @@
 		2FF7155F22380DF7007C9B36 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7155B22380DF7007C9B36 /* UserController.swift */; };
 		2FF7156022380DF7007C9B36 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7155C22380DF7007C9B36 /* EventController.swift */; };
 		2FF7156122380DF7007C9B36 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7155D22380DF7007C9B36 /* User.swift */; };
-		2FF7157122380EAE007C9B36 /* CreateEventPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157022380EAE007C9B36 /* CreateEventPage1ViewController.swift */; };
+		2FF7157122380EAE007C9B36 /* Page1CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157022380EAE007C9B36 /* Page1CreateEventViewController.swift */; };
 		2FF71579223811D2007C9B36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF71577223811D2007C9B36 /* Main.storyboard */; };
+		2FF7157B2238393B007C9B36 /* Page2CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157A2238393A007C9B36 /* Page2CreateEventViewController.swift */; };
+		2FF7157D22383A11007C9B36 /* Page3CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157C22383A11007C9B36 /* Page3CreateEventViewController.swift */; };
 		EDC459352236D26200B49392 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC459342236D26200B49392 /* AppDelegate.swift */; };
 		EDC4593F2236D26300B49392 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDC4593D2236D26300B49392 /* LaunchScreen.storyboard */; };
 		EDC459482236D64400B49392 /* MainFeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDC459462236D64400B49392 /* MainFeed.storyboard */; };
@@ -41,8 +43,10 @@
 		2FF7156C22380E8D007C9B36 /* EventPhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPhotosCollectionViewController.swift; sourceTree = "<group>"; };
 		2FF7156D22380E8D007C9B36 /* AttendeeEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeEditViewController.swift; sourceTree = "<group>"; };
 		2FF7156E22380E8D007C9B36 /* SegmentedControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlViewController.swift; sourceTree = "<group>"; };
-		2FF7157022380EAE007C9B36 /* CreateEventPage1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventPage1ViewController.swift; sourceTree = "<group>"; };
+		2FF7157022380EAE007C9B36 /* Page1CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page1CreateEventViewController.swift; sourceTree = "<group>"; };
 		2FF71578223811D2007C9B36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Photobox/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		2FF7157A2238393A007C9B36 /* Page2CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page2CreateEventViewController.swift; sourceTree = "<group>"; };
+		2FF7157C22383A11007C9B36 /* Page3CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page3CreateEventViewController.swift; sourceTree = "<group>"; };
 		EDC459312236D26200B49392 /* Photobox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photobox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC459342236D26200B49392 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDC4593E2236D26300B49392 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -121,7 +125,9 @@
 		2FF7156F22380E9D007C9B36 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				2FF7157022380EAE007C9B36 /* CreateEventPage1ViewController.swift */,
+				2FF7157022380EAE007C9B36 /* Page1CreateEventViewController.swift */,
+				2FF7157A2238393A007C9B36 /* Page2CreateEventViewController.swift */,
+				2FF7157C22383A11007C9B36 /* Page3CreateEventViewController.swift */,
 				2FF7156622380E8D007C9B36 /* MainFeedViewControllers */,
 			);
 			name = ViewControllers;
@@ -265,8 +271,10 @@
 				2FF7155E22380DF7007C9B36 /* Event.swift in Sources */,
 				2FF7153522370323007C9B36 /* CloudKitManager.swift in Sources */,
 				2FF7156022380DF7007C9B36 /* EventController.swift in Sources */,
+				2FF7157B2238393B007C9B36 /* Page2CreateEventViewController.swift in Sources */,
 				2FF7155F22380DF7007C9B36 /* UserController.swift in Sources */,
-				2FF7157122380EAE007C9B36 /* CreateEventPage1ViewController.swift in Sources */,
+				2FF7157122380EAE007C9B36 /* Page1CreateEventViewController.swift in Sources */,
+				2FF7157D22383A11007C9B36 /* Page3CreateEventViewController.swift in Sources */,
 				EDC459352236D26200B49392 /* AppDelegate.swift in Sources */,
 				2FF7156122380DF7007C9B36 /* User.swift in Sources */,
 			);

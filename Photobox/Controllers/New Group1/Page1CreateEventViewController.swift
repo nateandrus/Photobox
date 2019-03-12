@@ -8,9 +8,7 @@
 
 import UIKit
 
-class CreateEventPage1ViewController: UIViewController {
-
-    var heightNeeded: CGFloat?
+class Page1CreateEventViewController: UIViewController {
     
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var selectThumbnailImageButton: UIButton!
@@ -28,46 +26,45 @@ class CreateEventPage1ViewController: UIViewController {
         super.viewDidLoad()
         nameTextField.delegate = self
         locationTextField.delegate = self
+
+        formatKeyboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.view.layoutSubviews()
-        scrollView.keyboardDismissMode = .onDrag
-        let heightNeeded = thumbnailImageView.frame.height + stackView.frame.height + 15
-        print(heightNeeded)
-        let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame
-        let viewHeight = safeAreaFrame.height
-        print(viewHeight)
-        if heightNeeded > viewHeight {
-            print("expanded")
-            self.bottomConstraint.constant += heightNeeded - viewHeight + 150
-            reloadInputViews()
-        }
-        
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (_) in
+    }
+    
+    func formatKeyboard() {
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
+            guard let userInfo = notification.userInfo,
+                let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
             
+            self.bottomConstraint.constant += keyboardFrame.height + 50
             self.view.layoutSubviews()
             
-            let frameInContentView = self.selectedTextField!.convert(self.selectedTextField!.bounds, to: self.contentView)
+            let amountToOffset = (self.view.frame.height * 0.9) - self.stackView.frame.height - keyboardFrame.height
+            print(amountToOffset)
             
-            let offSetPoint = CGPoint(x: self.contentView.frame.origin.x, y: frameInContentView.origin.y - frameInContentView.height)
+            let offSetPoint = CGPoint(x: self.contentView.frame.origin.x, y: self.view.bounds.origin.y + amountToOffset)
             
             self.scrollView.setContentOffset(offSetPoint, animated: true)
         }
+        
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (notification) in
+            self.bottomConstraint.constant = 0
+        }
     }
-
+    
+    
     
     // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "toPage2"
+//    }
  
 
 }
-extension CreateEventPage1ViewController: UITextFieldDelegate {
+extension Page1CreateEventViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         selectedTextField = textField
         return true
@@ -76,8 +73,6 @@ extension CreateEventPage1ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
-        //or
-        //self.view.endEditing(true)
         return true
     }
 }
