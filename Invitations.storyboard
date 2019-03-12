@@ -46,7 +46,7 @@
             </objects>
             <point key="canvasLocation" x="925.60000000000002" y="-194.75262368815595"/>
         </scene>
-        <!--View Controller-->
+        <!--PhotoBOX-->
         <scene sceneID="eXb-5T-yPr">
             <objects>
                 <viewController id="98b-wa-SEF" sceneMemberID="viewController">
@@ -75,6 +75,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Fmh-jV-VTG"/>
                     </view>
+                    <navigationItem key="navigationItem" title="PhotoBOX" id="6d8-zG-UCx">
+                        <barButtonItem key="leftBarButtonItem" title="←" id="hDp-jc-vtr">
+                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ER0-MV-wY2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -91,6 +96,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.99937313800000005" green="0.91895431279999995" blue="0.73831993340000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" red="0.70492940989847708" green="0.65154177193804652" blue="0.52873093848780151" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
