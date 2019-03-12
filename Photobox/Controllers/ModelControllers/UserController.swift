@@ -11,6 +11,7 @@ import CloudKit
 import Contacts
 
 class UserController {
+
     
     static let shared = UserController()
     

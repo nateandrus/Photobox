@@ -18,7 +18,10 @@
 		2FF71579223811D2007C9B36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF71577223811D2007C9B36 /* Main.storyboard */; };
 		2FF7157B2238393B007C9B36 /* Page2CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157A2238393A007C9B36 /* Page2CreateEventViewController.swift */; };
 		2FF7157D22383A11007C9B36 /* Page3CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157C22383A11007C9B36 /* Page3CreateEventViewController.swift */; };
+
+
 		2FF7157F22384F32007C9B36 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157E22384F32007C9B36 /* ContactTableViewCell.swift */; };
+
 		ED07648E223819AA00D8307F /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED07648D223819AA00D8307F /* UserProfileViewController.swift */; };
 		ED076490223819BE00D8307F /* UserProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED07648F223819BE00D8307F /* UserProfileDetailViewController.swift */; };
 		ED0764942238209C00D8307F /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0764932238209C00D8307F /* Photo.swift */; };
@@ -28,6 +31,7 @@
 		EDC4594A2236D6A700B49392 /* Invitations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDC459492236D6A700B49392 /* Invitations.storyboard */; };
 		EDC4594D2236D71700B49392 /* CreateEvent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDC4594B2236D71700B49392 /* CreateEvent.storyboard */; };
 		EDC4594F2236D7A600B49392 /* UserProfile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDC4594E2236D7A600B49392 /* UserProfile.storyboard */; };
+		EDCF4A88223855160061E8FF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCF4A87223855160061E8FF /* ImageCollectionViewCell.swift */; };
 		EDFF2FB02238315B00DF725C /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7156B22380E8D007C9B36 /* EventTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +68,7 @@
 		EDC459492236D6A700B49392 /* Invitations.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Invitations.storyboard; sourceTree = "<group>"; };
 		EDC4594C2236D71700B49392 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Photobox/Base.lproj/CreateEvent.storyboard; sourceTree = "<group>"; };
 		EDC4594E2236D7A600B49392 /* UserProfile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserProfile.storyboard; sourceTree = "<group>"; };
+		EDCF4A87223855160061E8FF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				2FF7156B22380E8D007C9B36 /* EventTableViewCell.swift */,
+				EDCF4A87223855160061E8FF /* ImageCollectionViewCell.swift */,
 				2FF7157E22384F32007C9B36 /* ContactTableViewCell.swift */,
 			);
 			name = Views;
@@ -308,6 +314,7 @@
 				2FF7155F22380DF7007C9B36 /* UserController.swift in Sources */,
 				2FF7157122380EAE007C9B36 /* Page1CreateEventViewController.swift in Sources */,
 				2FF7157D22383A11007C9B36 /* Page3CreateEventViewController.swift in Sources */,
+				EDCF4A88223855160061E8FF /* ImageCollectionViewCell.swift in Sources */,
 				EDC459352236D26200B49392 /* AppDelegate.swift in Sources */,
 				ED076490223819BE00D8307F /* UserProfileDetailViewController.swift in Sources */,
 				2FF7156122380DF7007C9B36 /* User.swift in Sources */,

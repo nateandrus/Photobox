@@ -9,6 +9,8 @@
 import UIKit
 
 class UserProfileDetailViewController: UIViewController {
+    
+    var collectionViewPhotos: [Photo] = []
 
     var pastEventLanding: Event? {
         didSet {
@@ -39,10 +41,15 @@ class UserProfileDetailViewController: UIViewController {
 extension UserProfileDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath)
+        let photo = collectionViewPhotos[indexPath.row]
+        let photoImageView = UIImageView(frame: cell.frame)
+        photoImageView.image = photo.image
+        cell.backgroundView = photoImageView
+        return cell
     }
 }
