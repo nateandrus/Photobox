@@ -41,7 +41,7 @@ class CreateEventPage1ViewController: UIViewController {
         let viewHeight = safeAreaFrame.height
         print(viewHeight)
         if heightNeeded > viewHeight {
-            print("expanded:")
+            print("expanded")
             self.bottomConstraint.constant += heightNeeded - viewHeight + 150
             reloadInputViews()
         }
