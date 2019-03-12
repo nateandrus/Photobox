@@ -27,7 +27,7 @@ class EventTableViewCell: UITableViewCell {
         eventImageView.image = event.eventImage
         eventTitleLabel.text = event.eventTitle
         eventLocationLabel.text = event.location
-        eventDateTimeLabel.text = "\(event.time)"
+        eventDateTimeLabel.text = "\(event.startTime)"
         numberOfAttendeesLabel.text = "Number of attendees: \(event.attendees.count)"
     }
 }
