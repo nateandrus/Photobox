@@ -14,6 +14,7 @@ class Event {
     static let typeKey = "Event"
     static let attendeesKey = "attendees"
     fileprivate static let eventTitleKey = "eventTitle"
+    fileprivate static let eventImage = "eventImage"
     fileprivate static let locationKey = "location"
     fileprivate static let startTimeKey = "startTime"
     fileprivate static let endTimeKey = "endTime"
@@ -21,7 +22,7 @@ class Event {
     fileprivate static let eventPhotosKey = "eventPhotos"
     fileprivate static let creatorReferenceKey = "creatorReference"
     
-    var attendees: [User]
+    var attendees: [User]?
     var eventImage: UIImage
     var eventTitle: String
     var location: String
@@ -47,18 +48,24 @@ class Event {
     
     init?(record: CKRecord) {
         guard let eventTitle = record[Event.eventTitleKey] as? String,
-        let location = record[Event.locationKey] as? String,
-        let startTime = record[Event.startTimeKey] as? Date,
-        let endTime = record[Event.endTimeKey] as? Date,
-        let description = record[Event.descriptionKey] as? String?,
-        let eventPhotos = record[Event.eventPhotosKey] as? [Photo]?,
-            let creatorReference = record[Event.creatorReferenceKey] as? CKRecord.Reference else { return nil }
+            let eventImage = record[Event.eventImage] as? UIImage,
+            let location = record[Event.locationKey] as? String,
+            let attendees = record[Event.attendeesKey] as? [User]?,
+            let startTime = record[Event.startTimeKey] as? Date,
+            let endTime = record[Event.endTimeKey] as? Date,
+            let description = record[Event.descriptionKey] as? String?,
+            let eventPhotos = record[Event.eventPhotosKey] as? [Photo]?,
+            let creatorReference = record[Event.creatorReferenceKey] as? CKRecord.Reference
+            else { return nil }
         self.eventTitle = eventTitle
+        self.eventImage = eventImage
         self.location = location
+        self.attendees = attendees
         self.startTime = startTime
         self.endTime = endTime
         self.description = description
         self.eventPhotos = eventPhotos
+        self.ckrecordID = CKRecord.ID(recordName: self.eventTitle)
         self.creatorReference = creatorReference
     }
 }
