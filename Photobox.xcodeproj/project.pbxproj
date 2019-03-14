@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F18D9CD2239933B001E1765 /* InvitationsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18D9CC2239933B001E1765 /* InvitationsListTableViewController.swift */; };
 		2FF7152F2236DDB0007C9B36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FF7152E2236DDAF007C9B36 /* Assets.xcassets */; };
 		2FF71533223702F2007C9B36 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF71532223702F2007C9B36 /* CloudKit.framework */; };
 		2FF7153522370323007C9B36 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7153422370323007C9B36 /* CloudKitManager.swift */; };
@@ -18,10 +19,8 @@
 		2FF71579223811D2007C9B36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF71577223811D2007C9B36 /* Main.storyboard */; };
 		2FF7157B2238393B007C9B36 /* Page2CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157A2238393A007C9B36 /* Page2CreateEventViewController.swift */; };
 		2FF7157D22383A11007C9B36 /* Page3CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157C22383A11007C9B36 /* Page3CreateEventViewController.swift */; };
-
-
 		2FF7157F22384F32007C9B36 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157E22384F32007C9B36 /* ContactTableViewCell.swift */; };
-
+		2FF7158122397738007C9B36 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7158022397738007C9B36 /* OnboardingViewController.swift */; };
 		ED07648E223819AA00D8307F /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED07648D223819AA00D8307F /* UserProfileViewController.swift */; };
 		ED076490223819BE00D8307F /* UserProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED07648F223819BE00D8307F /* UserProfileDetailViewController.swift */; };
 		ED0764942238209C00D8307F /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0764932238209C00D8307F /* Photo.swift */; };
@@ -31,11 +30,11 @@
 		EDC4594A2236D6A700B49392 /* Invitations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDC459492236D6A700B49392 /* Invitations.storyboard */; };
 		EDC4594D2236D71700B49392 /* CreateEvent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDC4594B2236D71700B49392 /* CreateEvent.storyboard */; };
 		EDC4594F2236D7A600B49392 /* UserProfile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDC4594E2236D7A600B49392 /* UserProfile.storyboard */; };
-		EDCF4A88223855160061E8FF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCF4A87223855160061E8FF /* ImageCollectionViewCell.swift */; };
 		EDFF2FB02238315B00DF725C /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7156B22380E8D007C9B36 /* EventTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F18D9CC2239933B001E1765 /* InvitationsListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationsListTableViewController.swift; sourceTree = "<group>"; };
 		2FF7152E2236DDAF007C9B36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FF71530223702EF007C9B36 /* Photobox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Photobox.entitlements; sourceTree = "<group>"; };
 		2FF71532223702F2007C9B36 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -57,6 +56,7 @@
 		2FF7157A2238393A007C9B36 /* Page2CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page2CreateEventViewController.swift; sourceTree = "<group>"; };
 		2FF7157C22383A11007C9B36 /* Page3CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page3CreateEventViewController.swift; sourceTree = "<group>"; };
 		2FF7157E22384F32007C9B36 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
+		2FF7158022397738007C9B36 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		ED07648D223819AA00D8307F /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		ED07648F223819BE00D8307F /* UserProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDetailViewController.swift; sourceTree = "<group>"; };
 		ED0764932238209C00D8307F /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
@@ -68,7 +68,6 @@
 		EDC459492236D6A700B49392 /* Invitations.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Invitations.storyboard; sourceTree = "<group>"; };
 		EDC4594C2236D71700B49392 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Photobox/Base.lproj/CreateEvent.storyboard; sourceTree = "<group>"; };
 		EDC4594E2236D7A600B49392 /* UserProfile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserProfile.storyboard; sourceTree = "<group>"; };
-		EDCF4A87223855160061E8FF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,11 +138,11 @@
 		2FF7156F22380E9D007C9B36 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				2FF7157022380EAE007C9B36 /* Page1CreateEventViewController.swift */,
-				2FF7157A2238393A007C9B36 /* Page2CreateEventViewController.swift */,
-				2FF7157C22383A11007C9B36 /* Page3CreateEventViewController.swift */,
+				2FF715822239774A007C9B36 /* CreateEventViewControllers */,
 				2FF7156622380E8D007C9B36 /* MainFeedViewControllers */,
 				ED076491223819C500D8307F /* UserProfileViewControllers */,
+				2FF7158022397738007C9B36 /* OnboardingViewController.swift */,
+				2F18D9CC2239933B001E1765 /* InvitationsListTableViewController.swift */,
 			);
 			name = ViewControllers;
 			path = "New Group1";
@@ -167,6 +166,16 @@
 			path = Resources/Storyboards;
 			sourceTree = "<group>";
 		};
+		2FF715822239774A007C9B36 /* CreateEventViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2FF7157022380EAE007C9B36 /* Page1CreateEventViewController.swift */,
+				2FF7157A2238393A007C9B36 /* Page2CreateEventViewController.swift */,
+				2FF7157C22383A11007C9B36 /* Page3CreateEventViewController.swift */,
+			);
+			path = CreateEventViewControllers;
+			sourceTree = "<group>";
+		};
 		ED076491223819C500D8307F /* UserProfileViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,7 +189,6 @@
 			isa = PBXGroup;
 			children = (
 				2FF7156B22380E8D007C9B36 /* EventTableViewCell.swift */,
-				EDCF4A87223855160061E8FF /* ImageCollectionViewCell.swift */,
 				2FF7157E22384F32007C9B36 /* ContactTableViewCell.swift */,
 			);
 			name = Views;
@@ -310,13 +318,14 @@
 				2FF7157F22384F32007C9B36 /* ContactTableViewCell.swift in Sources */,
 				2FF7156022380DF7007C9B36 /* EventController.swift in Sources */,
 				ED0764942238209C00D8307F /* Photo.swift in Sources */,
+				2FF7158122397738007C9B36 /* OnboardingViewController.swift in Sources */,
 				2FF7157B2238393B007C9B36 /* Page2CreateEventViewController.swift in Sources */,
 				2FF7155F22380DF7007C9B36 /* UserController.swift in Sources */,
 				2FF7157122380EAE007C9B36 /* Page1CreateEventViewController.swift in Sources */,
 				2FF7157D22383A11007C9B36 /* Page3CreateEventViewController.swift in Sources */,
-				EDCF4A88223855160061E8FF /* ImageCollectionViewCell.swift in Sources */,
 				EDC459352236D26200B49392 /* AppDelegate.swift in Sources */,
 				ED076490223819BE00D8307F /* UserProfileDetailViewController.swift in Sources */,
+				2F18D9CD2239933B001E1765 /* InvitationsListTableViewController.swift in Sources */,
 				2FF7156122380DF7007C9B36 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
