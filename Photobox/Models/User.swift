@@ -12,7 +12,7 @@ import CloudKit
 class User {
     
     static let typeKey = "User"
-    fileprivate static let usernameKey = "username"
+    static let usernameKey = "username"
     fileprivate static let profileImageKey = "profileImage"
     static let creatorReferenceKey = "creatorReference"
 
@@ -33,6 +33,11 @@ class User {
             let profileImage = record[User.profileImageKey] as? UIImage,
             let creatorReference = record[User.creatorReferenceKey] as? CKRecord.Reference else { return nil}
         self.init(username: username, profileImage: profileImage, ckRecord: record.recordID, creatorReference: creatorReference)
+    }
+}
+extension User: Equatable {
+    static func == (lhs: User, rhs: User) -> Bool {
+        return lhs.ckRecord == rhs.ckRecord
     }
 }
 

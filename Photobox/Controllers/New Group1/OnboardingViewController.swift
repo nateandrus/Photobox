@@ -1,25 +1,22 @@
 //
-//  Page2CreateEventViewController.swift
+//  OnboardingViewController.swift
 //  Photobox
 //
-//  Created by Brayden Harris on 3/12/19.
+//  Created by Brayden Harris on 3/13/19.
 //  Copyright © 2019 Nathan Andrus. All rights reserved.
 //
 
 import UIKit
 
-class Page2CreateEventViewController: UIViewController {
+class OnboardingViewController: UIPageViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
     }
     
-    @IBAction func backButtonTapped(_ sender: Any) {
-        DispatchQueue.main.async {
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
-    
+
     /*
     // MARK: - Navigation
 

@@ -11,59 +11,109 @@ import CloudKit
 
 class EventController {
     
+    // MARK: - Shared Instance/Singleton
     static let shared = EventController()
     
+    // MARK: - Sources of Truth
     var events: [Event] = []
-    
     var attendees: [User] = []
     
     let publicDB = CKContainer.default().publicCloudDatabase
     
-    //CRUD Functions
-    //save to icloud
-    func save(event: Event, completion: @escaping (Bool) -> Void) {
-        guard let record = CKRecord(event: event) else { completion(false); return }
-        publicDB.save(record) { (record, error) in
-            if let error = error {
-                print("Error saving to cloudkit: \(error)")
-                completion(false)
-                return
-            }
-            self.events.append(event)
-            completion(true)
-        }
-    }
-    
-    //create
+    // MARK: - CRUD Functions
     func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String, completion: @escaping (Bool) -> Void) {
-        guard let logginInUser = UserController.shared.loggedInUser else { completion(false); return }
-        let creatorReference = CKRecord.Reference(recordID: logginInUser.ckRecord, action: .deleteSelf)
-        let newEvent = Event(eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
-        save(event: newEvent) { (success) in
-            if success {
-                completion(true)
-            } else {
+        guard let loggedinInUser = UserController.shared.loggedInUser else { completion(false); return }
+        
+        let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .deleteSelf)
+        
+        let newEvent = Event(attendees: [loggedinInUser], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
+        
+        guard let record = CKRecord(event: newEvent) else { completion(false); return }
+        
+        CloudKitManager.shared.saveRecord(record) { (record, error) in
+            if let error = error {
+                print("Error saving record to CloudKit: \(error), \(error.localizedDescription)")
                 completion(false)
+                return
+            }
+            guard let record = record else { completion(false); return }
+            
+            guard let event = Event(record: record) else { completion(false); return }
+            self.events.append(event)
+        }
+    }
+    
+    func fetchEvents(completion: @escaping (Bool) -> Void) {
+        guard let loggedInUser = UserController.shared.loggedInUser else { completion(false); return }
+        
+        let predicate = NSPredicate(format: "%K IN $@", argumentArray: [loggedInUser, Event.attendeesKey])
+        
+        CloudKitManager.shared.fetchRecordsWithType(Event.typeKey, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
+            if let error = error {
+                print("Error fetching user events: \(error), \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+            
+            guard let records = records else { completion(false); return }
+            
+            for record in records {
+                guard let event = Event(record: record) else { completion(false); return }
+                self.events.append(event)
             }
         }
     }
     
-    //read
-    func fetchEvents(completion: @escaping (Bool) -> Void) {
-        guard let logginInUser = UserController.shared.loggedInUser else { completion(false); return }
-        let creatorReference = CKRecord.Reference(recordID: logginInUser.ckRecord, action: .deleteSelf)
-        let predicate = NSPredicate(format: "%K == %@", argumentArray: [creatorReference, attendees])
-        let query = CKQuery(recordType: Event.typeKey, predicate: predicate)
-        publicDB.perform(query, inZoneWith: nil) { (events, error) in
+    func modify(event: Event, withTitle title: String?, image: UIImage?, location: String?, startTime: Date?, endTime: Date?, description: String?) {
+        //Update local event object
+        if title != nil {
+            event.eventTitle = title!
+        }
+        if image != nil {
+            event.eventImage = image!
+        }
+        if location != nil {
+            event.location = location!
+        }
+        if startTime != nil {
+            event.startTime = startTime!
+        }
+        if endTime != nil {
+            event.endTime = endTime!
+        }
+        if description != nil {
+            event.description = description!
+        }
+        
+        guard let record = CKRecord(event: event) else { return }
+        
+        //Update CloudKit
+        CloudKitManager.shared.modifyRecords([record], perRecordCompletion: nil) { (_, error) in
             if let error = error {
-                print("There was an error fetching events from cloudkit: \(error.localizedDescription)")
+                print("Error modifying the event: \(event.eventTitle); \(error.localizedDescription)")
+                return
+            }
+        }
+    }
+    
+    func delete(event: Event, completion: @escaping (Bool) -> Void) {
+        //Delete local instance
+        guard let indexToDelete = events.index(of: event) else { completion(false); return }
+        events.remove(at: indexToDelete)
+        
+        //Delete from CloudKit
+        let recordID = event.ckrecordID
+        CloudKitManager.shared.deleteRecordWithID(recordID) { (_, error) in
+            if let error = error {
+                print("Unable to delete event: \(event.eventTitle); \(error.localizedDescription)")
                 completion(false)
                 return
             }
-            guard let events = events else { completion(false); return }
-            let eventsArray = events.compactMap({ Event(record: $0 )})
-            self.events = eventsArray
-            completion(true)
         }
+        completion(true)
+    }
+    
+    func removeAttendee(user: User, completion: @escaping (Bool) -> Void) {
+        
     }
 }
