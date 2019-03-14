@@ -17,10 +17,11 @@ class UserController {
     
     //MARK: - Sources of Truth
     var loggedInUser: User?
+    var eventsForFeed: ([Event], [Event]) = ([],[])
     var users: [User] = []
     
     //MARK: - CRUD Functions
-    func saveUserWith(username: String, profilePic: UIImage, completion: @escaping (Bool) -> Void) {
+    func saveUserWith(username: String, profilePic: UIImage, phoneNumber: CNPhoneNumber, completion: @escaping (Bool) -> Void) {
         CKContainer.default().fetchUserRecordID { (appleUserRecordID, error) in
             if let error = error {
                 print("Error fetching user's apple ID: \(error.localizedDescription)")
@@ -31,7 +32,7 @@ class UserController {
             
             let reference = CKRecord.Reference(recordID: appleUserRecordID, action: .deleteSelf)
             
-            let newUser = User(username: username, profileImage: profilePic, ckRecord: appleUserRecordID, creatorReference: reference)
+            let newUser = User(username: username, profileImage: profilePic, ckRecord: appleUserRecordID, creatorReference: reference, phoneNumber: phoneNumber)
             
             let record = CKRecord(user: newUser)
             

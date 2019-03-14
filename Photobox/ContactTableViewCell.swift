@@ -8,10 +8,11 @@
 
 import UIKit
 import CloudKit
+import Contacts
 
 class ContactTableViewCell: UITableViewCell {
 
-    var contact: String? {
+    var contact: CNContact? {
         didSet {
             updateViews()
         }
