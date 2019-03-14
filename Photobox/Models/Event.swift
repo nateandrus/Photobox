@@ -32,7 +32,7 @@ class Event {
     let ckrecordID: CKRecord.ID
     let creatorReference: CKRecord.Reference
     
-    init(attendees: [User] = [], eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String?, eventPhotos: [Photo] = [], creatorReference: CKRecord.Reference) {
+    init(attendees: [User] = [], eventImage: UIImage = #imageLiteral(resourceName: "calendar icon"), eventTitle: String, location: String, startTime: Date, endTime: Date, description: String?, eventPhotos: [Photo] = [], creatorReference: CKRecord.Reference) {
         self.attendees = attendees
         self.eventImage = eventImage
         self.eventTitle = eventTitle
@@ -60,6 +60,11 @@ class Event {
         self.description = description
         self.eventPhotos = eventPhotos
         self.creatorReference = creatorReference
+    }
+}
+extension Event: Equatable {
+    static func == (lhs: Event, rhs: Event) -> Bool {
+        return lhs.ckrecordID == rhs.ckrecordID
     }
 }
 
