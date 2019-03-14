@@ -35,6 +35,7 @@ class UserProfileDetailViewController: UIViewController {
         eventTitleLabel.text = pastEvent.eventTitle
         eventLocationLabel.text = pastEvent.location
         numberOfAttendeesLabel.text = "Number of attendees: \(pastEvent.attendees)"
+        
     }
 }
 

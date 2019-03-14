@@ -28,6 +28,6 @@ class EventTableViewCell: UITableViewCell {
         eventTitleLabel.text = event.eventTitle
         eventLocationLabel.text = event.location
         eventDateTimeLabel.text = "\(event.startTime)"
-        numberOfAttendeesLabel.text = "Number of attendees: \(event.attendees.count)"
+//        numberOfAttendeesLabel.text = "Number of attendees: \(event.attendees.count)"
     }
 }
