@@ -93,7 +93,7 @@ class UserController {
         
         //TODO: Search for name in contacts
         
-        completion(usernameSearchResults, contactsSearchResults)
+//        completion(usernameSearchResults, contactsSearchResults)
     }
     
     func fetchAllUsers(completion: @escaping (Bool) -> Void) {
