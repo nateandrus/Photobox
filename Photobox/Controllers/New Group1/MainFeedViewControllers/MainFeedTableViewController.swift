@@ -14,13 +14,24 @@ class MainFeedTableViewController: UITableViewController {
         super.viewDidLoad()
     }
 
-    // MARK: - Table view data source
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        return 0
-//    }
+    //MARK: - Table view data source
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        if UserController.shared.eventsForFeed.0.count > 0 && UserController.shared.eventsForFeed.1.count > 0 {
+            return 2
+        } else if UserController.shared.eventsForFeed.0.count > 0 && UserController.shared.eventsForFeed.1.count == 0 {
+            return 1
+        } else if UserController.shared.eventsForFeed.0.count == 0 && UserController.shared.eventsForFeed.1.count > 0 {
+            return 1
+        } else {
+            return 0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return EventController.shared.events.count
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

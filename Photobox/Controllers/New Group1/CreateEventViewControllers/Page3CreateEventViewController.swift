@@ -23,6 +23,8 @@ class Page3CreateEventViewController: UIViewController {
     var startDate: Date?
     var endDate: Date?
     
+    var isSearching: Bool = false
+    
     var searchResults: [User]? {
         didSet {
             DispatchQueue.main.async {
@@ -30,11 +32,11 @@ class Page3CreateEventViewController: UIViewController {
             }
         }
     }
-    var contacts: [CNContact]?
     
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        ContactController.shared.fetchContacts()
     }
     
     // MARK: - IBActions
@@ -49,6 +51,15 @@ class Page3CreateEventViewController: UIViewController {
     }
 }
 extension Page3CreateEventViewController: UISearchBarDelegate {
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        <#code#>
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        <#code#>
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         UserController.shared.fetchUsersWith(searchTerm: searchText) { (users, contacts) in
             guard let users = users else { return }
@@ -59,11 +70,11 @@ extension Page3CreateEventViewController: UISearchBarDelegate {
 }
 extension Page3CreateEventViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        if searchResults != nil && contacts != nil {
+        if searchResults != nil && ContactController.shared.contacts.count > 0 {
             return 2
         } else if searchResults != nil {
             return 1
-        } else if contacts != nil {
+        } else if ContactController.shared.contacts.count > 0 {
             return 1
         } else {
             return 0
@@ -79,24 +90,34 @@ extension Page3CreateEventViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchResults != nil && contacts != nil {
+        if searchResults != nil && ContactController.shared.contacts.count > 0 {
             if section == 0 {
                 return searchResults?.count ?? 0
             } else {
-                return contacts?.count ?? 0
+                return ContactController.shared.contacts.count
             }
         } else if searchResults != nil {
             return searchResults?.count ?? 0
-        } else if contacts != nil {
-            return contacts?.count ?? 0
+        } else if ContactController.shared.contacts.count > 0 {
+            return ContactController.shared.contacts.count
         } else {
             return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let userCell
+        if isSearching == false {
+            if ContactController.shared.contacts.count > 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell
+                let contact = ContactController.shared.contacts[indexPath.row]
+                cell?.contact = contact
+                return cell ?? UITableViewCell()
+            }
+        } else if isSearching == true {
+            
+            
+        } else {
+            return UITableViewCell()
+        }
     }
-    
-    
 }
