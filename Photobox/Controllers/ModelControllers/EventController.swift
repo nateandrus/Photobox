@@ -16,7 +16,7 @@ class EventController {
     
     // MARK: - Sources of Truth
     var events: [Event] = []
-    var attendees: [User] = []
+//    var attendees: [User] = []
     
     let publicDB = CKContainer.default().publicCloudDatabase
     
@@ -113,7 +113,20 @@ class EventController {
         completion(true)
     }
     
-    func removeAttendee(user: User, completion: @escaping (Bool) -> Void) {
+    func removeAttendee(user: User, fromEvent event: Event, completion: @escaping (Bool) -> Void) {
+        //Remove local attendee
+        guard let attendeeIndex = event.attendees.index(of: user) else { completion(false); return }
+        event.attendees.remove(at: attendeeIndex)
         
+        //Remove from CloudKit
+        guard let eventRecord = CKRecord(event: event) else { completion(false); return }
+        CloudKitManager.shared.modifyRecords([eventRecord], perRecordCompletion: nil) { (_, error) in
+            if let error = error {
+                print("Error removing attendee from CloudKit: \(error), \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+        }
+        completion(true)
     }
 }

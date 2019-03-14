@@ -22,7 +22,7 @@ class Event {
     fileprivate static let eventPhotosKey = "eventPhotos"
     fileprivate static let creatorReferenceKey = "creatorReference"
     
-    var attendees: [User]?
+    var attendees: [User]
     var eventImage: UIImage
     var eventTitle: String
     var location: String
@@ -50,7 +50,7 @@ class Event {
         guard let eventTitle = record[Event.eventTitleKey] as? String,
             let eventImage = record[Event.eventImage] as? UIImage,
             let location = record[Event.locationKey] as? String,
-            let attendees = record[Event.attendeesKey] as? [User]?,
+            let attendees = record[Event.attendeesKey] as? [User],
             let startTime = record[Event.startTimeKey] as? Date,
             let endTime = record[Event.endTimeKey] as? Date,
             let description = record[Event.descriptionKey] as? String?,

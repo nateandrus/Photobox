@@ -30,7 +30,7 @@ class Page3CreateEventViewController: UIViewController {
             }
         }
     }
-    var contacts: [CNContact]?
+
     
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
