@@ -14,7 +14,7 @@
         <scene sceneID="HKW-bP-BvE">
             <objects>
                 <navigationController id="EfS-Mg-NIq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Main Feed" id="9zs-54-ycr"/>
+                    <tabBarItem key="tabBarItem" title="Main Feed" image="home icon" id="9zs-54-ycr"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OOW-FX-iih">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -493,4 +493,7 @@
             <point key="canvasLocation" x="2201" y="-783"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="home icon" width="25" height="21"/>
+    </resources>
 </document>

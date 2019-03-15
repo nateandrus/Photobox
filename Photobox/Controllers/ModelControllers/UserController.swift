@@ -70,9 +70,9 @@ class UserController {
         completion(true)
     }
     
-    func fetchUsersWith(searchTerm: String, completion: @escaping ([User]?, [CNContact]?) -> Void) {
+    func fetchUsersWith(searchTerm: String, completion: @escaping ([CNContact]?, [User]?) -> Void) {
         var usernameSearchResults: [User] = []
-        var contactsSearchResults: [CNContact]
+        var contactsSearchResults: [CNContact] = []
         
         //Search for username in CloudKit
         let predicate = NSPredicate(format: "%K == %@", argumentArray: [User.usernameKey, searchTerm])
@@ -91,8 +91,12 @@ class UserController {
             usernameSearchResults = results
         }
         
-        //TODO: Search for name in contacts
+        //Search for name in contacts
+        contactsSearchResults = ContactController.shared.contacts.filter({ (contact) -> Bool in
+            return contact.givenName.contains(searchTerm) || contact.familyName.contains(searchTerm)
+        })
         
+        completion(contactsSearchResults, usernameSearchResults)
     }
     
     func fetchUserWith(phoneNumber: String, completion: @escaping (User?) -> Void) {

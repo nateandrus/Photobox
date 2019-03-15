@@ -260,11 +260,11 @@
             </objects>
             <point key="canvasLocation" x="1616.8" y="319.79010494752629"/>
         </scene>
-        <!--Item-->
+        <!--Profile-->
         <scene sceneID="FTe-7D-uFq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UtJ-AZ-LTq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="lEC-NL-jzH"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile icon" id="lEC-NL-jzH"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bCX-rr-0gf">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -280,4 +280,7 @@
             <point key="canvasLocation" x="165.59999999999999" y="319.79010494752629"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="profile icon" width="25" height="25"/>
+    </resources>
 </document>

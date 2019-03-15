@@ -13,6 +13,7 @@ class Page1CreateEventViewController: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var eventThumbnailImageView: UIImageView!
     @IBOutlet weak var selectImageButtonLabel: UIButton!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -58,10 +59,12 @@ class Page1CreateEventViewController: UIViewController {
             self.bottomConstraint.constant += keyboardFrame.height + 50
             self.view.layoutSubviews()
             
-            let amountToOffset = (self.view.frame.height * 0.9) - self.stackView.frame.height - keyboardFrame.height
-            print(amountToOffset)
+//            let amountToOffset = (self.view.frame.height * 0.9) - self.stackView.frame.height - keyboardFrame.height
+//            print(amountToOffset)
             
-            let offSetPoint = CGPoint(x: self.contentView.frame.origin.x, y: self.view.bounds.origin.y + amountToOffset)
+            let frameInContentView = self.nameLabel.convert(self.nameLabel.bounds, to: self.contentView)
+            
+            let offSetPoint = CGPoint(x: self.contentView.frame.origin.x, y: frameInContentView.origin.y - frameInContentView.height - 10)
             
             self.scrollView.setContentOffset(offSetPoint, animated: true)
         }

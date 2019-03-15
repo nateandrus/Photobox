@@ -18,26 +18,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IM6-YQ-s83">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="IM6-YQ-s83">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EbB-lg-m69" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="sJg-c5-MXY">
-                                                <rect key="frame" x="32" y="357" width="311" height="126"/>
+                                                <rect key="frame" x="28" y="385" width="319" height="126.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="3R9-8b-8X6">
-                                                        <rect key="frame" x="0.0" y="0.0" width="311" height="56"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="319" height="55.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="og4-yr-ON4">
-                                                                <rect key="frame" x="0.0" y="0.0" width="311" height="20.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="319" height="20.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter event name..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vvn-fk-QSP">
-                                                                <rect key="frame" x="0.0" y="25.5" width="311" height="30.5"/>
+                                                                <rect key="frame" x="0.0" y="25.5" width="319" height="30"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -45,10 +45,10 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="EC3-g8-M3Y">
-                                                        <rect key="frame" x="0.0" y="71" width="311" height="55"/>
+                                                        <rect key="frame" x="0.0" y="70.5" width="319" height="56"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XyQ-bE-Twj">
-                                                                <rect key="frame" x="0.0" y="0.0" width="311" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="319" height="21"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="21" id="xKx-O5-yqa"/>
                                                                 </constraints>
@@ -57,7 +57,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter event location..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Uy-hD-6dd">
-                                                                <rect key="frame" x="0.0" y="26" width="311" height="29"/>
+                                                                <rect key="frame" x="0.0" y="26" width="319" height="30"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -66,15 +66,22 @@
                                                     </stackView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="312" id="QMr-dO-49m"/>
-                                                    <constraint firstItem="EC3-g8-M3Y" firstAttribute="top" secondItem="sJg-c5-MXY" secondAttribute="top" constant="71" id="TFD-4u-Aj6"/>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="QMr-dO-49m"/>
                                                 </constraints>
                                             </stackView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8iz-d4-qT9">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="347"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8iz-d4-qT9">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="LDu-l4-YmF"/>
+                                                    <constraint firstAttribute="width" secondItem="8iz-d4-qT9" secondAttribute="height" multiplier="1:1" id="dyt-Ma-pT0"/>
+                                                </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAQ-sg-AST">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="357"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAQ-sg-AST" userLabel="Select Image Button">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="O7Z-yP-DcM"/>
+                                                    <constraint firstAttribute="width" secondItem="LAQ-sg-AST" secondAttribute="height" multiplier="1:1" id="kub-xX-Awz"/>
+                                                </constraints>
                                                 <state key="normal" title="Select Image"/>
                                                 <connections>
                                                     <action selector="selectImageButtonTapped:" destination="DsW-VI-T5p" eventType="touchUpInside" id="zLL-DU-jtU"/>
@@ -84,18 +91,15 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="LAQ-sg-AST" firstAttribute="top" secondItem="EbB-lg-m69" secondAttribute="top" id="3pC-xR-PQR"/>
-                                            <constraint firstItem="LAQ-sg-AST" firstAttribute="leading" secondItem="EbB-lg-m69" secondAttribute="leading" id="99Q-pl-3QM"/>
-                                            <constraint firstAttribute="trailing" secondItem="LAQ-sg-AST" secondAttribute="trailing" id="Bh3-Z6-ZaN"/>
+                                            <constraint firstItem="LAQ-sg-AST" firstAttribute="width" secondItem="EbB-lg-m69" secondAttribute="width" priority="900" id="7sr-3z-0w7"/>
                                             <constraint firstItem="sJg-c5-MXY" firstAttribute="top" secondItem="8iz-d4-qT9" secondAttribute="bottom" constant="10" id="Car-K5-2oY"/>
                                             <constraint firstItem="sJg-c5-MXY" firstAttribute="centerX" secondItem="EbB-lg-m69" secondAttribute="centerX" id="HAj-nD-ZzC"/>
-                                            <constraint firstAttribute="trailing" secondItem="8iz-d4-qT9" secondAttribute="trailing" id="HKe-db-ad2"/>
+                                            <constraint firstItem="LAQ-sg-AST" firstAttribute="centerX" secondItem="EbB-lg-m69" secondAttribute="centerX" id="MQS-N1-fcB"/>
                                             <constraint firstItem="8iz-d4-qT9" firstAttribute="top" secondItem="EbB-lg-m69" secondAttribute="top" id="W2D-vY-rRM"/>
-                                            <constraint firstAttribute="bottom" secondItem="sJg-c5-MXY" secondAttribute="bottom" constant="71" id="WsY-C5-doX"/>
-                                            <constraint firstItem="sJg-c5-MXY" firstAttribute="top" secondItem="LAQ-sg-AST" secondAttribute="bottom" id="anG-eY-ukD"/>
-                                            <constraint firstItem="sJg-c5-MXY" firstAttribute="top" secondItem="EbB-lg-m69" secondAttribute="top" constant="357" id="hlU-uX-K3M"/>
+                                            <constraint firstItem="sJg-c5-MXY" firstAttribute="top" secondItem="LAQ-sg-AST" secondAttribute="bottom" constant="10" id="anG-eY-ukD"/>
+                                            <constraint firstItem="8iz-d4-qT9" firstAttribute="centerX" secondItem="EbB-lg-m69" secondAttribute="centerX" id="d3f-Q5-XGL"/>
+                                            <constraint firstItem="8iz-d4-qT9" firstAttribute="width" secondItem="EbB-lg-m69" secondAttribute="width" priority="900" id="eIw-Rz-dSH"/>
                                             <constraint firstItem="sJg-c5-MXY" firstAttribute="width" secondItem="EbB-lg-m69" secondAttribute="width" multiplier="0.85" priority="900" id="kAg-FA-4l8"/>
-                                            <constraint firstItem="8iz-d4-qT9" firstAttribute="leading" secondItem="EbB-lg-m69" secondAttribute="leading" id="oHu-Jw-MkY"/>
-                                            <constraint firstItem="sJg-c5-MXY" firstAttribute="leading" secondItem="EbB-lg-m69" secondAttribute="leading" constant="32" id="zMl-LA-Ik5"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -136,6 +140,7 @@
                         <outlet property="contentView" destination="EbB-lg-m69" id="5Dt-Ql-s4p"/>
                         <outlet property="eventThumbnailImageView" destination="8iz-d4-qT9" id="gf1-gi-Mmr"/>
                         <outlet property="locationTextField" destination="5Uy-hD-6dd" id="SHj-Ne-qnJ"/>
+                        <outlet property="nameLabel" destination="og4-yr-ON4" id="Rgn-IE-yBi"/>
                         <outlet property="nameTextField" destination="Vvn-fk-QSP" id="P2T-Lz-TSA"/>
                         <outlet property="scrollView" destination="IM6-YQ-s83" id="xrS-Pr-Wbj"/>
                         <outlet property="selectImageButtonLabel" destination="LAQ-sg-AST" id="nw1-D6-gGH"/>
