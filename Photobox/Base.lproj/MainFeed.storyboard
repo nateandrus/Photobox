@@ -251,10 +251,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="270" verticalHuggingPriority="266" horizontalCompressionResistancePriority="761" verticalCompressionResistancePriority="761" translatesAutoresizingMaskIntoConstraints="NO" id="sjC-Un-fFG">
-                                <rect key="frame" x="12" y="76" width="121.5" height="121.5"/>
+                                <rect key="frame" x="12" y="76" width="150.5" height="150.5"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="245" verticalHuggingPriority="245" axis="vertical" alignment="top" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="EXU-2v-seM">
-                                <rect key="frame" x="145.5" y="76" width="217.5" height="106.5"/>
+                                <rect key="frame" x="174.5" y="76" width="188.5" height="135.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="(title for event)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BDV-8c-oA6">
                                         <rect key="frame" x="0.0" y="0.0" width="130" height="21.5"/>
@@ -274,8 +274,14 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(end date and time)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tzt-ym-a9z">
+                                        <rect key="frame" x="0.0" y="90.5" width="134.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(# of attendees)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vyy-Oz-ZdX">
-                                        <rect key="frame" x="0.0" y="90.5" width="98" height="16"/>
+                                        <rect key="frame" x="0.0" y="119.5" width="98" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -283,10 +289,10 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ogM-Dv-7Fa">
-                                <rect key="frame" x="0.0" y="243" width="375" height="424"/>
+                                <rect key="frame" x="0.0" y="272" width="375" height="395"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AA9-r8-2H2">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="424"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="395"/>
                                         <connections>
                                             <segue destination="023-Nl-ldX" kind="embed" id="zwr-fM-w2R"/>
                                         </connections>
@@ -301,7 +307,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="tvQ-7x-OoR">
-                                <rect key="frame" x="0.0" y="212.5" width="375" height="20.5"/>
+                                <rect key="frame" x="0.0" y="241.5" width="375" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity Log" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Azj-zg-Zom">
                                         <rect key="frame" x="0.0" y="0.0" width="187.5" height="20.5"/>
@@ -346,6 +352,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="dateAndTimeLabel" destination="WiQ-QU-1J7" id="oWd-T2-Ya3"/>
+                        <outlet property="endDateandTimeLabel" destination="tzt-ym-a9z" id="dhT-kj-8XV"/>
                         <outlet property="eventImageView" destination="sjC-Un-fFG" id="Vln-hf-HLl"/>
                         <outlet property="eventLocationLabel" destination="OSg-30-4aF" id="X29-fb-Mgc"/>
                         <outlet property="eventTitleLabel" destination="BDV-8c-oA6" id="2OX-na-jAw"/>
@@ -354,7 +361,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eni-TS-LAd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1448.8" y="-364.7676161919041"/>
+            <point key="canvasLocation" x="1449" y="-309"/>
         </scene>
         <!--Segmented Control View Controller-->
         <scene sceneID="r9C-Bg-zTM">

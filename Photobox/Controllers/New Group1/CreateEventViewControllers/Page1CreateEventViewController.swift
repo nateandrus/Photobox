@@ -11,8 +11,8 @@ import UIKit
 class Page1CreateEventViewController: UIViewController {
     
     // MARK: - IBOutlets
-    @IBOutlet weak var thumbnailImageView: UIImageView!
-    @IBOutlet weak var selectThumbnailImageButton: UIButton!
+    @IBOutlet weak var eventThumbnailImageView: UIImageView!
+    @IBOutlet weak var selectImageButtonLabel: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -23,13 +23,31 @@ class Page1CreateEventViewController: UIViewController {
     // MARK: - Properties
     var selectedTextField: UITextField?
     
+    var selectedImage: UIImage?
+    
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         nameTextField.delegate = self
         locationTextField.delegate = self
-
         formatKeyboard()
+    }
+    
+    //MARK: - View Lifecycle Methods
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        eventThumbnailImageView.image = nil
+        selectImageButtonLabel.setTitle("Select Photo", for: .normal)
+    }
+
+    
+    @IBAction func selectImageButtonTapped(_ sender: UIButton) {
+        presentImagePickerActionSheet()
+    }
+    
+    
+    @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        self.tabBarController?.selectedIndex = 0
     }
     
     func formatKeyboard() {
@@ -53,8 +71,6 @@ class Page1CreateEventViewController: UIViewController {
         }
     }
     
-    
-    
     // MARK: - Navigation
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         guard let name = nameTextField.text,
@@ -76,20 +92,18 @@ class Page1CreateEventViewController: UIViewController {
         if segue.identifier == "toPage2" {
             guard let name = nameTextField.text, !name.isEmpty,
                 let location = locationTextField.text, !location.isEmpty else { return }
-            
             let destination = segue.destination as? Page2CreateEventViewController
-            
             destination?.name = name
             destination?.location = location
-            
-            if thumbnailImageView.image == nil {
+            if eventThumbnailImageView.image == nil {
                 destination?.image = #imageLiteral(resourceName: "calendar icon")
             } else {
-                destination?.image = thumbnailImageView.image
+                destination?.image = eventThumbnailImageView.image
             }
         }
     }
 }
+
 extension Page1CreateEventViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         selectedTextField = textField
@@ -97,8 +111,48 @@ extension Page1CreateEventViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         textField.resignFirstResponder()
         return true
     }
 }
+
+//MARK: - UIImagePickerDelegate
+extension Page1CreateEventViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        if let photo = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            selectImageButtonLabel.setTitle("", for: .normal)
+            eventThumbnailImageView.image = photo
+            selectedImage = photo
+        }
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+
+    func presentImagePickerActionSheet() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        let actionSheet = UIAlertController(title: "Select a Photo", message: nil, preferredStyle: .actionSheet)
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            actionSheet.addAction(UIAlertAction(title: "Photos", style: .default, handler: { (_) in
+                imagePickerController.sourceType = UIImagePickerController.SourceType.photoLibrary
+                self.present(imagePickerController, animated: true, completion: nil)
+            }))
+        }
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (_) in
+                imagePickerController.sourceType = UIImagePickerController.SourceType.camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            }))
+        }
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(actionSheet, animated: true)
+    }
+}
+
+
+
+
+

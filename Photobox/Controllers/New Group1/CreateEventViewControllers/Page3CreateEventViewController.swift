@@ -36,6 +36,7 @@ class Page3CreateEventViewController: UIViewController {
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        resultsTableView.delegate = self
         ContactController.shared.fetchContacts()
     }
     
@@ -52,14 +53,14 @@ class Page3CreateEventViewController: UIViewController {
 }
 extension Page3CreateEventViewController: UISearchBarDelegate {
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        <#code#>
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        <#code#>
-    }
-    
+//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+//        <#code#>
+//    }
+//    
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        <#code#>
+//    }
+//    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         UserController.shared.fetchUsersWith(searchTerm: searchText) { (users, contacts) in
             guard let users = users else { return }
@@ -68,7 +69,7 @@ extension Page3CreateEventViewController: UISearchBarDelegate {
         }
     }
 }
-extension Page3CreateEventViewController: UITableViewDataSource {
+extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         if searchResults != nil && ContactController.shared.contacts.count > 0 {
             return 2
@@ -114,10 +115,8 @@ extension Page3CreateEventViewController: UITableViewDataSource {
                 return cell ?? UITableViewCell()
             }
         } else if isSearching == true {
-            
-            
-        } else {
-            return UITableViewCell()
+
         }
+        return UITableViewCell()
     }
 }
