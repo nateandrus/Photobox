@@ -10,16 +10,41 @@ import UIKit
 
 class SignUpViewController: UIViewController {
 
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var usernameErrorLabel: UILabel!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordErrorLabel: UILabel!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var confirmPasswordErrorLabel: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        formatKeyboard()
+    }
+    
+    func formatKeyboard() {
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
+            guard let userInfo = notification.userInfo,
+                let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+            
+            self.bottomConstraint.constant += keyboardFrame.height
+            self.view.layoutSubviews()
+
+            let frameInContentView = self.usernameLabel.convert(self.usernameLabel.bounds, to: self.contentView)
+            
+            let offSetPoint = CGPoint(x: self.contentView.frame.origin.x, y: frameInContentView.origin.y - frameInContentView.height)
+
+            self.scrollView.setContentOffset(offSetPoint, animated: true)
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (notification) in
+            self.bottomConstraint.constant = 0
+        }
     }
     
     @IBAction func signUpButtonTapped(_ sender: Any) {
@@ -60,13 +85,14 @@ class SignUpViewController: UIViewController {
                 }
             } 
             
-            UserController.shared.saveUserWith(username: username, password: password, profilePic: #imageLiteral(resourceName: "default user icon"), phoneNumber: nil, completion: { (success) in
-                if success {
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "PhoneNumberViewController")
-                    self.present(vc, animated: true)
-                }
-            })
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "PhoneNumberViewController") as? PhoneNumberViewController
+            guard let phoneNumberVC = vc else { return }
+            phoneNumberVC.username = username
+            phoneNumberVC.password = password
+            DispatchQueue.main.async {
+                self.present(phoneNumberVC, animated: true)
+            }
         }
     }
 
@@ -75,13 +101,11 @@ class SignUpViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "LogInScreen")
         self.present(vc, animated: true)
     }
-    
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    
-
 }
+extension SignUpViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
+    }
+}
+

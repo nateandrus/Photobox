@@ -15,7 +15,7 @@ class User {
     static let typeKey = "User"
     static let usernameKey = "username"
     fileprivate static let passwordKey = "password"
-    fileprivate static let profileImageKey = "profileImage"
+    fileprivate static let profileImageKey = "profileImageData"
     static let creatorReferenceKey = "creatorReference"
     static let phoneNumberKey = "phoneNumber"
     static let pastEventsKey = "pastEvents"
@@ -25,7 +25,30 @@ class User {
 
     var username: String
     var password: String
-    var profileImage: UIImage?
+    var profileImageData: Data?
+    var imageAsset: CKAsset? {
+        get {
+            let temporaryDirectory = NSTemporaryDirectory()
+            let temporaryDirectoryURL = URL(fileURLWithPath: temporaryDirectory)
+            let fileURL = temporaryDirectoryURL.appendingPathComponent(ckRecord.recordName).appendingPathExtension("jpg")
+            print(fileURL)
+            do {
+                try profileImageData?.write(to: fileURL)
+            } catch let error {
+                print("Error writing to URL: \(error), \(error.localizedDescription)")
+            }
+            return CKAsset(fileURL: fileURL)
+        }
+    }
+    var profileImage: UIImage? {
+        get {
+            guard let profileImageData = profileImageData else { return nil }
+            return UIImage(data: profileImageData)
+        }
+        set {
+            profileImageData = newValue?.jpegData(compressionQuality: 0.5)
+        }
+    }
     let ckRecord: CKRecord.ID
     let creatorReference: CKRecord.Reference
     var phoneNumber: String
@@ -34,10 +57,9 @@ class User {
     var futureEvents: [Event]?
     var invitedEvents: [Event]?
     
-    init(username: String, password: String, profileImage: UIImage? = nil, ckRecord: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), creatorReference: CKRecord.Reference, phoneNumber: String, pastEvents: [Event]? = nil, currentEvents: [Event]? = nil, futureEvents: [Event]? = nil, invitedEvents: [Event]? = nil) {
+    init(username: String, password: String, profileImage: UIImage = #imageLiteral(resourceName: "default user icon"), ckRecord: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), creatorReference: CKRecord.Reference, phoneNumber: String, pastEvents: [Event]? = nil, currentEvents: [Event]? = nil, futureEvents: [Event]? = nil, invitedEvents: [Event]? = nil) {
         self.username = username
         self.password = password
-        self.profileImage = profileImage
         self.ckRecord = ckRecord
         self.creatorReference = creatorReference
         self.phoneNumber = phoneNumber
@@ -45,6 +67,7 @@ class User {
         self.currentEvents = currentEvents
         self.futureEvents = futureEvents
         self.invitedEvents = invitedEvents
+        self.profileImage = profileImage
     }
     
     convenience init?(record: CKRecord) {
@@ -53,7 +76,7 @@ class User {
             let phoneNumber = record[User.phoneNumberKey] as? String,
             let creatorReference = record[User.creatorReferenceKey] as? CKRecord.Reference else { return nil }
         
-        self.init(username: username, password: password, profileImage: #imageLiteral(resourceName: "default user icon"), ckRecord: record.recordID, creatorReference: creatorReference, phoneNumber: phoneNumber)
+        self.init(username: username, password: password, ckRecord: record.recordID, creatorReference: creatorReference, phoneNumber: phoneNumber)
     }
 }
 extension User: Equatable {
@@ -67,7 +90,7 @@ extension CKRecord {
         self.init(recordType: User.typeKey, recordID: user.ckRecord)
         setValue(user.username, forKey: User.usernameKey)
         setValue(user.password, forKey: User.passwordKey)
-        setValue(user.profileImage, forKey: User.profileImageKey)
+        setValue(user.imageAsset, forKey: User.profileImageKey)
         setValue(user.phoneNumber, forKey: User.phoneNumberKey)
         setValue(user.creatorReference, forKey: User.creatorReferenceKey)
         setValue(user.pastEvents, forKey: User.pastEventsKey)

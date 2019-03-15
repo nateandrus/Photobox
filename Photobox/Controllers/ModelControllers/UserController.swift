@@ -21,7 +21,7 @@ class UserController {
     var users: [User] = []
     
     //MARK: - CRUD Functions
-    func saveUserWith(username: String, password: String, profilePic: UIImage, phoneNumber: String?, completion: @escaping (Bool) -> Void) {
+    func saveUserWith(username: String, password: String, phoneNumber: String?, completion: @escaping (Bool) -> Void) {
         CKContainer.default().fetchUserRecordID { (appleUserRecordID, error) in
             if let error = error {
                 print("Error fetching user's apple ID: \(error.localizedDescription)")
@@ -93,6 +93,22 @@ class UserController {
         
         //TODO: Search for name in contacts
         
+    }
+    
+    func fetchUserWith(phoneNumber: String, completion: @escaping (User?) -> Void) {
+        let predicate = NSPredicate(format: "%K == %@", argumentArray: [User.phoneNumberKey, phoneNumber])
+        
+        CloudKitManager.shared.fetchRecordsWithType(User.typeKey, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
+            if let error = error {
+                print("Error fetching records for \(phoneNumber): \(error), \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            guard let records = records, records.count > 0 else { completion(nil); return }
+            let user = User(record: records.first!)
+            completion(user)
+        }
     }
     
     func fetchAllUsers(completion: @escaping (Bool) -> Void) {

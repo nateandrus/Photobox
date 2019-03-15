@@ -12,25 +12,38 @@ import Contacts
 class PhoneNumberViewController: UIViewController {
 
     @IBOutlet weak var phoneNumberTextField: UITextField!
+    @IBOutlet weak var errorLabel: UILabel!
     
-    var user: User?
+    var username: String?
+    var password: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     @IBAction func OKButtonTapped(_ sender: Any) {
-        guard let phoneNumber = phoneNumberTextField.text, !phoneNumber.isEmpty else { return }
+        guard let username = username,
+            let password = password,
+            let phoneNumber = phoneNumberTextField.text, !phoneNumber.isEmpty else { return }
+        
+        UserController.shared.fetchUserWith(phoneNumber: phoneNumber) { (user) in
+            if user != nil {
+                DispatchQueue.main.async {
+                    self.errorLabel.text = "A user already exists with this phone number."
+                }
+                return
+            }
+        }
+        
+        UserController.shared.saveUserWith(username: username, password: password, phoneNumber: phoneNumber) { (success) in
+            if success {
+                DispatchQueue.main.async {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")
+                    self.present(vc, animated: true)
+                }
+            }
+        }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
