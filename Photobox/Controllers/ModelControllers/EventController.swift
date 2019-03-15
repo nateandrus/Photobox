@@ -14,9 +14,11 @@ class EventController {
     // MARK: - Shared Instance/Singleton
     static let shared = EventController()
     
-    // MARK: - Sources of Truth
-    var events: [Event] = []
 //    var attendees: [User] = []
+    
+    var pastEvents: [Event] = []
+    var currentEvents: [Event] = []
+    var futureEvents: [Event] = []
     
     let publicDB = CKContainer.default().publicCloudDatabase
     
@@ -39,7 +41,7 @@ class EventController {
             guard let record = record else { completion(false); return }
             
             guard let event = Event(record: record) else { completion(false); return }
-            self.events.append(event)
+            UserController.shared.events.append(event)
         }
     }
     
@@ -59,7 +61,8 @@ class EventController {
             
             for record in records {
                 guard let event = Event(record: record) else { completion(false); return }
-                self.events.append(event)
+                self.sortEvents(event: event, completion: { (_) in
+                })
             }
         }
     }
@@ -98,9 +101,8 @@ class EventController {
     
     func delete(event: Event, completion: @escaping (Bool) -> Void) {
         //Delete local instance
-        guard let indexToDelete = events.index(of: event) else { completion(false); return }
-        events.remove(at: indexToDelete)
-        
+        guard let indexToDelete = UserController.shared.events.index(of: event) else { completion(false); return }
+        UserController.shared.events.remove(at: indexToDelete)
         //Delete from CloudKit
         let recordID = event.ckrecordID
         CloudKitManager.shared.deleteRecordWithID(recordID) { (_, error) in
@@ -128,5 +130,19 @@ class EventController {
             }
         }
         completion(true)
+    }
+    
+    func sortEvents(event: Event, completion: @escaping (Bool) -> Void) {
+        let events = UserController.shared.events
+        for event in events {
+            if event.startTime > Date() {
+                self.futureEvents.append(event)
+            }
+            if event.endTime < Date() {
+                self.pastEvents.append(event)
+            } else {
+                self.currentEvents.append(event)
+            }
+        }
     }
 }

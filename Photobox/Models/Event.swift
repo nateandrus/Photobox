@@ -14,7 +14,7 @@ class Event {
     static let typeKey = "Event"
     static let attendeesKey = "attendees"
     fileprivate static let eventTitleKey = "eventTitle"
-    fileprivate static let eventImage = "eventImage"
+    fileprivate static let eventImageKey = "eventImage"
     fileprivate static let locationKey = "location"
     fileprivate static let startTimeKey = "startTime"
     fileprivate static let endTimeKey = "endTime"
@@ -23,7 +23,30 @@ class Event {
     fileprivate static let creatorReferenceKey = "creatorReference"
     
     var attendees: [User]
-    var eventImage: UIImage
+    var eventPhotoData: Data?
+    var eventImage: UIImage? {
+        get {
+            guard let photoData = eventPhotoData else { return nil }
+            return UIImage(data: photoData)
+        }
+        set {
+            eventPhotoData = newValue?.jpegData(compressionQuality: 0.5)
+        }
+    }
+    var imageAsset: CKAsset? {
+        get {
+            let temporaryDirectory = NSTemporaryDirectory()
+            let temporaryDirectoryURL = URL(fileURLWithPath: temporaryDirectory)
+            let fileURL = temporaryDirectoryURL.appendingPathComponent(ckrecordID.recordName).appendingPathExtension("jpg")
+            print(fileURL)
+            do {
+                try eventPhotoData?.write(to: fileURL)
+            } catch let error {
+                print("Error writing to URL: \(error), \(error.localizedDescription)")
+            }
+            return CKAsset(fileURL: fileURL)
+        }
+    }
     var eventTitle: String
     var location: String
     var startTime: Date
@@ -35,7 +58,6 @@ class Event {
     
     init(attendees: [User] = [], eventImage: UIImage = #imageLiteral(resourceName: "calendar icon"), eventTitle: String, location: String, startTime: Date, endTime: Date, description: String?, eventPhotos: [Photo] = [], creatorReference: CKRecord.Reference) {
         self.attendees = attendees
-        self.eventImage = eventImage
         self.eventTitle = eventTitle
         self.location = location
         self.startTime = startTime
@@ -44,11 +66,12 @@ class Event {
         self.eventPhotos = eventPhotos
         self.ckrecordID = CKRecord.ID(recordName: self.eventTitle)
         self.creatorReference = creatorReference
+        self.eventImage = eventImage
     }
     
     init?(record: CKRecord) {
         guard let eventTitle = record[Event.eventTitleKey] as? String,
-            let eventImage = record[Event.eventImage] as? UIImage,
+            let eventImage = record[Event.eventImageKey] as? UIImage,
             let location = record[Event.locationKey] as? String,
             let attendees = record[Event.attendeesKey] as? [User],
             let startTime = record[Event.startTimeKey] as? Date,
@@ -58,7 +81,6 @@ class Event {
             let creatorReference = record[Event.creatorReferenceKey] as? CKRecord.Reference
             else { return nil }
         self.eventTitle = eventTitle
-        self.eventImage = eventImage
         self.location = location
         self.attendees = attendees
         self.startTime = startTime
@@ -67,6 +89,7 @@ class Event {
         self.eventPhotos = eventPhotos
         self.ckrecordID = CKRecord.ID(recordName: self.eventTitle)
         self.creatorReference = creatorReference
+        self.eventImage = eventImage
     }
 }
 extension Event: Equatable {
@@ -80,6 +103,7 @@ extension CKRecord {
         self.init(recordType: Event.typeKey, recordID: event.ckrecordID)
         self.setValue(event.attendees, forKey: Event.attendeesKey)
         self.setValue(event.eventTitle, forKey: Event.eventTitleKey)
+        self.setValue(event.eventPhotoData, forKey: Event.eventImageKey)
         self.setValue(event.location, forKey: Event.locationKey)
         self.setValue(event.startTime, forKey: Event.startTimeKey)
         self.setValue(event.endTime, forKey: Event.endTimeKey)
