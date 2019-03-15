@@ -27,11 +27,46 @@ class MainFeedTableViewController: UITableViewController {
         }
     }
     
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//    }
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if tableView.numberOfSections == 2 {
+            if section == 0 {
+                if UserController.shared.eventsForFeed.0.count == 1 {
+                    return "Current Event"
+                } else {
+                    return "Current Events"
+                }
+            } else if section == 1 {
+                if UserController.shared.eventsForFeed.1.count == 1 {
+                    return "Future Event"
+                } else {
+                    return "Future Events"
+                }
+            }
+        } else if tableView.numberOfSections == 1 {
+            if UserController.shared.eventsForFeed.0.count == 0 {
+                if UserController.shared.eventsForFeed.1.count == 1 {
+                    return "Future Event"
+                } else {
+                    return "Future Events"
+                }
+            } else {
+                if UserController.shared.eventsForFeed.0.count == 1 {
+                    return "Current Event"
+                } else {
+                    return "Current Events"
+                }
+            }
+        }
+        return ""
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if section == 0 {
+            return UserController.shared.eventsForFeed.0.count
+        } else if section == 1 {
+            return UserController.shared.eventsForFeed.1.count
+        }
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

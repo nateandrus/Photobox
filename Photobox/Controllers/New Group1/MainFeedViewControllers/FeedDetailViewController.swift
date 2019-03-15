@@ -14,6 +14,7 @@ class FeedDetailViewController: UIViewController {
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventLocationLabel: UILabel!
     @IBOutlet weak var dateAndTimeLabel: UILabel!
+    @IBOutlet weak var endDateandTimeLabel: UILabel!
     @IBOutlet weak var numberOfAttendeesLabel: UILabel!
     
     
@@ -29,16 +30,13 @@ class FeedDetailViewController: UIViewController {
     }
     
     // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-    }
-    
     func updateViews() {
         guard let event = eventLandingPad else { return }
         eventImageView.image = event.eventImage
         eventTitleLabel.text = event.eventTitle
         eventLocationLabel.text = event.location
-        dateAndTimeLabel.text = "\(event.time)"
+        dateAndTimeLabel.text = "\(event.startTime)"
+        endDateandTimeLabel.text = "\(event.endTime)"
         numberOfAttendeesLabel.text = "Number of attendees: \(event.attendees.count)"
     }
 }

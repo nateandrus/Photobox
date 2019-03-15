@@ -17,7 +17,6 @@ class ContactTableViewCell: UITableViewCell {
             updateViews()
         }
     }
-    
     var user: User? {
         didSet {
             updateViews()
@@ -34,21 +33,16 @@ class ContactTableViewCell: UITableViewCell {
     
     func updateViews() {
         guard let user = user else { return }
-        
+        guard let contact = contact else { return }
+        nameLabel.text = contact.givenName + " " + contact.familyName
         CloudKitManager.shared.fetchDiscoverableUserWith(recordID: user.ckRecord) { (userID) in
             guard let userID = userID else { return }
-            
             guard let firstName = userID.nameComponents?.givenName else { return }
             guard let lastName = userID.nameComponents?.familyName else { return }
-            
             DispatchQueue.main.async {
                 self.nameLabel.text = "\(firstName) \(lastName)"
             }
-        
         }
-        
-        
         addButton.layer.cornerRadius = addButton.frame.width / 2
     }
-    
 }
