@@ -84,7 +84,7 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
     
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         if tableView.numberOfSections == 2 {
-            return ["", "Contacts"]
+            return ["Contacts", ""]
         } else {
             return ["Contacts"]
         }

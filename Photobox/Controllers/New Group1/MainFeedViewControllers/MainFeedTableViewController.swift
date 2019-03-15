@@ -80,10 +80,10 @@ class MainFeedTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toEventDetailVC" {
             if let index = tableView.indexPathForSelectedRow {
-                if let destinationVC = segue.destination as? FeedDetailViewController {
-                    let eventToSend = EventController.shared.events[index.row]
-                    destinationVC.eventLandingPad = eventToSend
-                }
+//                if let destinationVC = segue.destination as? FeedDetailViewController {
+//                    let eventToSend = EventController.shared.events[index.row]
+//                    destinationVC.eventLandingPad = eventToSend
+//                }
             }
         }
     }
