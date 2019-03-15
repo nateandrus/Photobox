@@ -233,8 +233,8 @@
 			isa = PBXGroup;
 			children = (
 				2FF71530223702EF007C9B36 /* Photobox.entitlements */,
-				ED07649222381B9400D8307F /* Views */,
 				2FF7156222380DFE007C9B36 /* Models */,
+				ED07649222381B9400D8307F /* Views */,
 				2FF7157622381029007C9B36 /* Storyboards */,
 				2FF7157222380EC2007C9B36 /* Controllers */,
 				2FF7156422380E25007C9B36 /* Resources */,

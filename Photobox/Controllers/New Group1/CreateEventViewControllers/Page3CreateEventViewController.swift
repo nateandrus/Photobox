@@ -25,7 +25,7 @@ class Page3CreateEventViewController: UIViewController {
     
     var isSearching: Bool = false
     
-    var searchResults: [User]? {
+    var searchResults: ([CNContact], [User])? {
         didSet {
             DispatchQueue.main.async {
                 self.resultsTableView.reloadData()
@@ -38,6 +38,8 @@ class Page3CreateEventViewController: UIViewController {
         super.viewDidLoad()
         resultsTableView.delegate = self
         resultsTableView.dataSource = self
+        searchBar.delegate = self
+        
         ContactController.shared.fetchContacts { (success) in
             if success {
                 DispatchQueue.main.async {
@@ -70,35 +72,33 @@ class Page3CreateEventViewController: UIViewController {
 }
 extension Page3CreateEventViewController: UISearchBarDelegate {
     
-//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-//        <#code#>
-//    }
-//    
-//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-//        <#code#>
-//    }
-//    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        isSearching = true
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        isSearching = false
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        UserController.shared.fetchUsersWith(searchTerm: searchText) { (users, contacts) in
-            guard let users = users else { return }
+        UserController.shared.fetchUsersWith(searchTerm: searchText) { (contacts, users) in
+            guard let contacts = contacts,
+                let users = users else { return }
             
-            self.searchResults = users
+            self.searchResults = (contacts, users)
         }
     }
 }
 
 extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDelegate {
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        if searchResults != nil && ContactController.shared.contacts.count > 0 {
-//            return 2
-//        } else if searchResults != nil {
-//            return 1
-//        } else if ContactController.shared.contacts.count > 0 {
-//            return 1
-//        } else {
-//            return 0
-//        }
-//    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        guard let searchResults = searchResults else { return 1 }
+        if searchResults.0.count > 0 || searchResults.1.count > 0 {
+            return 2
+        } else {
+            return 1
+        }
+    }
     
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         if tableView.numberOfSections == 2 {
@@ -109,24 +109,44 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if searchResults != nil && ContactController.shared.contacts.count > 0 {
-//            if section == 0 {
-//                return searchResults?.count ?? 0
-//            } else {
-//                return ContactController.shared.contacts.count
-//            }
-//        } else if searchResults != nil {
-//            return searchResults?.count ?? 0
-//        } else if ContactController.shared.contacts.count > 0 {
-//            return ContactController.shared.contacts.count
-//        } else {
-//            return 0
-//        }
-        return ContactController.shared.contacts.count
+        //If the user hasn't started a search, fill up the tableview with the user's contacts
+        guard let searchResults = searchResults else { return ContactController.shared.contacts.count }
+        
+        //If the searchResults tuple contains values in both arrays
+        if searchResults.0.count > 0 && searchResults.1.count > 0 {
+            if section == 0 {
+                return searchResults.0.count
+            } else {
+                return searchResults.1.count
+            }
+        //If the searchResults tuple contains results in the contacts array
+        } else if searchResults.0.count > 1 {
+            if section == 0 {
+                return searchResults.0.count
+            } else {
+                return 0
+            }
+        //If the searchResults tuple contains results in the users array
+        } else if searchResults.1.count > 0 {
+            if section == 0 {
+                return 0
+            } else {
+                return searchResults.1.count
+            }
+        }
+        //If both arrays are empty within the searchResults tuple
+        return 0
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if isSearching == false {
+        if searchResults == nil {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell
+            
+            let contact = ContactController.shared.contacts[indexPath.row]
+        }
+        
+        if isSearching == false {
 //            if ContactController.shared.contacts.count > 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "usernameCell", for: indexPath) as? ContactTableViewCell
                 let contact = ContactController.shared.contacts[indexPath.row]
@@ -135,7 +155,7 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
 //            }
 //        } else if isSearching == true {
 //
-//        }
-//        return UITableViewCell()
+        }
+        return UITableViewCell()
     }
 }
