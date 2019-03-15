@@ -27,8 +27,8 @@ class MainFeedTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -45,10 +45,10 @@ class MainFeedTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toEventDetailVC" {
             if let index = tableView.indexPathForSelectedRow {
-                if let destinationVC = segue.destination as? FeedDetailViewController {
-                    let eventToSend = EventController.shared.events[index.row]
-                    destinationVC.eventLandingPad = eventToSend
-                }
+//                if let destinationVC = segue.destination as? FeedDetailViewController {
+//                    let eventToSend = EventController.shared.events[index.row]
+//                    destinationVC.eventLandingPad = eventToSend
+//                }
             }
         }
     }
