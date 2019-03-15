@@ -34,7 +34,7 @@ class UserProfileViewController: UIViewController {
         if segue.identifier == "toEventPhotoVC" {
             if let eventIndex = pastEventsTableView.indexPathForSelectedRow {
                 if let destinationVC = segue.destination as? UserProfileDetailViewController {
-                    let eventToSend = EventController.shared.events[eventIndex.row]
+                    let eventToSend = EventController.shared.pastEvents[eventIndex.row]
                     destinationVC.pastEventLanding = eventToSend
                 }
             }
@@ -50,7 +50,7 @@ extension UserProfileViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "pastEventCell", for: indexPath) as? EventTableViewCell
-        let event = EventController.shared.events[indexPath.row]
+        let event = EventController.shared.pastEvents[indexPath.row]
         cell?.eventCellLanding = event
         return cell ?? UITableViewCell()
     }

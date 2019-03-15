@@ -17,7 +17,8 @@ class UserController {
     
     //MARK: - Sources of Truth
     var loggedInUser: User?
-    var eventsForFeed: ([Event], [Event]) = ([],[])
+    var events: [Event] = []
+    var invitedEvents: [Event] = []
     var users: [User] = []
     
     //MARK: - CRUD Functions
