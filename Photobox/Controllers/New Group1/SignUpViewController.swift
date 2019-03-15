@@ -16,6 +16,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordErrorLabel: UILabel!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var confirmPasswordErrorLabel: UILabel!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
