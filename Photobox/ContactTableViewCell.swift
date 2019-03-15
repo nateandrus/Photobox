@@ -29,6 +29,7 @@ class ContactTableViewCell: UITableViewCell {
     
     @IBAction func addButtonTapped(_ sender: Any) {
         //Send invitation to the contact
+        
     }
     
     func updateViews() {
