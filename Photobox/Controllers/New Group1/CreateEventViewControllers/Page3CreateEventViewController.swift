@@ -16,7 +16,7 @@ class Page3CreateEventViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var resultsTableView: UITableView!
     
-    // MARK: - Properties
+    // MARK: - Landing Pad items
     var name: String?
     var location: String?
     var image: UIImage?
@@ -48,7 +48,17 @@ class Page3CreateEventViewController: UIViewController {
     }
     
     @IBAction func createButtonTapped(_ sender: Any) {
+        guard let name = name,
+            let location = location,
+            let image = image,
+            let startDate = startDate,
+            let endDate = endDate,
+            let eventDescription = descriptionTextView.text
+            else { return }
         
+        EventController.shared.createEvent(eventImage: image, eventTitle: name, location: location, startTime: startDate, endTime: endDate, description: eventDescription) { (success) in
+            self.tabBarController?.selectedIndex = 0 
+        }
     }
 }
 extension Page3CreateEventViewController: UISearchBarDelegate {
