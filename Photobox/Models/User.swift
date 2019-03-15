@@ -34,6 +34,10 @@ class User {
         self.ckRecord = ckRecord
         self.creatorReference = creatorReference
         self.phoneNumber = phoneNumber
+        self.pastEvents = pastEvents
+        self.currentEvents = currentEvents
+        self.futureEvents = futureEvents
+        self.invitedEvents = invitedEvents
     }
     
     convenience init?(record: CKRecord) {
