@@ -15,11 +15,12 @@ class ContactController {
     
     var contacts: [CNContact] = []
     
-    func fetchContacts() {
+    func fetchContacts(completion: @escaping (Bool) -> Void) {
         let store = CNContactStore()
         store.requestAccess(for: .contacts) { (granted, error) in
             if let error = error {
                 print("There was an error requesting contacts: \(error.localizedDescription)")
+                completion(false)
                 return
             }
             if granted {
@@ -28,12 +29,15 @@ class ContactController {
                 do {
                     try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
                         self.contacts.append(contact)
+                        completion(true)
                     })
                 }catch{
                     print("double negative ghost rider")
+                    completion(false)
                 }
             } else {
                 print("negative ghostrider")
+                completion(false)
             }
         }
     }

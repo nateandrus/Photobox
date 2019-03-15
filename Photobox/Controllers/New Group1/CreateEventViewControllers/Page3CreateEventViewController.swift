@@ -37,7 +37,14 @@ class Page3CreateEventViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         resultsTableView.delegate = self
-        ContactController.shared.fetchContacts()
+        resultsTableView.dataSource = self
+        ContactController.shared.fetchContacts { (success) in
+            if success {
+                DispatchQueue.main.async {
+                    self.resultsTableView.reloadData()
+                }
+            }
+        }
     }
     
     // MARK: - IBActions
@@ -69,54 +76,56 @@ extension Page3CreateEventViewController: UISearchBarDelegate {
         }
     }
 }
+
 extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        if searchResults != nil && ContactController.shared.contacts.count > 0 {
-            return 2
-        } else if searchResults != nil {
-            return 1
-        } else if ContactController.shared.contacts.count > 0 {
-            return 1
-        } else {
-            return 0
-        }
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        if searchResults != nil && ContactController.shared.contacts.count > 0 {
+//            return 2
+//        } else if searchResults != nil {
+//            return 1
+//        } else if ContactController.shared.contacts.count > 0 {
+//            return 1
+//        } else {
+//            return 0
+//        }
+//    }
     
-    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        if tableView.numberOfSections == 2 {
-            return ["", "Contacts"]
-        } else {
-            return ["Contacts"]
-        }
-    }
+//    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+//        if tableView.numberOfSections == 2 {
+//            return ["", "Contacts"]
+//        } else {
+//            return ["Contacts"]
+//        }
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchResults != nil && ContactController.shared.contacts.count > 0 {
-            if section == 0 {
-                return searchResults?.count ?? 0
-            } else {
-                return ContactController.shared.contacts.count
-            }
-        } else if searchResults != nil {
-            return searchResults?.count ?? 0
-        } else if ContactController.shared.contacts.count > 0 {
-            return ContactController.shared.contacts.count
-        } else {
-            return 0
-        }
+//        if searchResults != nil && ContactController.shared.contacts.count > 0 {
+//            if section == 0 {
+//                return searchResults?.count ?? 0
+//            } else {
+//                return ContactController.shared.contacts.count
+//            }
+//        } else if searchResults != nil {
+//            return searchResults?.count ?? 0
+//        } else if ContactController.shared.contacts.count > 0 {
+//            return ContactController.shared.contacts.count
+//        } else {
+//            return 0
+//        }
+        return ContactController.shared.contacts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isSearching == false {
-            if ContactController.shared.contacts.count > 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell
+//        if isSearching == false {
+//            if ContactController.shared.contacts.count > 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "usernameCell", for: indexPath) as? ContactTableViewCell
                 let contact = ContactController.shared.contacts[indexPath.row]
                 cell?.contact = contact
                 return cell ?? UITableViewCell()
-            }
-        } else if isSearching == true {
-
-        }
-        return UITableViewCell()
+//            }
+//        } else if isSearching == true {
+//
+//        }
+//        return UITableViewCell()
     }
 }
