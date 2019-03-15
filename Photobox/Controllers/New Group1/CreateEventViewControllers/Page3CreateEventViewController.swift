@@ -90,13 +90,13 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
 //        }
 //    }
     
-//    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-//        if tableView.numberOfSections == 2 {
-//            return ["", "Contacts"]
-//        } else {
-//            return ["Contacts"]
-//        }
-//    }
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        if tableView.numberOfSections == 2 {
+            return ["Contacts", ""]
+        } else {
+            return ["Contacts"]
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        if searchResults != nil && ContactController.shared.contacts.count > 0 {

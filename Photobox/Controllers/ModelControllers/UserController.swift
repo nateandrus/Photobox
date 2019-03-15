@@ -21,24 +21,24 @@ class UserController {
     var users: [User] = []
     
     //MARK: - CRUD Functions
-    func saveUserWith(username: String, profilePic: UIImage, phoneNumber: CNPhoneNumber, completion: @escaping (Bool) -> Void) {
+    func saveUserWith(username: String, password: String, profilePic: UIImage, phoneNumber: String?, completion: @escaping (Bool) -> Void) {
         CKContainer.default().fetchUserRecordID { (appleUserRecordID, error) in
             if let error = error {
                 print("Error fetching user's apple ID: \(error.localizedDescription)")
                 completion(false)
                 return
             }
-            guard let appleUserRecordID = appleUserRecordID else { completion(false); return }
+            guard let appleUserRecordID = appleUserRecordID,
+                let phoneNumber = phoneNumber else { completion(false); return }
             
             let reference = CKRecord.Reference(recordID: appleUserRecordID, action: .deleteSelf)
             
-            let newUser = User(username: username, profileImage: profilePic, ckRecord: appleUserRecordID, creatorReference: reference, phoneNumber: phoneNumber)
+            let newUser = User(username: username, password: password, creatorReference: reference, phoneNumber: phoneNumber)
             
-            let record = CKRecord(user: newUser)
+            guard let record = CKRecord(user: newUser) else
+            { completion(false); return }
             
-            guard let newRecord = record else { completion(false); return }
-            
-            CloudKitManager.shared.saveRecord(newRecord, completion: { (record, error) in
+            CloudKitManager.shared.saveRecord(record, completion: { (record, error) in
                 if let error = error {
                     print("Error saving record to CK: \(error), \(error.localizedDescription)")
                     completion(false)
@@ -49,8 +49,8 @@ class UserController {
                 let user = User(record: record)
                 self.loggedInUser = user
             })
+            completion(true)
         }
-        completion(true)
     }
     
     func fetchLoggedInUser(completion: @escaping (Bool) -> Void) {
@@ -93,7 +93,6 @@ class UserController {
         
         //TODO: Search for name in contacts
         
-//        completion(usernameSearchResults, contactsSearchResults)
     }
     
     func fetchAllUsers(completion: @escaping (Bool) -> Void) {
