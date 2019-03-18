@@ -100,7 +100,6 @@ class UserController {
             }
             
             guard let userRecord = userRecord else { completion(false); return }
-            
             let user = User(record: userRecord)
             
             self.loggedInUser = user
