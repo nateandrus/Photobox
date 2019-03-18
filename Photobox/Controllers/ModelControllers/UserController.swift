@@ -104,8 +104,8 @@ class UserController {
             let user = User(record: userRecord)
             
             self.loggedInUser = user
+            completion(true)
         }
-        completion(true)
     }
     
     func fetchUsersWith(searchTerm: String, completion: @escaping ([CNContact]?, [User]?) -> Void) {

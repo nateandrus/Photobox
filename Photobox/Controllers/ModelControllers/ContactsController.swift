@@ -42,4 +42,30 @@ class ContactController {
             }
         }
     }
+    
+    func fetchUserUsing(contact: CNContact, completion: @escaping ((String)?) -> Void) {
+        
+        let phoneNumber = contact.phoneNumbers.first?.value.stringValue
+        let newNumber = phoneNumber?.replacingOccurrences(of: "-", with: "")
+        
+        let predicate = NSPredicate(format: "%K = %@", [User.phoneNumberKey, newNumber])
+        
+        CloudKitManager.shared.fetchRecordsWithType(User.typeKey, predicate: predicate, recordFetchedBlock: { (_) in
+        }) { (records, error) in
+            if let error = error {
+                print("Couldn't fetch record with the phonenumber: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            guard let record = records else { completion(nil); return }
+            if record.count > 0 {
+                let ourRecord = record.first!
+                let ourUser = User(record: ourRecord)
+                completion(ourUser?.username)
+            } else {
+                completion(nil)
+                return
+            }
+        }
+    }
 }
