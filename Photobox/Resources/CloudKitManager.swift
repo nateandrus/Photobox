@@ -40,7 +40,20 @@ class CloudKitManager {
             if let recordID = recordID,
                 let completion = completion {
                 
-                self.fetchRecord(withID: recordID, completion: completion)
+                let creatorReference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
+                
+                let predicate = NSPredicate(format: "%K == %@", argumentArray: [User.creatorReferenceKey, creatorReference])
+                self.fetchRecordsWithType(User.typeKey, predicate: predicate, recordFetchedBlock: nil, completion: { (records, error) in
+                    if let error = error {
+                        print("Error fetching records from CloudKit: \(error), \(error.localizedDescription)")
+                        completion(nil, error)
+                        return
+                    }
+                    
+                    guard let records = records, !records.isEmpty else { completion(nil, error); return }
+                    
+                    completion(records.first, nil)
+                })
             }
         }
     }

@@ -35,7 +35,6 @@ class User {
             
             guard let ckRecord = ckRecord else { return nil }
             let fileURL = temporaryDirectoryURL.appendingPathComponent(ckRecord.recordName).appendingPathExtension("jpg")
-            print(fileURL)
             do {
                 try profileImageData?.write(to: fileURL)
             } catch let error {
@@ -74,11 +73,12 @@ class User {
     
     convenience init?(record: CKRecord) {
         guard let username = record[User.usernameKey] as? String,
-            let firstName = record[User.firstNameKey] as? String,
-            let lastName = record[User.lastNameKey] as? String,
             let password = record[User.passwordKey] as? String,
             let phoneNumber = record[User.phoneNumberKey] as? String,
             let creatorReference = record[User.creatorReferenceKey] as? CKRecord.Reference else { return nil }
+        
+        let firstName = record[User.firstNameKey] as? String
+        let lastName = record[User.lastNameKey] as? String
         
         self.init(username: username, password: password, firstName: firstName, lastName: lastName, creatorReference: creatorReference, phoneNumber: phoneNumber)
     }
