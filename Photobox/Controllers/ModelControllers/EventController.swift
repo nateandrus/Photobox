@@ -26,7 +26,8 @@ class EventController {
     func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String, completion: @escaping (Bool) -> Void) {
         guard let loggedinInUser = UserController.shared.loggedInUser else { completion(false); return }
         
-        let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .deleteSelf)
+        guard let recordID = loggedinInUser.ckRecord else { completion(false); return }
+        let creatorReference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
         
         let newEvent = Event(attendees: [loggedinInUser], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
         

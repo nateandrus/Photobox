@@ -22,36 +22,73 @@ class UserController {
     var users: [User] = []
     
     //MARK: - CRUD Functions
-    func saveUserWith(username: String, password: String, phoneNumber: String?, completion: @escaping (Bool) -> Void) {
-        CKContainer.default().fetchUserRecordID { (appleUserRecordID, error) in
-            if let error = error {
-                print("Error fetching user's apple ID: \(error.localizedDescription)")
-                completion(false)
-                return
+    func saveUserWith(username: String?, password: String?, phoneNumber: String?, completion: @escaping (Bool) -> Void) {
+        // If the user is saved with a username and password
+        if username != nil {
+            CKContainer.default().fetchUserRecordID { (appleUserRecordID, error) in
+                if let error = error {
+                    print("Error fetching user's apple ID: \(error.localizedDescription)")
+                    completion(false)
+                    return
+                }
+                
+                guard let appleUserRecordID = appleUserRecordID,
+                    let phoneNumber = phoneNumber else { completion(false); return }
+                
+                let reference = CKRecord.Reference(recordID: appleUserRecordID, action: .deleteSelf)
+            
+                let newUser = User(username: username, password: password, creatorReference: reference, phoneNumber: phoneNumber)
+                
+                guard let record = CKRecord(user: newUser) else { completion(false); return }
+                
+                CloudKitManager.shared.saveRecord(record, completion: { (record, error) in
+                    if let error = error {
+                        print("Error saving record to CK: \(error), \(error.localizedDescription)")
+                        completion(false)
+                        return
+                    }
+                    
+                    guard let record = record else { completion(false); return }
+                    let user = User(record: record)
+                    self.loggedInUser = user
+                    
+                    // Fetch the new user's first and last name from Cloud Kit
+                    guard let recordID = newUser.ckRecord else { completion(false); return }
+                    
+                    CloudKitManager.shared.fetchDiscoverableUserWith(recordID: recordID) { (userID) in
+                        guard let userID = userID else { return }
+                        newUser.firstName = userID.nameComponents?.givenName
+                        newUser.lastName = userID.nameComponents?.familyName
+                    }
+                    
+                    // Update the record in CloudKit to include first and last name
+                    guard let newRecord = CKRecord(user: newUser) else { completion(false); return }
+                    CloudKitManager.shared.modifyRecords([newRecord], perRecordCompletion: nil, completion: { (record, error) in
+                        if let error = error {
+                            print("Error modifying record in CloudKit: \(error), \(error.localizedDescription)")
+                        }
+                    })
+                })
+                completion(true)
             }
-            guard let appleUserRecordID = appleUserRecordID,
-                let phoneNumber = phoneNumber else { completion(false); return }
+        }
+        //If the user is created with only a phone number. This will happen if an event moderator invites someone from their contacts who isn't a registed member of photoBOX to join an event.
+        else {
+            guard let phoneNumber = phoneNumber else { completion(false); return }
             
-            let reference = CKRecord.Reference(recordID: appleUserRecordID, action: .deleteSelf)
+            let newUser = User(username: nil, password: nil, creatorReference: nil, phoneNumber: phoneNumber)
             
-            let newUser = User(username: username, password: password, creatorReference: reference, phoneNumber: phoneNumber)
+            guard let record = CKRecord(user: newUser) else { completion(false); return }
             
-            guard let record = CKRecord(user: newUser) else
-            { completion(false); return }
-            
-            CloudKitManager.shared.saveRecord(record, completion: { (record, error) in
+            CloudKitManager.shared.saveRecord(record) { (record, error) in
                 if let error = error {
                     print("Error saving record to CK: \(error), \(error.localizedDescription)")
                     completion(false)
                     return
                 }
-                
-                guard let record = record else { completion(false); return }
-                let user = User(record: record)
-                self.loggedInUser = user
-            })
-            completion(true)
+            }
         }
+            
     }
     
     func fetchLoggedInUser(completion: @escaping (Bool) -> Void) {
@@ -165,7 +202,7 @@ class UserController {
         users.remove(at: indexToRemove)
         
         //Delete from CloudKit
-        let recordID = user.ckRecord
+        guard let recordID = user.ckRecord else { completion(false); return }
         CloudKitManager.shared.deleteRecordWithID(recordID) { (_, error) in
             if let error = error {
                 print("Unable to delete user: \(user.username); \(error.localizedDescription)")

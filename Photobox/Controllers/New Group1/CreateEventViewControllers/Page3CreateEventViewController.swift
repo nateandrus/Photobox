@@ -144,17 +144,38 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell
             
             let contact = ContactController.shared.contacts[indexPath.row]
-        }
-        
-        if isSearching == false {
-//            if ContactController.shared.contacts.count > 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "usernameCell", for: indexPath) as? ContactTableViewCell
-                let contact = ContactController.shared.contacts[indexPath.row]
-                cell?.contact = contact
-                return cell ?? UITableViewCell()
+            
+            cell?.nameLabel.text = contact.givenName + " " + contact.familyName
+            
+//            if contact.username != nil {
+//                cell?.usernameLabel.text = "@\(contact.username)"
+//            } else {
+//                cell?.usernameLabel.text = contact.phoneNumbers.first
 //            }
-//        } else if isSearching == true {
-//
+        } else if indexPath.section == 0 {
+            guard let searchResults = searchResults else { return UITableViewCell() }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell
+            
+            let contact = searchResults.0[indexPath.row]
+            
+            cell?.nameLabel.text = contact.givenName + " " + contact.familyName
+            
+//            if contact.username != nil {
+//                cell?.usernameLabel.text = "@\(contact.username)"
+//            } else {
+//                cell?.usernameLabel.text = contact.phoneNumbers.first
+//            }
+        } else {
+            guard let searchResults = searchResults else { return UITableViewCell() }
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? ContactTableViewCell
+            
+            let user = searchResults.1[indexPath.row]
+            
+            // TODO: Find a user's name
+//            cell?.nameLabel = user.name
+            
+            cell?.usernameLabel.text = user.username
         }
         return UITableViewCell()
     }
