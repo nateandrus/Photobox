@@ -83,6 +83,7 @@ class User {
         self.init(username: username, password: password, firstName: firstName, lastName: lastName, creatorReference: creatorReference, phoneNumber: phoneNumber)
     }
 }
+
 extension User: Equatable {
     static func == (lhs: User, rhs: User) -> Bool {
         return lhs.ckRecord == rhs.ckRecord
@@ -91,7 +92,6 @@ extension User: Equatable {
 
 extension CKRecord {
     convenience init?(user: User) {
-        
         self.init(recordType: User.typeKey, recordID: user.ckRecord ?? CKRecord.ID())
         setValue(user.username, forKey: User.usernameKey)
         setValue(user.password, forKey: User.passwordKey)
