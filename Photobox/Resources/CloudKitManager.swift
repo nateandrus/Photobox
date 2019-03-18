@@ -387,39 +387,14 @@ class CloudKitManager {
         
         self.fetchAllDiscoverableUsers { (userIDs) in
             
-//            var fetchedUsers: [CKRecord.ID] = []
-            
             guard let userIDs = userIDs else { completion(nil); return }
+            
             for userID in userIDs {
                 if userID.userRecordID == recordID {
                     completion(userID)
                     return
                 }
             }
-            
-//            guard let recordIDs = userIDs?.compactMap({ (userID) -> CKRecord.ID? in
-//                guard let recordID = userID.userRecordID else { return nil }
-//                return recordID
-//            }) else { completion(nil); return }
-//
-//            guard let names = userIDs?.compactMap({ (userID) -> String? in
-//
-//                guard let firstName = userID.nameComponents?.givenName,
-//                    let lastName = userID.nameComponents?.familyName else { completion(nil); return "" }
-//                return "\(firstName) \(lastName)"
-//            }) else { completion(nil); return }
-//
-//            let _ = names.filter({ (fullName) -> Bool in
-//                if fullName.contains(name) {
-//                    guard let index = names.index(of: fullName) else { completion(nil); return false }
-//                    fetchedUsers.append(recordIDs[index])
-//                    return true
-//                } else {
-//                    return false
-//                }
-//            })
-//
-//            completion(fetchedUsers)
         }
     }
 }

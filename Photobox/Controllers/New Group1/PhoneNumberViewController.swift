@@ -8,6 +8,7 @@
 
 import UIKit
 import Contacts
+import CloudKit
 
 class PhoneNumberViewController: UIViewController {
 
@@ -28,9 +29,30 @@ class PhoneNumberViewController: UIViewController {
         
         UserController.shared.fetchUserWith(phoneNumber: phoneNumber) { (user) in
             if user != nil {
-                DispatchQueue.main.async {
-                    self.errorLabel.text = "A user already exists with this phone number."
+                if user?.username != nil {
+                    DispatchQueue.main.async {
+                        self.errorLabel.text = "A user already exists with this phone number."
+                    }
+                } else {
+                    user?.username = username
+                    user?.password = password
+                    
+                    //Update CloudKit
+                    guard let userRecord = CKRecord(user: user!) else { return }
+                    
+                    CloudKitManager.shared.modifyRecords([userRecord], perRecordCompletion: nil, completion: { (_, error) in
+                        if let error = error {
+                            print("Error modifying record: \(error), \(error.localizedDescription)")
+                        }
+                        
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")
+                            self.present(vc, animated: true)
+                        }
+                    })
                 }
+                
                 return
             }
         }
