@@ -52,17 +52,16 @@ class PhoneNumberViewController: UIViewController {
                         }
                     })
                 }
-                
                 return
-            }
-        }
-        
-        UserController.shared.saveUserWith(username: username, password: password, phoneNumber: phoneNumber) { (success) in
-            if success {
-                DispatchQueue.main.async {
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")
-                    self.present(vc, animated: true)
+            } else {
+                UserController.shared.saveUserWith(username: username, password: password, phoneNumber: phoneNumber) { (success) in
+                    if success {
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")
+                            self.present(vc, animated: true)
+                        }
+                    }
                 }
             }
         }
