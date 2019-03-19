@@ -14,8 +14,6 @@ class EventController {
     // MARK: - Shared Instance/Singleton
     static let shared = EventController()
     
-//    var attendees: [User] = []
-    
     var pastEvents: [Event] = []
     var currentEvents: [Event] = []
     var futureEvents: [Event] = []
@@ -32,27 +30,43 @@ class EventController {
         let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
         UserController.shared.events.append(newEvent)
         
+        let defaultPhoto = Photo(image: #imageLiteral(resourceName: "home icon"), timestamp: Date(), eventReference: nil, userReference: creatorReference)
         
-        guard let record = CKRecord(event: newEvent) else { completion(false); return }
-        
-        CloudKitManager.shared.saveRecord(record) { (record, error) in
+        guard let photoRecord = CKRecord(photo: defaultPhoto) else { completion(false); return }
+        CloudKitManager.shared.saveRecord(photoRecord) { (photoRecord, error) in
             if let error = error {
                 print("Error saving record to CloudKit: \(error), \(error.localizedDescription)")
                 completion(false)
                 return
             }
-            guard let record = record else { completion(false); return }
             
-            guard let event = Event(record: record) else { completion(false); return }
-            completion(true)
-            return 
+            guard let photoRecord = photoRecord else { completion(false); return }
+
+            let photoReference = CKRecord.Reference(record: photoRecord, action: .deleteSelf)
+
+            let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, eventPhotos: [photoReference], creatorReference: creatorReference)
+            UserController.shared.events.append(newEvent)
+
+            guard let record = CKRecord(event: newEvent) else { completion(false); return }
+
+            CloudKitManager.shared.saveRecord(record) { (record, error) in
+                if let error = error {
+                    print("Error saving record to CloudKit: \(error), \(error.localizedDescription)")
+                    completion(false)
+                    return
+                }
+            
+                completion(true)
+                return
+            }
         }
     }
     
     func fetchEvents(completion: @escaping (Bool) -> Void) {
-        guard let loggedInUser = UserController.shared.loggedInUser else { completion(false); return }
+        guard let loggedInUser = UserController.shared.loggedInUser,
+            let reference = loggedInUser.creatorReference else { completion(false); return }
         
-        let predicate = NSPredicate(format: "%K IN $@", argumentArray: [loggedInUser, Event.attendeesKey])
+        let predicate = NSPredicate(format: "%@ IN $attendees", reference)
         
         CloudKitManager.shared.fetchRecordsWithType(Event.typeKey, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
             if let error = error {
@@ -65,8 +79,16 @@ class EventController {
             
             for record in records {
                 guard let event = Event(record: record) else { completion(false); return }
-                self.sortEvents(event: event, completion: { (_) in
-                })
+                
+                UserController.shared.events.append(event)
+            }
+        }
+        sortEvents { (success) in
+            if success {
+                completion(true)
+                return
+            } else {
+                completion(false)
             }
         }
     }
@@ -136,7 +158,7 @@ class EventController {
         completion(true)
     }
     
-    func sortEvents(event: Event, completion: @escaping (Bool) -> Void) {
+    func sortEvents(completion: @escaping (Bool) -> Void) {
         let events = UserController.shared.events
         for event in events {
             if event.startTime > Date() {

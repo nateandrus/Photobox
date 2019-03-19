@@ -9,7 +9,14 @@
 import UIKit
 import CloudKit
 
-class Photo {
+class Photo { 
+    
+    static let typeKey = "Photo"
+    static let timestampKey = "timestamp"
+    static let eventReferenceKey = "eventReference"
+    static let userReferenceKey = "userReference"
+    static let imageAssetKey = "imageAsset"
+    static let recordID = "photoRecordID"
     
     static let typeKey = "Photo"
     static let timestampKey = "timestamp"
@@ -22,7 +29,7 @@ class Photo {
     
     var photoData: Data?
     let timestamp: Date
-    let eventReference: CKRecord.Reference
+    let eventReference: CKRecord.Reference?
     let userReference: CKRecord.Reference
     let photoRecordID: CKRecord.ID
     var image: UIImage? {
@@ -39,7 +46,7 @@ class Photo {
         get {
             let temporaryDirectory = NSTemporaryDirectory()
             let temporaryDirectoryURL = URL(fileURLWithPath: temporaryDirectory)
-            let fileURL = temporaryDirectoryURL.appendingPathComponent(photoRecordID.recordName).appendingPathComponent("jpg")
+            let fileURL = temporaryDirectoryURL.appendingPathComponent(photoRecordID.recordName).appendingPathExtension("jpg")
             do {
                 try photoData?.write(to: fileURL)
             } catch let error {
@@ -49,7 +56,7 @@ class Photo {
         }
     }
     
-    init(image: UIImage, timestamp: Date = Date(), eventReference: CKRecord.Reference, userReference: CKRecord.Reference, photoRecordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString)) {
+    init(image: UIImage, timestamp: Date = Date(), eventReference: CKRecord.Reference?, userReference: CKRecord.Reference, photoRecordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString)) {
         self.timestamp = timestamp
         self.eventReference = eventReference
         self.userReference = userReference
@@ -59,16 +66,28 @@ class Photo {
     
     init?(ckRecord: CKRecord) {
         guard let timestamp = ckRecord[Photo.timestampKey] as? Date,
-            let eventReference = ckRecord[Photo.eventReference] as? CKRecord.Reference,
-            let userReference = ckRecord[Photo.userReference] as? CKRecord.Reference,
-            let photoAsset = ckRecord[Photo.photoKey] as? CKAsset else { return nil }
+
+            let userReference = ckRecord[Photo.userReferenceKey] as? CKRecord.Reference,
+            let imageAsset = ckRecord[Photo.imageAssetKey] as? CKAsset else { return nil }
         
-        let photoData = try? Data(contentsOf: photoAsset.fileURL)
+        guard let photoData = try? Data(contentsOf: imageAsset.fileURL) else { return nil }
+        
+        let eventReference = ckRecord[Photo.eventReferenceKey] as? CKRecord.Reference
+        
+        self.photoData = photoData
         self.timestamp = timestamp
         self.photoRecordID = ckRecord.recordID
         self.eventReference = eventReference
         self.userReference = userReference
-        self.photoData = photoData
+    }
+}
+extension CKRecord {
+    convenience init?(photo: Photo) {
+        self.init(recordType: Photo.typeKey, recordID: photo.photoRecordID)
+        setValue(photo.imageAsset, forKey: Photo.imageAssetKey)
+        setValue(photo.timestamp, forKey: Photo.timestampKey)
+        setValue(photo.eventReference, forKey: Photo.eventReferenceKey)
+        setValue(photo.userReference, forKey: Photo.userReferenceKey)
     }
 }
 
