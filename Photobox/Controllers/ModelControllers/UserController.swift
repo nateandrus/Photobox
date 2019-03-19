@@ -201,7 +201,7 @@ class UserController {
         users.remove(at: indexToRemove)
         
         //Delete from CloudKit
-        guard let recordID = user.ckRecord else { completion(false); return }
+        let recordID = user.ckRecord 
         CloudKitManager.shared.deleteRecordWithID(recordID) { (_, error) in
             if let error = error {
                 print("Unable to delete user: \(user.username); \(error.localizedDescription)")
