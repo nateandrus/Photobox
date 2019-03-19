@@ -57,6 +57,7 @@ class Event {
     let creatorReference: CKRecord.Reference
     
     init(attendees: [CKRecord.Reference] = [], eventImage: UIImage = #imageLiteral(resourceName: "calendar icon"), eventTitle: String, location: String, startTime: Date, endTime: Date, description: String?, eventPhotos: [CKRecord.Reference] = [], creatorReference: CKRecord.Reference) {
+
         self.attendees = attendees
         self.eventTitle = eventTitle
         self.location = location

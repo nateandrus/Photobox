@@ -18,6 +18,15 @@ class Photo {
     static let imageAssetKey = "imageAsset"
     static let recordID = "photoRecordID"
     
+    static let typeKey = "Photo"
+    static let timestampKey = "timestamp"
+    static let eventReference = "eventReference"
+    static let userReference = "userReference"
+    static let photoKey = "photo"
+    static let recordID = "photoRecordID"
+    
+    
+    
     var photoData: Data?
     let timestamp: Date
     let eventReference: CKRecord.Reference?
@@ -57,6 +66,7 @@ class Photo {
     
     init?(ckRecord: CKRecord) {
         guard let timestamp = ckRecord[Photo.timestampKey] as? Date,
+
             let userReference = ckRecord[Photo.userReferenceKey] as? CKRecord.Reference,
             let imageAsset = ckRecord[Photo.imageAssetKey] as? CKAsset else { return nil }
         
@@ -80,3 +90,5 @@ extension CKRecord {
         setValue(photo.userReference, forKey: Photo.userReferenceKey)
     }
 }
+
+

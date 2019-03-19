@@ -26,6 +26,9 @@ class EventController {
         
         guard let recordID = loggedinInUser.ckRecord else { completion(false); return }
         let creatorReference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
+
+        let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
+        UserController.shared.events.append(newEvent)
         
         let defaultPhoto = Photo(image: #imageLiteral(resourceName: "home icon"), timestamp: Date(), eventReference: nil, userReference: creatorReference)
         
@@ -138,9 +141,9 @@ class EventController {
         completion(true)
     }
     
-    func removeAttendee(userRef: CKRecord.Reference, fromEvent event: Event, completion: @escaping (Bool) -> Void) {
+    func removeAttendee(creatorReference: CKRecord.Reference, fromEvent event: Event, completion: @escaping (Bool) -> Void) {
         //Remove local attendee
-        guard let attendeeIndex = event.attendees.index(of: userRef) else { completion(false); return }
+        guard let attendeeIndex = event.attendees.index(of: creatorReference) else { completion(false); return }
         event.attendees.remove(at: attendeeIndex)
         
         //Remove from CloudKit
