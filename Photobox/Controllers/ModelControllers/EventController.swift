@@ -29,7 +29,7 @@ class EventController {
         guard let recordID = loggedinInUser.ckRecord else { completion(false); return }
         let creatorReference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
 
-        let newEvent = Event(attendees: [loggedinInUser], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
+        let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
         UserController.shared.events.append(newEvent)
         
         
@@ -119,9 +119,9 @@ class EventController {
         completion(true)
     }
     
-    func removeAttendee(user: User, fromEvent event: Event, completion: @escaping (Bool) -> Void) {
+    func removeAttendee(creatorReference: CKRecord.Reference, fromEvent event: Event, completion: @escaping (Bool) -> Void) {
         //Remove local attendee
-        guard let attendeeIndex = event.attendees.index(of: user) else { completion(false); return }
+        guard let attendeeIndex = event.attendees.index(of: creatorReference) else { completion(false); return }
         event.attendees.remove(at: attendeeIndex)
         
         //Remove from CloudKit
