@@ -18,15 +18,6 @@ class Photo {
     static let imageAssetKey = "imageAsset"
     static let recordID = "photoRecordID"
     
-    static let typeKey = "Photo"
-    static let timestampKey = "timestamp"
-    static let eventReference = "eventReference"
-    static let userReference = "userReference"
-    static let photoKey = "photo"
-    static let recordID = "photoRecordID"
-    
-    
-    
     var photoData: Data?
     let timestamp: Date
     let eventReference: CKRecord.Reference?

@@ -33,7 +33,6 @@ class User {
             let temporaryDirectory = NSTemporaryDirectory()
             let temporaryDirectoryURL = URL(fileURLWithPath: temporaryDirectory)
             
-            guard let ckRecord = ckRecord else { return nil }
             let fileURL = temporaryDirectoryURL.appendingPathComponent(ckRecord.recordName).appendingPathExtension("jpg")
             do {
                 try profileImageData?.write(to: fileURL)
@@ -52,13 +51,12 @@ class User {
             profileImageData = newValue?.jpegData(compressionQuality: 0.5)
         }
     }
-    let ckRecord: CKRecord.ID?
+    let ckRecord: CKRecord.ID
     let creatorReference: CKRecord.Reference?
     var phoneNumber: String
-    var userEvents: [Event]?
-    var invitedEvents: [Event]?
+    var invitedEvents: [CKRecord.Reference]
     
-    init(username: String?, password: String?, firstName: String? = nil, lastName: String? = nil, profileImage: UIImage = #imageLiteral(resourceName: "default user icon"), ckRecord: CKRecord.ID? = CKRecord.ID(recordName: UUID().uuidString), creatorReference: CKRecord.Reference?, phoneNumber: String, userEvents: [Event]? = nil, invitedEvents: [Event]? = nil) {
+    init(username: String?, password: String?, firstName: String? = nil, lastName: String? = nil, profileImage: UIImage = #imageLiteral(resourceName: "default user icon"), ckRecord: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), creatorReference: CKRecord.Reference?, phoneNumber: String, invitedEvents: [CKRecord.Reference] = []) {
         self.firstName = firstName
         self.lastName = lastName
         self.username = username
@@ -66,21 +64,31 @@ class User {
         self.ckRecord = ckRecord
         self.creatorReference = creatorReference
         self.phoneNumber = phoneNumber
-        self.userEvents = userEvents
         self.invitedEvents = invitedEvents
         self.profileImage = profileImage
     }
     
-    convenience init?(record: CKRecord) {
+    init?(record: CKRecord) {
         guard let username = record[User.usernameKey] as? String,
             let password = record[User.passwordKey] as? String,
+            let profileImageAsset = record[User.profileImageKey] as? CKAsset,
             let phoneNumber = record[User.phoneNumberKey] as? String,
             let creatorReference = record[User.creatorReferenceKey] as? CKRecord.Reference else { return nil }
         
+        guard let photoData = try? Data(contentsOf: profileImageAsset.fileURL) else { return nil }
         let firstName = record[User.firstNameKey] as? String
         let lastName = record[User.lastNameKey] as? String
+        let invitedEvents = record[User.invitedEventsKey] as? [CKRecord.Reference]
         
-        self.init(username: username, password: password, firstName: firstName, lastName: lastName, creatorReference: creatorReference, phoneNumber: phoneNumber)
+        self.profileImageData = photoData
+        self.firstName = firstName
+        self.lastName = lastName
+        self.username = username
+        self.password = password
+        self.phoneNumber = phoneNumber
+        self.invitedEvents = invitedEvents ?? []
+        self.ckRecord = record.recordID
+        self.creatorReference = creatorReference
     }
 }
 
@@ -92,14 +100,15 @@ extension User: Equatable {
 
 extension CKRecord {
     convenience init?(user: User) {
-        self.init(recordType: User.typeKey, recordID: user.ckRecord ?? CKRecord.ID())
+        self.init(recordType: User.typeKey, recordID: user.ckRecord)
         setValue(user.username, forKey: User.usernameKey)
         setValue(user.password, forKey: User.passwordKey)
         setValue(user.imageAsset, forKey: User.profileImageKey)
         setValue(user.phoneNumber, forKey: User.phoneNumberKey)
         setValue(user.creatorReference, forKey: User.creatorReferenceKey)
-        setValue(user.userEvents, forKey: User.userEventsKey)
-        setValue(user.invitedEvents, forKey: User.invitedEventsKey)
+        if !user.invitedEvents.isEmpty {
+            setValue(user.invitedEvents, forKey: User.invitedEventsKey)
+        }
     }
 }
 
