@@ -22,7 +22,7 @@ class Event {
     fileprivate static let eventPhotosKey = "eventPhotos"
     fileprivate static let creatorReferenceKey = "creatorReference"
     
-    var attendees: [User]
+    var attendees: [CKRecord.Reference]
     var eventPhotoData: Data?
     var eventImage: UIImage? {
         get {
@@ -52,11 +52,11 @@ class Event {
     var startTime: Date
     var endTime: Date
     var description: String?
-    var eventPhotos: [Photo]?
+    var eventPhotos: [CKAsset]?
     let ckrecordID: CKRecord.ID
     let creatorReference: CKRecord.Reference
     
-    init(attendees: [User] = [], eventImage: UIImage = #imageLiteral(resourceName: "calendar icon"), eventTitle: String, location: String, startTime: Date, endTime: Date, description: String?, eventPhotos: [Photo] = [], creatorReference: CKRecord.Reference) {
+    init(attendees: [CKRecord.Reference] = [], eventImage: UIImage = #imageLiteral(resourceName: "calendar icon"), eventTitle: String, location: String, startTime: Date, endTime: Date, description: String?, eventPhotos: [CKAsset] = [], creatorReference: CKRecord.Reference) {
         self.attendees = attendees
         self.eventTitle = eventTitle
         self.location = location
@@ -73,11 +73,11 @@ class Event {
         guard let eventTitle = record[Event.eventTitleKey] as? String,
             let eventImage = record[Event.eventImageKey] as? UIImage,
             let location = record[Event.locationKey] as? String,
-            let attendees = record[Event.attendeesKey] as? [User],
+            let attendees = record[Event.attendeesKey] as? [CKRecord.Reference],
             let startTime = record[Event.startTimeKey] as? Date,
             let endTime = record[Event.endTimeKey] as? Date,
             let description = record[Event.descriptionKey] as? String?,
-            let eventPhotos = record[Event.eventPhotosKey] as? [Photo]?,
+            let eventPhotos = record[Event.eventPhotosKey] as? [CKAsset]?,
             let creatorReference = record[Event.creatorReferenceKey] as? CKRecord.Reference
             else { return nil }
         self.eventTitle = eventTitle
