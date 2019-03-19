@@ -66,7 +66,9 @@ class Page3CreateEventViewController: UIViewController {
             else { return }
         
         EventController.shared.createEvent(eventImage: image, eventTitle: name, location: location, startTime: startDate, endTime: endDate, description: eventDescription) { (success) in
-            self.tabBarController?.selectedIndex = 0 
+            DispatchQueue.main.async {
+                self.tabBarController?.selectedIndex = 0 
+            }
         }
     }
 }
