@@ -78,11 +78,9 @@ class EventController {
             }
             
             guard let records = records else { completion(false); return }
-            print(records.count)
             
             for record in records {
                 guard let event = Event(record: record) else { completion(false); return }
-                print(event.attendees)
                 UserController.shared.events.append(event)
             }
         }

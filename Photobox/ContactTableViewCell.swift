@@ -34,9 +34,16 @@ class ContactTableViewCell: UITableViewCell {
     
     func updateViews() {
 //        guard let user = user else { return }
-        guard let contact = contact else { return }
-        nameLabel.text = contact.givenName + " " + contact.familyName
-        usernameLabel.text = contact.givenName
+        if contact != nil {
+            guard let contact = contact else { return }
+            nameLabel.text = contact.givenName + " " + contact.familyName
+            usernameLabel.text = contact.givenName
+        } else if user != nil {
+            guard let user = user,
+            let username = user.username else { return }
+            nameLabel.text = "@\(username)"
+            usernameLabel.text = ""
+        }
 //        CloudKitManager.shared.fetchDiscoverableUserWith(recordID: user.ckRecord) { (userID) in
 //            guard let userID = userID else { return }
 //            guard let firstName = userID.nameComponents?.givenName else { return }
