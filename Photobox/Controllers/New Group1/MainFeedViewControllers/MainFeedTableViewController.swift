@@ -77,7 +77,11 @@ class MainFeedTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return EventController.shared.currentEvents.count
+            if EventController.shared.currentEvents.count > 0 {
+                return EventController.shared.currentEvents.count
+            } else {
+                return EventController.shared.futureEvents.count
+            }
         } else if section == 1 {
             return EventController.shared.futureEvents.count
         }

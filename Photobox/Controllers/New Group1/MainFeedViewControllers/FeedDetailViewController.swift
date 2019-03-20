@@ -17,10 +17,9 @@ class FeedDetailViewController: UIViewController {
     @IBOutlet weak var endDateandTimeLabel: UILabel!
     @IBOutlet weak var numberOfAttendeesLabel: UILabel!
     
-    
     var eventLandingPad: Event? {
         didSet {
-            
+           updateViews()
         }
     }
     
@@ -38,5 +37,6 @@ class FeedDetailViewController: UIViewController {
         dateAndTimeLabel.text = "\(event.startTime)"
         endDateandTimeLabel.text = "\(event.endTime)"
         numberOfAttendeesLabel.text = "Number of attendees: \(event.attendees.count)"
+        self.title = event.eventTitle
     }
 }

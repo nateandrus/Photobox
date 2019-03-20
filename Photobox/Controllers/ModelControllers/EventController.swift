@@ -26,10 +26,8 @@ class EventController {
         
         guard let recordID = loggedinInUser.ckRecord else { completion(false); return }
         let creatorReference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
-
-        let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
-        UserController.shared.events.append(newEvent)
-        
+//        let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
+//        UserController.shared.events.append(newEvent)
         let defaultPhoto = Photo(image: #imageLiteral(resourceName: "home icon"), timestamp: Date(), eventReference: nil, userReference: creatorReference)
         
         guard let photoRecord = CKRecord(photo: defaultPhoto) else { completion(false); return }
@@ -41,11 +39,11 @@ class EventController {
             }
             
             guard let photoRecord = photoRecord else { completion(false); return }
-
             let photoReference = CKRecord.Reference(record: photoRecord, action: .deleteSelf)
-
             let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, eventPhotos: [photoReference], creatorReference: creatorReference)
             UserController.shared.events.append(newEvent)
+            self.sortEvents(completion: { (success) in
+            })
 
             guard let record = CKRecord(event: newEvent) else { completion(false); return }
 
@@ -66,7 +64,7 @@ class EventController {
         guard let loggedInUser = UserController.shared.loggedInUser,
             let reference = loggedInUser.creatorReference else { completion(false); return }
         
-        let predicate = NSPredicate(format: "%@ IN $attendees", reference)
+        let predicate = NSPredicate(format: "%@ IN attendees", reference)
         
         CloudKitManager.shared.fetchRecordsWithType(Event.typeKey, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
             if let error = error {
@@ -163,11 +161,13 @@ class EventController {
         for event in events {
             if event.startTime > Date() {
                 self.futureEvents.append(event)
-            }
-            if event.endTime < Date() {
+            }else if event.endTime < Date() {
                 self.pastEvents.append(event)
             } else {
                 self.currentEvents.append(event)
+            }
+            if event == events.last {
+                completion(true)
             }
         }
     }

@@ -22,7 +22,7 @@ class Page2CreateEventViewController: UIViewController {
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = name
         startDatePicker.minimumDate = Date()
         endDatePicker.minimumDate = startDatePicker.date
     }
