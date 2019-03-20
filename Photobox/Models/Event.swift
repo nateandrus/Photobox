@@ -21,6 +21,7 @@ class Event {
     fileprivate static let descriptionKey = "description"
     fileprivate static let eventPhotosKey = "eventPhotos"
     fileprivate static let creatorReferenceKey = "creatorReference"
+    fileprivate static let invitedUsersKey = "invitedUsers"
     
     var attendees: [CKRecord.Reference]
     var eventPhotoData: Data?
@@ -55,8 +56,9 @@ class Event {
     var eventPhotos: [CKRecord.Reference]?
     let ckrecordID: CKRecord.ID
     let creatorReference: CKRecord.Reference?
+    var invitedUsers: [CKRecord.Reference]
     
-    init(attendees: [CKRecord.Reference] = [], eventImage: UIImage = #imageLiteral(resourceName: "calendar icon"), eventTitle: String, location: String, startTime: Date, endTime: Date, description: String?, eventPhotos: [CKRecord.Reference] = [], creatorReference: CKRecord.Reference?) {
+    init(attendees: [CKRecord.Reference] = [], eventImage: UIImage = #imageLiteral(resourceName: "calendar icon"), eventTitle: String, location: String, startTime: Date, endTime: Date, description: String?, eventPhotos: [CKRecord.Reference] = [], creatorReference: CKRecord.Reference?, invitedUsers: [CKRecord.Reference] = []) {
 
         self.attendees = attendees
         self.eventTitle = eventTitle
@@ -68,6 +70,7 @@ class Event {
         self.ckrecordID = CKRecord.ID(recordName: self.eventTitle)
         self.creatorReference = creatorReference
         self.eventImage = eventImage
+        self.invitedUsers = invitedUsers
     }
     
     init?(record: CKRecord) {
@@ -79,7 +82,8 @@ class Event {
             let endTime = record[Event.endTimeKey] as? Date,
             let description = record[Event.descriptionKey] as? String?,
             let eventPhotos = record[Event.eventPhotosKey] as? [CKRecord.Reference]?,
-            let creatorReference = record[Event.creatorReferenceKey] as? CKRecord.Reference?
+            let creatorReference = record[Event.creatorReferenceKey] as? CKRecord.Reference?,
+            let invitedUsers = record[Event.invitedUsersKey] as? [CKRecord.Reference]
             else { return nil }
         
         guard let photoData = try? Data(contentsOf: imageAsset.fileURL) else { return nil }
@@ -94,6 +98,7 @@ class Event {
         self.eventPhotos = eventPhotos
         self.ckrecordID = CKRecord.ID(recordName: self.eventTitle)
         self.creatorReference = creatorReference
+        self.invitedUsers = invitedUsers
     }
 }
 extension Event: Equatable {
@@ -114,5 +119,6 @@ extension CKRecord {
         self.setValue(event.description, forKey: Event.descriptionKey)
         self.setValue(event.eventPhotos, forKey: Event.eventPhotosKey)
         self.setValue(event.creatorReference, forKey: Event.creatorReferenceKey)
+        self.setValue(event.invitedUsers, forKey: Event.invitedUsersKey)
     }
 }

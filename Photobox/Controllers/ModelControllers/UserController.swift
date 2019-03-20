@@ -113,13 +113,15 @@ class UserController {
         
         //Search for username
         usernameSearchResults = users.filter({ (user) -> Bool in
-            guard let username = user.username else { return false }
-            return username.lowercased().starts(with: searchTerm)
+            guard let username = user.username?.lowercased() else { return false }
+            return username.starts(with: searchTerm)
         })
         
         //Search for name in contacts
         contactsSearchResults = ContactController.shared.contacts.filter({ (contact) -> Bool in
-            return contact.givenName.lowercased().starts(with: searchTerm) || contact.familyName.lowercased().starts(with: searchTerm)
+            let firstName = contact.givenName.lowercased()
+            let lastName = contact.familyName.lowercased()
+            return firstName.starts(with: searchTerm) || lastName.starts(with: searchTerm)
         })
         
         completion(contactsSearchResults, usernameSearchResults)

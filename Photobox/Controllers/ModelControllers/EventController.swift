@@ -21,16 +21,15 @@ class EventController {
     let publicDB = CKContainer.default().publicCloudDatabase
     
     // MARK: - CRUD Functions
-    func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String, completion: @escaping (Bool) -> Void) {
+    func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String, invitedUsers: [CKRecord.Reference], completion: @escaping (Bool) -> Void) {
         guard let loggedinInUser = UserController.shared.loggedInUser else { completion(false); return }
-
 
         let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .none)
         
-        let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
-        UserController.shared.events.append(newEvent)
+//        let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference, invitedUsers: invitedUsers)
+//        UserController.shared.events.append(newEvent)
         
-        let defaultPhoto = Photo(image: #imageLiteral(resourceName: "home icon"), timestamp: Date(), eventReference: nil, userReference: creatorReference)
+        let defaultPhoto = Photo(image: eventImage, timestamp: Date(), eventReference: nil, userReference: creatorReference)
         
         guard let photoRecord = CKRecord(photo: defaultPhoto) else { completion(false); return }
         CloudKitManager.shared.saveRecord(photoRecord) { (photoRecord, error) in
@@ -42,7 +41,7 @@ class EventController {
             
             guard let photoRecord = photoRecord else { completion(false); return }
             let photoReference = CKRecord.Reference(record: photoRecord, action: .deleteSelf)
-            let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, eventPhotos: [photoReference], creatorReference: creatorReference)
+            let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, eventPhotos: [photoReference], creatorReference: creatorReference, invitedUsers: invitedUsers)
             UserController.shared.events.append(newEvent)
             self.sortEvents(completion: { (success) in
             })
