@@ -26,6 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
+        
+        UserController.shared.fetchAllUsers { (success) in
+            if success {
+                print("Fetched users from CloudKit")
+            }
+        }
         //Check if the user is logged into iCloud
         CloudKitManager.shared.checkCloudKitAvailability()
     

@@ -274,7 +274,7 @@
                                 <rect key="frame" x="20" y="311" width="335" height="307"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="usernameCell" rowHeight="60" id="kZe-rz-hKr" customClass="ContactTableViewCell" customModule="Photobox" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="userCell" rowHeight="60" id="kZe-rz-hKr" customClass="ContactTableViewCell" customModule="Photobox" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="335" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kZe-rz-hKr" id="tRU-EF-0Lb">
@@ -373,6 +373,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="G87-dW-YBg" id="JFR-ld-5JS"/>
+                                    <outlet property="delegate" destination="G87-dW-YBg" id="SN3-fF-IeD"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

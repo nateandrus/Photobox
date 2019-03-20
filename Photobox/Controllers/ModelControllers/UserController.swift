@@ -111,26 +111,15 @@ class UserController {
         var usernameSearchResults: [User] = []
         var contactsSearchResults: [CNContact] = []
         
-        //Search for username in CloudKit
-        let predicate = NSPredicate(format: "%K == %@", argumentArray: [User.usernameKey, searchTerm])
-        CloudKitManager.shared.fetchRecordsWithType(User.typeKey, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
-            if let error = error {
-                print("Error fetching records for \(searchTerm): \(error), \(error.localizedDescription)")
-                completion(nil, nil)
-                return
-            }
-            
-            guard let records = records else { completion(nil, nil); return }
-            let results = records.compactMap({ (record) -> User? in
-                guard let user = User(record: record) else { completion(nil, nil); return nil }
-                return user
-            })
-            usernameSearchResults = results
-        }
+        //Search for username
+        usernameSearchResults = users.filter({ (user) -> Bool in
+            guard let username = user.username else { return false }
+            return username.lowercased().starts(with: searchTerm)
+        })
         
         //Search for name in contacts
         contactsSearchResults = ContactController.shared.contacts.filter({ (contact) -> Bool in
-            return contact.givenName.contains(searchTerm) || contact.familyName.contains(searchTerm)
+            return contact.givenName.lowercased().starts(with: searchTerm) || contact.familyName.lowercased().starts(with: searchTerm)
         })
         
         completion(contactsSearchResults, usernameSearchResults)
@@ -164,12 +153,12 @@ class UserController {
             guard let records = records else { completion(false); return }
             
             for record in records {
-                let newUser = User(record: record)
-                guard let user = newUser else { completion(false); return }
-                self.users.append(user)
+                guard let newUser = User(record: record) else { completion(false); return }
+                self.users.append(newUser)
             }
+            
+            completion(true)
         }
-        completion(true)
     }
     
     func modify(user: User, withUsername username: String?, profileImage: UIImage?, completion: @escaping (Bool) -> Void) {
