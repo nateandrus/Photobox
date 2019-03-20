@@ -34,6 +34,7 @@ class Page3CreateEventViewController: UIViewController {
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = name
         resultsTableView.delegate = self
         resultsTableView.dataSource = self
         searchBar.delegate = self

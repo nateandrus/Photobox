@@ -43,7 +43,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ylB-cJ-TGk">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ylB-cJ-TGk">
                                             <rect key="frame" x="24" y="19" width="112" height="112"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="ylB-cJ-TGk" secondAttribute="height" multiplier="1:1" id="nOH-6x-jij"/>
@@ -494,6 +494,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="home icon" width="25" height="21"/>
+        <image name="home icon" width="25" height="24"/>
     </resources>
 </document>
