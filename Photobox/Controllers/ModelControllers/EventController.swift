@@ -23,11 +23,13 @@ class EventController {
     // MARK: - CRUD Functions
     func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String, completion: @escaping (Bool) -> Void) {
         guard let loggedinInUser = UserController.shared.loggedInUser else { completion(false); return }
+
+
+        let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .none)
         
-        guard let recordID = loggedinInUser.ckRecord else { completion(false); return }
-        let creatorReference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
-//        let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
-//        UserController.shared.events.append(newEvent)
+        let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference)
+        UserController.shared.events.append(newEvent)
+        
         let defaultPhoto = Photo(image: #imageLiteral(resourceName: "home icon"), timestamp: Date(), eventReference: nil, userReference: creatorReference)
         
         guard let photoRecord = CKRecord(photo: defaultPhoto) else { completion(false); return }
@@ -61,10 +63,12 @@ class EventController {
     }
     
     func fetchEvents(completion: @escaping (Bool) -> Void) {
-        guard let loggedInUser = UserController.shared.loggedInUser,
-            let reference = loggedInUser.creatorReference else { completion(false); return }
+        guard let loggedInUser = UserController.shared.loggedInUser else { completion(false); return }
         
+        let reference = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
         let predicate = NSPredicate(format: "%@ IN attendees", reference)
+        
+
         
         CloudKitManager.shared.fetchRecordsWithType(Event.typeKey, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
             if let error = error {
@@ -77,7 +81,6 @@ class EventController {
             
             for record in records {
                 guard let event = Event(record: record) else { completion(false); return }
-                
                 UserController.shared.events.append(event)
             }
         }
@@ -157,6 +160,9 @@ class EventController {
     }
     
     func sortEvents(completion: @escaping (Bool) -> Void) {
+        pastEvents.removeAll()
+        currentEvents.removeAll()
+        futureEvents.removeAll()
         let events = UserController.shared.events
         for event in events {
             if event.startTime > Date() {

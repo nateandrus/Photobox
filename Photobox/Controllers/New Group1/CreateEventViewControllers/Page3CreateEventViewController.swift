@@ -23,8 +23,6 @@ class Page3CreateEventViewController: UIViewController {
     var startDate: Date?
     var endDate: Date?
     
-    var isSearching: Bool = false
-    
     var searchResults: ([CNContact], [User])? {
         didSet {
             DispatchQueue.main.async {
@@ -40,6 +38,8 @@ class Page3CreateEventViewController: UIViewController {
         resultsTableView.delegate = self
         resultsTableView.dataSource = self
         searchBar.delegate = self
+        
+        descriptionTextView.layer.borderWidth = 1
         
         ContactController.shared.fetchContacts { (success) in
             if success {
@@ -75,45 +75,46 @@ class Page3CreateEventViewController: UIViewController {
 }
 extension Page3CreateEventViewController: UISearchBarDelegate {
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        isSearching = true
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        isSearching = false
-    }
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        UserController.shared.fetchUsersWith(searchTerm: searchText) { (contacts, users) in
+        UserController.shared.fetchUsersWith(searchTerm: searchText.lowercased()) { (contacts, users) in
             guard let contacts = contacts,
                 let users = users else { return }
             
             self.searchResults = (contacts, users)
         }
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
 }
 
 extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let searchResults = searchResults else { return 1 }
-        if searchResults.0.count > 0 || searchResults.1.count > 0 {
+        guard let searchResults = searchResults else { print("1 section"); return 1 }
+        
+        if searchResults.0.count > 0 && searchResults.1.count > 0 {
+            print("2 sections")
             return 2
-        } else {
+        } else if searchResults.0.count > 0 || searchResults.1.count > 0{
+            print("1 section")
             return 1
+        } else {
+            return 0
         }
     }
     
-    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        if tableView.numberOfSections == 2 {
-            return ["Contacts", ""]
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Contacts"
         } else {
-            return ["Contacts"]
+            return "Users"
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //If the user hasn't started a search, fill up the tableview with the user's contacts
-        guard let searchResults = searchResults else { return ContactController.shared.contacts.count }
+        guard let searchResults = searchResults else { print(ContactController.shared.contacts.count); return ContactController.shared.contacts.count }
         
         //If the searchResults tuple contains values in both arrays
         if searchResults.0.count > 0 && searchResults.1.count > 0 {
@@ -136,10 +137,10 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
             } else {
                 return searchResults.1.count
             }
-        }
         //If both arrays are empty within the searchResults tuple
-        return 0
-        
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -148,7 +149,9 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
             
             let contact = ContactController.shared.contacts[indexPath.row]
             
-            cell?.nameLabel.text = contact.givenName + " " + contact.familyName
+            cell?.contact = contact
+            
+            return cell ?? UITableViewCell()
             
 //            if contact.username != nil {
 //                cell?.usernameLabel.text = "@\(contact.username)"
@@ -161,8 +164,9 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
             
             let contact = searchResults.0[indexPath.row]
             
-            cell?.nameLabel.text = contact.givenName + " " + contact.familyName
+            cell?.contact = contact
             
+            return cell ?? UITableViewCell()
 //            if contact.username != nil {
 //                cell?.usernameLabel.text = "@\(contact.username)"
 //            } else {
@@ -178,7 +182,9 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
             // TODO: Find a user's name
 //            cell?.nameLabel = user.name
             
-            cell?.usernameLabel.text = user.username
+            cell?.user = user
+            
+            return cell ?? UITableViewCell()
         }
         return UITableViewCell()
     }
