@@ -25,7 +25,7 @@ class PhoneNumberViewController: UIViewController {
     @IBAction func OKButtonTapped(_ sender: Any) {
         guard let username = username,
             let password = password,
-            let phoneNumber = phoneNumberTextField.text, !phoneNumber.isEmpty else { return }
+            let phoneNumber = phoneNumberTextField.text?.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined(), !phoneNumber.isEmpty else { return }
         
         UserController.shared.fetchUserWith(phoneNumber: phoneNumber) { (user) in
             if user != nil {
