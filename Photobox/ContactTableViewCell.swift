@@ -49,7 +49,11 @@ class ContactTableViewCell: UITableViewCell {
                     
                     let reference = CKRecord.Reference(recordID: recordID, action: .none)
                     
-                    Page3CreateEventViewController.shared.invitedUsers.append(reference)
+                    if Page3CreateEventViewController.shared.invitedUsers == nil {
+                        Page3CreateEventViewController.shared.invitedUsers = [reference]
+                    } else {
+                        Page3CreateEventViewController.shared.invitedUsers?.append(reference)
+                    }
                 }
                 // If the contact isn't a user
                 else {
@@ -60,14 +64,13 @@ class ContactTableViewCell: UITableViewCell {
                         for num in 1...phoneNumbersCount {
                             let actionName =
                                 actions.append(UIAlertAction(title: "PhoneNumber\(num)", style: .default, handler: { (actionTapped) in
-                                    <#code#>
+                                    
                                 }))
                         }
                     }
                 }
             }
         }
-        
     }
     
     func updateViews() {

@@ -9,22 +9,14 @@
 import UIKit
 
 class MainFeedTableViewController: UITableViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        EventController.shared.fetchEvents { (success) in
-            if success {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        EventController.shared.sortEvents { (success) in
+        EventController.shared.fetchEvents { (success) in
             if success {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -121,7 +113,12 @@ class MainFeedTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toEventDetailVC" {
             if let index = tableView.indexPathForSelectedRow {
-                if index.section == 0 {
+                if EventController.shared.currentEvents.count == 0 {
+                    if let destinationVC = segue.destination as? FeedDetailViewController {
+                        let eventToSend = EventController.shared.futureEvents[index.row]
+                        destinationVC.eventLandingPad = eventToSend
+                    }
+                } else if index.section == 0 {
                     if let destinationVC = segue.destination as? FeedDetailViewController {
                         let eventToSend = EventController.shared.currentEvents[index.row]
                         destinationVC.eventLandingPad = eventToSend
