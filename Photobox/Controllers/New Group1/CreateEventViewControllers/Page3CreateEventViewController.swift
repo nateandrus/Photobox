@@ -73,12 +73,6 @@ class Page3CreateEventViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        NotificationCenter.default.addObserver(self, selector: #selector(popToRoot), name: Page3CreateEventViewController.notif, object: nil)
-    }
-    
-    @objc func popToRoot() {
-        self.navigationController?.popToRootViewController(animated: true)
-
     }
     
     // MARK: - IBActions
