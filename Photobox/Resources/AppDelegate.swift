@@ -17,15 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-//        UserController.shared.fetchLoggedInUser { (success) in
-//            if success {
-//                DispatchQueue.main.async {
-//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                    let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")
-//                    self.window?.rootViewController = vc
-//                }
-//            }
-//        }
+        UserController.shared.fetchLoggedInUser { (success) in
+            if success {
+                DispatchQueue.main.async {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")
+                    self.window?.rootViewController = vc
+                }
+            }
+        }
         
         UserController.shared.fetchAllUsers { (success) in
             if success {

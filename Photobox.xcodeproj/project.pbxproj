@@ -12,6 +12,7 @@
 		2F18D9D1223AC385001E1765 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18D9D0223AC385001E1765 /* SignUpViewController.swift */; };
 		2F18D9D3223B03C9001E1765 /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18D9D2223B03C9001E1765 /* PhoneNumberViewController.swift */; };
 		2F18D9D5223B095E001E1765 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F18D9D4223B095E001E1765 /* CloudKit.framework */; };
+		2FA406BA2242EC2E00562693 /* AddedFriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA406B92242EC2E00562693 /* AddedFriendCollectionViewCell.swift */; };
 		2FF7152F2236DDB0007C9B36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FF7152E2236DDAF007C9B36 /* Assets.xcassets */; };
 		2FF7153522370323007C9B36 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7153422370323007C9B36 /* CloudKitManager.swift */; };
 		2FF7155E22380DF7007C9B36 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7155A22380DF7007C9B36 /* Event.swift */; };
@@ -45,6 +46,7 @@
 		2F18D9D0223AC385001E1765 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2F18D9D2223B03C9001E1765 /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		2F18D9D4223B095E001E1765 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		2FA406B92242EC2E00562693 /* AddedFriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedFriendCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FF7152E2236DDAF007C9B36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FF71530223702EF007C9B36 /* Photobox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Photobox.entitlements; sourceTree = "<group>"; };
 		2FF7153422370323007C9B36 /* CloudKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			children = (
 				2FF7156B22380E8D007C9B36 /* EventTableViewCell.swift */,
 				2FF7157E22384F32007C9B36 /* ContactTableViewCell.swift */,
+				2FA406B92242EC2E00562693 /* AddedFriendCollectionViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				ED0764942238209C00D8307F /* Photo.swift in Sources */,
 				EDCF4AD2223AAFF90061E8FF /* ContactsController.swift in Sources */,
 				2FF7158122397738007C9B36 /* OnboardingViewController.swift in Sources */,
+				2FA406BA2242EC2E00562693 /* AddedFriendCollectionViewCell.swift in Sources */,
 				2FF7157B2238393B007C9B36 /* Page2CreateEventViewController.swift in Sources */,
 				2FF7155F22380DF7007C9B36 /* UserController.swift in Sources */,
 				2F18D9D3223B03C9001E1765 /* PhoneNumberViewController.swift in Sources */,

@@ -21,7 +21,7 @@ class EventController {
     let publicDB = CKContainer.default().publicCloudDatabase
     
     // MARK: - CRUD Functions
-    func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String, invitedUsers: [CKRecord.Reference], completion: @escaping (Bool) -> Void) {
+    func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String, invitedUsers: [CKRecord.Reference]?, completion: @escaping (Bool) -> Void) {
         guard let loggedinInUser = UserController.shared.loggedInUser else { completion(false); return }
 
         let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .none)

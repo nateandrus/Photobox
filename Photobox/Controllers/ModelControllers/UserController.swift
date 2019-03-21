@@ -111,6 +111,11 @@ class UserController {
         var usernameSearchResults: [User] = []
         var contactsSearchResults: [CNContact] = []
         
+        if searchTerm.isEmpty {
+            completion(nil, nil)
+            return
+        }
+        
         //Search for username
         usernameSearchResults = users.filter({ (user) -> Bool in
             guard let username = user.username?.lowercased() else { return false }
@@ -177,7 +182,7 @@ class UserController {
         //Update CloudKit
         CloudKitManager.shared.modifyRecords([record], perRecordCompletion: nil) { (_, error) in
             if let error = error {
-                print("Error modifying the user: \(user.username); \(error.localizedDescription)")
+                print("Error modifying the user: \(user.username ?? ""); \(error.localizedDescription)")
                 completion(false)
                 return
             }
@@ -195,7 +200,7 @@ class UserController {
         let recordID = user.ckRecord 
         CloudKitManager.shared.deleteRecordWithID(recordID) { (_, error) in
             if let error = error {
-                print("Unable to delete user: \(user.username); \(error.localizedDescription)")
+                print("Unable to delete user: \(user.username ?? ""); \(error.localizedDescription)")
                 completion(false)
                 return
             }

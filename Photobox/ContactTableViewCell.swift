@@ -9,8 +9,35 @@
 import UIKit
 import CloudKit
 import Contacts
+import MessageUI
 
-class ContactTableViewCell: UITableViewCell {
+protocol ContactTableViewCellDelegate: class {
+    func addButtonTapped(_ cell: ContactTableViewCell, contact: CNContact?, user: User?, completion: @escaping (Bool) -> Void)
+}
+
+class ContactTableViewCell: UITableViewCell, MFMessageComposeViewControllerDelegate {
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+    }
+    
+    func displayMessageInterface(recipients: [String], body: String) {
+        let composeVC = MFMessageComposeViewController()
+        composeVC.messageComposeDelegate = self
+        
+        // Configure the fields of the interface.
+        composeVC.recipients = recipients
+        composeVC.body = body
+        
+        // Present the view controller modally.
+        if MFMessageComposeViewController.canSendText() {
+            
+//            present(composeVC, animated: true, completion: nil)
+        } else {
+            print("Can't send messages.")
+        }
+    }
+    
+    
 
     // MARK: - Landing pads
     var contact: CNContact? {
@@ -29,45 +56,16 @@ class ContactTableViewCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
     
+    // MARK: - weak var optional delegate
+    weak var delegate: ContactTableViewCellDelegate?
+    
     // MARK: - IBActions
     @IBAction func addButtonTapped(_ sender: Any) {
-        // If the cell is a contact
-        if contact != nil {
-            guard let contact = contact else { return }
-            
-            // Check to see if the contact is already a user
-            for phoneNumber in contact.phoneNumbers {
-                let stringPhoneNumber = phoneNumber.value.stringValue.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined()
-                
-                let filteredUsers = UserController.shared.users.filter { (user) -> Bool in
-                    return user.phoneNumber == stringPhoneNumber
-                }
-                
-                // If the contact is already a user
-                if filteredUsers.count > 0 {
-                    guard let recordID = filteredUsers.first?.ckRecord else { return }
-                    
-                    let reference = CKRecord.Reference(recordID: recordID, action: .none)
-                    
-                    Page3CreateEventViewController.shared.invitedUsers.append(reference)
-                }
-                // If the contact isn't a user
-                else {
-                    let phoneNumbersCount = contact.phoneNumbers.count
-                    if phoneNumbersCount > 1 {
-                        let alertController = UIAlertController(title: "Send invitation to join your event", message: "Which phone number would you like to send the invitation to?", preferredStyle: .actionSheet)
-                        var actions: [UIAlertAction] = []
-                        for num in 1...phoneNumbersCount {
-                            let actionName =
-                                actions.append(UIAlertAction(title: "PhoneNumber\(num)", style: .default, handler: { (actionTapped) in
-                                    <#code#>
-                                }))
-                        }
-                    }
-                }
+        delegate?.addButtonTapped(self, contact: contact, user: user, completion: { (didAdd) in
+            if didAdd {
+                self.addButton.setTitle("✓", for: .normal)
             }
-        }
-        
+        })
     }
     
     func updateViews() {
