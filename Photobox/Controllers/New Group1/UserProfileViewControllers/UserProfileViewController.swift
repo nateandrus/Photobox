@@ -22,6 +22,7 @@ class UserProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         pastEventsTableView.delegate = self
+        pastEventsTableView.dataSource = self
     }
     
     func updateViews() {

@@ -21,9 +21,6 @@ class Page3CreateEventViewController: UIViewController {
     @IBOutlet weak var contentViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchBarTopRestraint: NSLayoutConstraint!
     
-    // Shared Instance/Singleton
-//    static let shared = Page3CreateEventViewController()
-    
     // MARK: - Landing Pad items
     var name: String?
     var location: String?
@@ -32,6 +29,7 @@ class Page3CreateEventViewController: UIViewController {
     var endDate: Date?
     
     // MARK: - Properties
+
     var invitedUsers: [CKRecord.Reference] = []
     var textMessageRecipients: [String] = []
     
@@ -43,6 +41,7 @@ class Page3CreateEventViewController: UIViewController {
             }
         }
     }
+
     var searchResults: ([CNContact], [User])? {
         didSet {
             DispatchQueue.main.async {
@@ -72,6 +71,16 @@ class Page3CreateEventViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        NotificationCenter.default.addObserver(self, selector: #selector(popToRoot), name: Page3CreateEventViewController.notif, object: nil)
+    }
+    
+    @objc func popToRoot() {
+        self.navigationController?.popToRootViewController(animated: true)
+
+    }
+    
     // MARK: - IBActions
     @IBAction func backButtonTapped(_ sender: Any) {
         DispatchQueue.main.async {
@@ -90,7 +99,9 @@ class Page3CreateEventViewController: UIViewController {
         
         EventController.shared.createEvent(eventImage: image, eventTitle: name, location: location, startTime: startDate, endTime: endDate, description: eventDescription, invitedUsers: invitedUsers) { (success) in
             DispatchQueue.main.async {
-                self.tabBarController?.selectedIndex = 0
+                let mainVC = self.navigationController?.viewControllers.first as? Page1CreateEventViewController
+                mainVC?.fromCreate = true
+                self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }

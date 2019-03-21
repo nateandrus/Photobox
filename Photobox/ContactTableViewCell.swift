@@ -66,6 +66,7 @@ class ContactTableViewCell: UITableViewCell, MFMessageComposeViewControllerDeleg
                 self.addButton.setTitle("✓", for: .normal)
             }
         })
+      
     }
     
     func updateViews() {
