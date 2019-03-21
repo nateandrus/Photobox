@@ -69,13 +69,13 @@ class User {
     }
     
     init?(record: CKRecord) {
-        guard let username = record[User.usernameKey] as? String,
-            let password = record[User.passwordKey] as? String,
-            let profileImageAsset = record[User.profileImageKey] as? CKAsset,
-            let phoneNumber = record[User.phoneNumberKey] as? String,
-            let creatorReference = record[User.creatorReferenceKey] as? CKRecord.Reference else { return nil }
+        guard let profileImageAsset = record[User.profileImageKey] as? CKAsset,
+            let phoneNumber = record[User.phoneNumberKey] as? String else { return nil }
         
         guard let photoData = try? Data(contentsOf: profileImageAsset.fileURL) else { return nil }
+        let username = record[User.usernameKey] as? String
+        let password = record[User.passwordKey] as? String
+        let creatorReference = record[User.creatorReferenceKey] as? CKRecord.Reference
         let firstName = record[User.firstNameKey] as? String
         let lastName = record[User.lastNameKey] as? String
         let invitedEvents = record[User.invitedEventsKey] as? [CKRecord.Reference]

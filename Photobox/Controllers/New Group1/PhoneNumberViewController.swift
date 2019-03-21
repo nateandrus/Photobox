@@ -54,7 +54,7 @@ class PhoneNumberViewController: UIViewController {
                 }
                 return
             } else {
-                UserController.shared.saveUserWith(username: username, password: password, phoneNumber: phoneNumber) { (success) in
+                UserController.shared.saveUserWith(username: username, password: password, phoneNumber: phoneNumber) { (success, _) in
                     if success {
                         DispatchQueue.main.async {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)

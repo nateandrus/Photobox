@@ -16,6 +16,8 @@ class ContactController {
     var contacts: [CNContact] = []
     
     func fetchContacts(completion: @escaping (Bool) -> Void) {
+        contacts.removeAll()
+        
         let store = CNContactStore()
         store.requestAccess(for: .contacts) { (granted, error) in
             if let error = error {

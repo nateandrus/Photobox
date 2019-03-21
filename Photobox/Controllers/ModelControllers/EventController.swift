@@ -21,38 +21,38 @@ class EventController {
     let publicDB = CKContainer.default().publicCloudDatabase
     
     // MARK: - CRUD Functions
-    func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String, invitedUsers: [CKRecord.Reference]?, completion: @escaping (Bool) -> Void) {
-        guard let loggedinInUser = UserController.shared.loggedInUser else { completion(false); return }
+    func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String, invitedUsers: [CKRecord.Reference]?, completion: @escaping (Bool, Event?) -> Void) {
+        guard let loggedinInUser = UserController.shared.loggedInUser else { completion(false, nil); return }
         
         let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .none)
         
         let defaultPhoto = Photo(image: eventImage, timestamp: Date(), eventReference: nil, userReference: creatorReference)
         
-        guard let photoRecord = CKRecord(photo: defaultPhoto) else { completion(false); return }
+        guard let photoRecord = CKRecord(photo: defaultPhoto) else { completion(false, nil); return }
         CloudKitManager.shared.saveRecord(photoRecord) { (photoRecord, error) in
             if let error = error {
                 print("Error saving record to CloudKit: \(error), \(error.localizedDescription)")
-                completion(false)
+                completion(false, nil)
                 return
             }
             
-            guard let photoRecord = photoRecord else { completion(false); return }
+            guard let photoRecord = photoRecord else { completion(false, nil); return }
             let photoReference = CKRecord.Reference(record: photoRecord, action: .deleteSelf)
             let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, eventPhotos: [photoReference], creatorReference: creatorReference, invitedUsers: invitedUsers)
             UserController.shared.events.append(newEvent)
             self.sortEvents(completion: { (success) in
             })
             
-            guard let record = CKRecord(event: newEvent) else { completion(false); return }
+            guard let record = CKRecord(event: newEvent) else { completion(false, nil); return }
             
             CloudKitManager.shared.saveRecord(record) { (record, error) in
                 if let error = error {
                     print("Error saving record to CloudKit: \(error), \(error.localizedDescription)")
-                    completion(false)
+                    completion(false, nil)
                     return
                 }
                 
-                completion(true)
+                completion(true, newEvent)
                 return
             }
         }

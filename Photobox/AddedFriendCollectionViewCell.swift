@@ -44,8 +44,11 @@ class AddedFriendCollectionViewCell: UICollectionViewCell {
         if contact != nil {
             nameLabel.text = contact?.givenName
         } else {
-            guard let username = user?.username else { return }
-            nameLabel.text = "@\(username)"
+            if let username = user?.username {
+                nameLabel.text = "@\(username)"
+            } else {
+                nameLabel.text = "@"
+            }
         }
         removeButton.layer.cornerRadius = removeButton.frame.width / 2
         removeButton.backgroundColor = #colorLiteral(red: 0.8403196383, green: 0.8403196383, blue: 0.8403196383, alpha: 1)

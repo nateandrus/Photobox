@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UserController.shared.fetchLoggedInUser { (success) in
             if success {
-                DispatchQueue.main.async {
+                DispatchQueue.main.async {                    
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")
                     self.window?.rootViewController = vc
@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserController.shared.fetchAllUsers { (success) in
             if success {
                 print("Fetched users from CloudKit")
+            } else {
+                print("Unable to fetch users")
             }
         }
         //Check if the user is logged into iCloud

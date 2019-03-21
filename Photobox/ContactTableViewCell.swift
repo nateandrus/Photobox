@@ -9,35 +9,12 @@
 import UIKit
 import CloudKit
 import Contacts
-import MessageUI
 
 protocol ContactTableViewCellDelegate: class {
     func addButtonTapped(_ cell: ContactTableViewCell, contact: CNContact?, user: User?, completion: @escaping (Bool) -> Void)
 }
 
-class ContactTableViewCell: UITableViewCell, MFMessageComposeViewControllerDelegate {
-    
-    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-    }
-    
-    func displayMessageInterface(recipients: [String], body: String) {
-        let composeVC = MFMessageComposeViewController()
-        composeVC.messageComposeDelegate = self
-        
-        // Configure the fields of the interface.
-        composeVC.recipients = recipients
-        composeVC.body = body
-        
-        // Present the view controller modally.
-        if MFMessageComposeViewController.canSendText() {
-            
-//            present(composeVC, animated: true, completion: nil)
-        } else {
-            print("Can't send messages.")
-        }
-    }
-    
-    
+class ContactTableViewCell: UITableViewCell {
 
     // MARK: - Landing pads
     var contact: CNContact? {
@@ -64,6 +41,7 @@ class ContactTableViewCell: UITableViewCell, MFMessageComposeViewControllerDeleg
         delegate?.addButtonTapped(self, contact: contact, user: user, completion: { (didAdd) in
             if didAdd {
                 self.addButton.setTitle("✓", for: .normal)
+                self.updateViews()
             }
         })
       
@@ -89,6 +67,5 @@ class ContactTableViewCell: UITableViewCell, MFMessageComposeViewControllerDeleg
 //                self.nameLabel.text = "\(firstName) \(lastName)"
 //            }
 //        }
-        addButton.layer.cornerRadius = addButton.frame.width / 2
     }
 }

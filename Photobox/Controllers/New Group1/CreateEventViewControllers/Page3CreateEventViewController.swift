@@ -9,6 +9,7 @@
 import UIKit
 import Contacts
 import CloudKit
+import MessageUI
 
 class Page3CreateEventViewController: UIViewController {
 
@@ -35,7 +36,6 @@ class Page3CreateEventViewController: UIViewController {
     
     var addedFriends: ([User], [CNContact]) = ([], []) {
         didSet {
-            print(addedFriends)
             DispatchQueue.main.async {
                 self.addedFriendsCollectionView.reloadData()
             }
@@ -73,12 +73,7 @@ class Page3CreateEventViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        NotificationCenter.default.addObserver(self, selector: #selector(popToRoot), name: Page3CreateEventViewController.notif, object: nil)
-    }
-    
-    @objc func popToRoot() {
-        self.navigationController?.popToRootViewController(animated: true)
-
+        
     }
     
     // MARK: - IBActions
@@ -97,7 +92,53 @@ class Page3CreateEventViewController: UIViewController {
             let eventDescription = descriptionTextView.text
             else { return }
         
-        EventController.shared.createEvent(eventImage: image, eventTitle: name, location: location, startTime: startDate, endTime: endDate, description: eventDescription, invitedUsers: invitedUsers) { (success) in
+        if !textMessageRecipients.isEmpty {
+            let composeVC = MFMessageComposeViewController()
+            
+            // Set delegate for MessageComposeViewController
+            composeVC.messageComposeDelegate = self
+            
+            // Configure the fields of the interface
+            composeVC.recipients = textMessageRecipients
+            composeVC.body = "Hey! Join me at \(name) on \(startDate.stringWith(dateStyle: .medium, timeStyle: .short))! Download PhotoBOX to accept my invitation: (URL)."
+            
+            // Present the view controller modally
+            if MFMessageComposeViewController.canSendText() {
+                self.present(composeVC, animated: true)
+            }
+            
+            // Create accounts using their phone numbers
+            for phoneNumber in textMessageRecipients {
+                let formattedPhoneNumber = phoneNumber.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined()
+                print(formattedPhoneNumber)
+                UserController.shared.saveUserWith(username: nil, password: nil, phoneNumber: formattedPhoneNumber) { (success, user) in
+                    if success {
+                        guard let recordID = user?.ckRecord else { return }
+                        
+                        let reference = CKRecord.Reference(recordID: recordID, action: .none)
+                        
+                        self.invitedUsers.append(reference)
+                    }
+                }
+            }
+        }
+        
+        EventController.shared.createEvent(eventImage: image, eventTitle: name, location: location, startTime: startDate, endTime: endDate, description: eventDescription, invitedUsers: invitedUsers) { (success, event)  in
+            guard let event = event else { return }
+            
+            for user in self.addedFriends.0 {
+                let reference = CKRecord.Reference(recordID: event.ckrecordID, action: .none)
+                
+                // Update CloudKit
+                UserController.shared.modify(user: user, withUsername: nil, password: nil, profileImage: nil, invitedEvent: reference, completion: { (success) in
+                    // If unsuccessful, print to console
+                    if !success {
+                        print("Unable to modify user")
+                        return
+                    }
+                })
+            }
+            
             DispatchQueue.main.async {
                 let mainVC = self.navigationController?.viewControllers.first as? Page1CreateEventViewController
                 mainVC?.fromCreate = true
@@ -113,7 +154,7 @@ extension Page3CreateEventViewController: UISearchBarDelegate {
             guard let contacts = contacts,
                 let users = users else { self.searchResults = nil; return }
             
-            self.searchResults = (contacts, users)
+           self.searchResults = (contacts, users)
         }
     }
     
@@ -183,8 +224,13 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let searchResults = searchResults else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell
+            cell?.addButton.setTitle("+", for: .normal)
             
             let contact = ContactController.shared.contacts[indexPath.row]
+            
+            if addedFriends.1.contains(contact) {
+                cell?.addButton.setTitle("✓", for: .normal)
+            }
             
             cell?.contact = contact
             
@@ -204,8 +250,13 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
             if indexPath.section == 0 {
 
                 let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell
-                
+                cell?.addButton.setTitle("+", for: .normal)
                 let contact = searchResults.0[indexPath.row]
+                
+                if addedFriends.1.contains(contact) {
+                    cell?.addButton.setTitle("✓", for: .normal)
+                    
+                }
                 
                 cell?.contact = contact
                 
@@ -220,13 +271,17 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
                     //}
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? ContactTableViewCell
-                
+                cell?.addButton.setTitle("+", for: .normal)
                 let user = searchResults.1[indexPath.row]
                 
                 // TODO: Find a user's name
                 // cell?.nameLabel = user.name
                 
                 cell?.user = user
+                
+                if addedFriends.0.contains(user) {
+                     cell?.addButton.setTitle("✓", for: .normal)
+                }
                 
                 //Set delegate to self
                 cell?.delegate = self
@@ -236,10 +291,14 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
         } else {
             if searchResults.0.count > 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell
-                
+                cell?.addButton.setTitle("+", for: .normal)
                 let contact = searchResults.0[indexPath.row]
                 
                 cell?.contact = contact
+                
+                if addedFriends.1.contains(contact) {
+                     cell?.addButton.setTitle("✓", for: .normal)
+                }
                 
                 //Set delegate to self
                 cell?.delegate = self
@@ -252,11 +311,15 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
                 //}
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? ContactTableViewCell
-                
+                cell?.addButton.setTitle("+", for: .normal)
                 let user = searchResults.1[indexPath.row]
                 
                 // TODO: Find a user's name
                 // cell?.nameLabel = user.name
+                
+                if addedFriends.0.contains(user) {
+                    cell?.addButton.setTitle("✓", for: .normal)
+                }
                 
                 cell?.user = user
                 
@@ -276,7 +339,10 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
             
             // Check to see if the contact is already a user
             for phoneNumber in contact.phoneNumbers {
-                let stringPhoneNumber = phoneNumber.value.stringValue.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined()
+                var stringPhoneNumber = phoneNumber.value.stringValue.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined()
+                if stringPhoneNumber.count > 10 {
+                    stringPhoneNumber.removeFirst()
+                }
                 
                 // If the phone number isn't connected to a user, continue looping through the phone numbers until it is verified that each number isn't connected to a user
                 if !phoneNumberIsAUser(phoneNumber: stringPhoneNumber) {
@@ -301,6 +367,8 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
                         completion(true)
                     }))
                 }
+                
+                actions.append(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
                 
                 for action in actions {
                     alertController.addAction(action)
@@ -358,7 +426,7 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
     }
     
     func phoneNumberIsAUser(phoneNumber: String) -> Bool {
-        
+ 
         let filteredUsers = UserController.shared.users.filter { (user) -> Bool in
             return user.phoneNumber == phoneNumber
         }
@@ -369,6 +437,7 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
             
             let reference = CKRecord.Reference(recordID: recordID, action: .none)
             
+            guard !addedFriends.0.contains(filteredUsers.first!) else { return true }
             self.invitedUsers.append(reference)
             self.addedFriends.0.append(filteredUsers.first!)
             return true
@@ -381,7 +450,7 @@ extension Page3CreateEventViewController: UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let numFriends = addedFriends.0.count + addedFriends.1.count
         
-        if numFriends > 3 {
+        if numFriends > 1 {
             searchBarTopRestraint.constant = 0
             contentViewBottomConstraint.constant += 60
         } else if numFriends > 0 {
@@ -398,20 +467,17 @@ extension Page3CreateEventViewController: UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "friendCell", for: indexPath) as? AddedFriendCollectionViewCell
         
-        print(addedFriends.0.count)
-        print(addedFriends.1.count)
+        cell?.contact = nil
+        cell?.user = nil
         
-        print("index: \(indexPath.row)")
         if indexPath.row < addedFriends.0.count {
             cell?.user = addedFriends.0[indexPath.row]
-            print("User set")
             // Set delegate = to self
             cell?.delegate = self
             
             return cell ?? UICollectionViewCell()
         } else {
             cell?.contact = addedFriends.1[indexPath.row - addedFriends.0.count]
-            print("Contact Set")
             // Set delegate = to self
             cell?.delegate = self
             
@@ -422,13 +488,56 @@ extension Page3CreateEventViewController: UICollectionViewDataSource, UICollecti
 extension Page3CreateEventViewController: AddedFriendCollectionViewCellDelegate {
     func removeButtonTapped(_ cell: AddedFriendCollectionViewCell, contact: CNContact?, user: User?) {
         if contact != nil {
-            guard let index = addedFriends.1.index(of: contact!) else { return }
-            addedFriends.1.remove(at: index)
+            guard let friendsIndex = addedFriends.1.index(of: contact!),
+            let phoneNumbers = contact?.phoneNumbers else { return }
+            
+            let phoneNumbersStrings = phoneNumbers.compactMap { (phoneNumber) -> String? in
+                return phoneNumber.value.stringValue
+            }
+            
+            for phoneNum in phoneNumbersStrings {
+                guard let index = textMessageRecipients.index(of: phoneNum) else { continue }
+               
+                textMessageRecipients.remove(at: index)
+                break
+            }
+            
+            addedFriends.1.remove(at: friendsIndex)
         } else {
-            guard let index = addedFriends.0.index(of: user!) else { return }
-            addedFriends.0.remove(at: index)
+            guard let friendsIndex = addedFriends.0.index(of: user!),
+                let recordID = user?.ckRecord else { return }
+            addedFriends.0.remove(at: friendsIndex)
+            
+            let reference = CKRecord.Reference(recordID: recordID, action: .none)
+            guard let invitedUserIndex = invitedUsers.index(of: reference) else { return }
+            invitedUsers.remove(at: invitedUserIndex)
         }
     }
+}
+extension Page3CreateEventViewController: MFMessageComposeViewControllerDelegate {
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "Page1CreateEvent") as? Page1CreateEventViewController
+        vc?.fromCreate = true
+        self.present(vc!, animated: true)
+    }
+    
+    func displayMessageInterface(recipients: [String], body: String) {
+        let composeVC = MFMessageComposeViewController()
+        composeVC.messageComposeDelegate = self
+        
+        // Configure the fields of the interface.
+        composeVC.recipients = recipients
+        composeVC.body = body
+        
+        // Present the view controller modally.
+        if MFMessageComposeViewController.canSendText() {
+            self.present(composeVC, animated: true, completion: nil)
+        } else {
+            print("Can't send messages.")
+        }
+    }
+    
     
     
 }

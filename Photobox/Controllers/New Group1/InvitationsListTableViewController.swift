@@ -7,31 +7,42 @@
 //
 
 import UIKit
+import CloudKit
 
 class InvitationsListTableViewController: UITableViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        guard let invitedEvents = UserController.shared.loggedInUser?.invitedEvents else { return 0 }
+        return invitedEvents.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "invitationCell", for: indexPath) as? InvitationTableViewCell
+        
+        cell?.eventReference = UserController.shared.loggedInUser?.invitedEvents[indexPath.row]
 
-        // Configure the cell...
-
-        return cell
+        return cell ?? UITableViewCell()
     }
 
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "toDetailVC" {
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            let destinationVC = segue.destination as? InvitationDetailViewController
+            destinationVC?.invitedEventReference = UserController.shared.loggedInUser?.invitedEvents[indexPath.row]
+        }
     }
 }
