@@ -18,6 +18,7 @@ class EventController {
     var currentEvents: [Event] = []
     var futureEvents: [Event] = []
     
+    
     let publicDB = CKContainer.default().publicCloudDatabase
     
     // MARK: - CRUD Functions

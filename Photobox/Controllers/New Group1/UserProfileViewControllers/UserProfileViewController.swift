@@ -16,11 +16,14 @@ class UserProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadViewIfNeeded()
         updateViews()
+        self.pastEventsTableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadViewIfNeeded()
         pastEventsTableView.delegate = self
         pastEventsTableView.dataSource = self
     }
@@ -46,7 +49,7 @@ class UserProfileViewController: UIViewController {
 extension UserProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return EventController.shared.pastEvents.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
