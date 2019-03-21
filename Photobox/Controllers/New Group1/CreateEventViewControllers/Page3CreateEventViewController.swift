@@ -73,7 +73,7 @@ class Page3CreateEventViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
+
     }
     
     // MARK: - IBActions

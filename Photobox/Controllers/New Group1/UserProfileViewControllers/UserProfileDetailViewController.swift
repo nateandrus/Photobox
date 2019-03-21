@@ -10,10 +10,9 @@ import UIKit
 
 class UserProfileDetailViewController: UIViewController {
     
-    var collectionViewPhotos: [Photo] = []
-
     var pastEventLanding: Event? {
         didSet {
+            loadViewIfNeeded()
             updateViews()
         }
     }
@@ -34,23 +33,37 @@ class UserProfileDetailViewController: UIViewController {
         eventImageView.image = pastEvent.eventImage
         eventTitleLabel.text = pastEvent.eventTitle
         eventLocationLabel.text = pastEvent.location
-        numberOfAttendeesLabel.text = "Number of attendees: \(pastEvent.attendees)"
-        
+        dateAndTimeLabel.text = "Ended: \(pastEvent.endTime.stringWith(dateStyle: .medium, timeStyle: .short))"
+        numberOfAttendeesLabel.text = "Number of attendees: \(pastEvent.attendees.count)"
+        self.title = pastEvent.eventTitle
     }
 }
 
-extension UserProfileDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension UserProfileDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return PhotoController.shared.collectionViewPhotos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath)
-        let photo = collectionViewPhotos[indexPath.row]
-        let photoImageView = UIImageView(frame: cell.frame)
-        photoImageView.image = photo.image
-        cell.backgroundView = photoImageView
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath)
+        let photo = PhotoController.shared.collectionViewPhotos[indexPath.row]
+        let imageView = UIImageView()
+        imageView.image = photo.image
+        cell.backgroundView = imageView
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let spacing = CGFloat(3)
+        return CGSize(width: (collectionView.frame.width / 3) - spacing, height: (collectionView.frame.width / 3) - spacing)
     }
 }

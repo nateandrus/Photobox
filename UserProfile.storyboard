@@ -40,14 +40,14 @@
                                 <rect key="frame" x="0.0" y="269" width="375" height="398"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pastEventCell" rowHeight="150" id="9wV-k3-ntS" customClass="EventTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pastEventCell" rowHeight="150" id="9wV-k3-ntS" customClass="EventTableViewCell" customModule="Photobox" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9wV-k3-ntS" id="YxE-JX-Har">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E6z-Dn-EPd">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E6z-Dn-EPd">
                                                     <rect key="frame" x="8" y="8" width="133.5" height="133.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="E6z-Dn-EPd" secondAttribute="height" multiplier="1:1" id="oH1-Je-5pW"/>
@@ -95,6 +95,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="eventDateTimeLabel" destination="yyX-B9-7MJ" id="ZZ9-en-OaB"/>
+                                            <outlet property="eventImageView" destination="E6z-Dn-EPd" id="xH0-If-Ibq"/>
+                                            <outlet property="eventLocationLabel" destination="Tby-cq-mnP" id="QAu-SF-R7f"/>
+                                            <outlet property="eventTitleLabel" destination="if8-Bd-KPW" id="Z1i-98-6cc"/>
+                                            <outlet property="numberOfAttendeesLabel" destination="yaU-Pe-KyW" id="LpM-zG-3xa"/>
                                             <segue destination="O8P-dq-rbG" kind="show" identifier="toEventPhotoVC" id="6Ai-T2-UIL"/>
                                         </connections>
                                     </tableViewCell>
@@ -167,8 +172,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IKC-uA-6Kn">
-                                <rect key="frame" x="24" y="88" width="134" height="134"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IKC-uA-6Kn">
+                                <rect key="frame" x="24" y="80" width="134" height="134"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="IKC-uA-6Kn" secondAttribute="height" multiplier="1:1" id="26c-GL-umd"/>
                                     <constraint firstAttribute="height" constant="134" id="ocd-LI-dTu"/>
@@ -179,7 +184,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(title for event)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEj-Ds-fdU">
                                         <rect key="frame" x="0.0" y="0.0" width="185" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -204,13 +209,13 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Photos:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTY-ux-OSd">
-                                <rect key="frame" x="32" y="238" width="126" height="23"/>
+                                <rect key="frame" x="32" y="230" width="126" height="23"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NkH-Zp-ws3">
-                                <rect key="frame" x="0.0" y="269" width="375" height="398"/>
+                                <rect key="frame" x="0.0" y="261" width="375" height="406"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SGd-7C-S98">
                                     <size key="itemSize" width="119" height="119"/>
@@ -238,7 +243,7 @@
                             <constraint firstItem="NkH-Zp-ws3" firstAttribute="top" secondItem="qTY-ux-OSd" secondAttribute="bottom" constant="8" id="PAm-jX-MP8"/>
                             <constraint firstItem="jFg-6h-qx8" firstAttribute="leading" secondItem="IKC-uA-6Kn" secondAttribute="trailing" constant="16" id="UhP-eF-DxU"/>
                             <constraint firstItem="jFg-6h-qx8" firstAttribute="top" secondItem="urP-ev-CrK" secondAttribute="top" constant="16" id="XnX-Nx-mVr"/>
-                            <constraint firstItem="IKC-uA-6Kn" firstAttribute="top" secondItem="jFg-6h-qx8" secondAttribute="top" constant="8" id="ac9-B8-C5n"/>
+                            <constraint firstItem="IKC-uA-6Kn" firstAttribute="top" secondItem="jFg-6h-qx8" secondAttribute="top" id="ac9-B8-C5n"/>
                             <constraint firstItem="urP-ev-CrK" firstAttribute="trailing" secondItem="NkH-Zp-ws3" secondAttribute="trailing" id="l66-mL-huz"/>
                             <constraint firstItem="urP-ev-CrK" firstAttribute="trailing" secondItem="jFg-6h-qx8" secondAttribute="trailing" constant="16" id="lw6-hD-syJ"/>
                             <constraint firstItem="qTY-ux-OSd" firstAttribute="trailing" secondItem="IKC-uA-6Kn" secondAttribute="trailing" id="oTz-Qx-d5c"/>
