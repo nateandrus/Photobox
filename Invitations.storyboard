@@ -13,13 +13,13 @@
         <!--PhotoBOX-->
         <scene sceneID="9hk-aM-ApH">
             <objects>
-                <tableViewController id="90v-oR-amM" sceneMemberID="viewController">
+                <tableViewController id="90v-oR-amM" customClass="InvitationsListTableViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="1" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7s4-pX-PlJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="invitationCell" rowHeight="265" id="XRN-XO-NBP">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="invitationCell" rowHeight="265" id="XRN-XO-NBP" customClass="InvitationTableViewCell" customModule="Photobox" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="265"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XRN-XO-NBP" id="Ebt-oH-hfV">
@@ -73,6 +73,9 @@
                                                             <state key="normal" title="Accept">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="acceptButtonTapped:" destination="XRN-XO-NBP" eventType="touchUpInside" id="WfA-uc-ojy"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ayW-ln-v0K">
                                                             <rect key="frame" x="185" y="0.0" width="175" height="28.5"/>
@@ -80,6 +83,9 @@
                                                             <state key="normal" title="Decline">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="declineButtonTapped:" destination="XRN-XO-NBP" eventType="touchUpInside" id="6mi-eC-bdH"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
@@ -97,7 +103,11 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="98b-wa-SEF" kind="show" id="z8w-GA-xe9"/>
+                                    <outlet property="eventImageView" destination="wf6-c9-QtX" id="kYe-4g-29D"/>
+                                    <outlet property="locationLabel" destination="Tdo-9Q-R8v" id="n8O-tV-ywI"/>
+                                    <outlet property="startDateLabel" destination="edq-rY-m6k" id="8hB-Sf-PcC"/>
+                                    <outlet property="titleLabel" destination="pdl-kt-kbi" id="dAp-Af-4lg"/>
+                                    <segue destination="98b-wa-SEF" kind="show" identifier="toDetailVC" id="z8w-GA-xe9"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -119,7 +129,7 @@
         <!--PhotoBOX-->
         <scene sceneID="eXb-5T-yPr">
             <objects>
-                <viewController id="98b-wa-SEF" sceneMemberID="viewController">
+                <viewController id="98b-wa-SEF" customClass="InvitationDetailViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iWk-Sb-KBu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -206,6 +216,9 @@
                                                                 <state key="normal" title="Accept">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="acceptButtonTapped:" destination="98b-wa-SEF" eventType="touchUpInside" id="mnb-Vh-M9H"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T0b-uT-Pq5">
                                                                 <rect key="frame" x="164.5" y="0.0" width="154.5" height="30"/>
@@ -213,6 +226,9 @@
                                                                 <state key="normal" title="Decline">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="declineButtonTapped:" destination="98b-wa-SEF" eventType="touchUpInside" id="4jh-JN-8vs"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <viewLayoutGuide key="safeArea" id="NmT-3X-J2L"/>
@@ -261,6 +277,13 @@
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="dateLabel" destination="cDD-29-Q2p" id="nAj-7N-bkh"/>
+                        <outlet property="descriptionLabel" destination="yN3-vs-3PI" id="XMF-CS-K3z"/>
+                        <outlet property="eventImageView" destination="5eO-DD-mbp" id="kjC-UT-nbZ"/>
+                        <outlet property="locationLabel" destination="sjr-sz-pRP" id="oQc-6q-9TZ"/>
+                        <outlet property="titleLabel" destination="iNZ-3C-6eY" id="osG-e1-P02"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ER0-MV-wY2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

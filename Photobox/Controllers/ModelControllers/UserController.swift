@@ -18,38 +18,36 @@ class UserController {
     //MARK: - Sources of Truth
     var loggedInUser: User?
     var events: [Event] = []
-    var invitedEvents: [Event] = []
+//    var invitedEvents: [Event] = []
     var users: [User] = []
     
     //MARK: - CRUD Functions
-    func saveUserWith(username: String?, password: String?, phoneNumber: String?, completion: @escaping (Bool) -> Void) {
+    func saveUserWith(username: String?, password: String?, phoneNumber: String?, completion: @escaping (Bool, User?) -> Void) {
         // If the user is saved with a username and password
         if username != nil {
             CKContainer.default().fetchUserRecordID { (appleUserRecordID, error) in
                 if let error = error {
                     print("Error fetching user's apple ID: \(error.localizedDescription)")
-                    completion(false)
+                    completion(false, nil)
                     return
                 }
                 
                 guard let appleUserRecordID = appleUserRecordID,
-                    let phoneNumber = phoneNumber else { completion(false); return }
+                    let phoneNumber = phoneNumber else { completion(false, nil); return }
                 
                 let reference = CKRecord.Reference(recordID: appleUserRecordID, action: .deleteSelf)
             
                 let newUser = User(username: username, password: password, creatorReference: reference, phoneNumber: phoneNumber)
                 
-                guard let record = CKRecord(user: newUser) else { completion(false); return }
+                guard let record = CKRecord(user: newUser) else { completion(false, nil); return }
                 
                 CloudKitManager.shared.saveRecord(record, completion: { (record, error) in
                     if let error = error {
                         print("Error saving record to CK: \(error), \(error.localizedDescription)")
-                        completion(false)
+                        completion(false, nil)
                         return
                     }
-                    
-//                    guard let record = record else { completion(false); return }
-//                    let user = User(record: record)
+            
                     self.loggedInUser = newUser
                     
                     // Fetch the new user's first and last name from Cloud Kit
@@ -62,31 +60,32 @@ class UserController {
                     }
                     
                     // Update the record in CloudKit to include first and last name
-                    guard let newRecord = CKRecord(user: newUser) else { completion(false); return }
+                    guard let newRecord = CKRecord(user: newUser) else { completion(false, nil); return }
                     CloudKitManager.shared.modifyRecords([newRecord], perRecordCompletion: nil, completion: { (record, error) in
                         if let error = error {
                             print("Error modifying record in CloudKit: \(error), \(error.localizedDescription)")
                         }
                     })
                 })
-                completion(true)
+                completion(true, newUser)
             }
         }
         //If the user is created with only a phone number. This will happen if an event moderator invites someone from their contacts who isn't a registed member of photoBOX to join an event.
         else {
-            guard let phoneNumber = phoneNumber else { completion(false); return }
+            guard let phoneNumber = phoneNumber else { completion(false, nil); return }
             
             let newUser = User(username: nil, password: nil, creatorReference: nil, phoneNumber: phoneNumber)
             
-            guard let record = CKRecord(user: newUser) else { completion(false); return }
+            guard let record = CKRecord(user: newUser) else { completion(false, nil); return }
             
             CloudKitManager.shared.saveRecord(record) { (record, error) in
                 if let error = error {
                     print("Error saving record to CK: \(error), \(error.localizedDescription)")
-                    completion(false)
+                    completion(false, nil)
                     return
                 }
             }
+            completion(true, newUser)
         }
             
     }
@@ -103,6 +102,15 @@ class UserController {
             let user = User(record: userRecord)
             
             self.loggedInUser = user
+            
+            // Set the user's invited events to the source of truth
+//            guard let invitedEvents = user?.invitedEvents.compactMap({ (reference) -> Event? in
+//                let recordID = reference.recordID
+//                let record = CKRecord(recordType: Event.typeKey, recordID: recordID)
+//                return Event(record: record)
+//            }) else { completion(false); return }
+//            
+//            self.invitedEvents = invitedEvents
             completion(true)
         }
     }
@@ -168,13 +176,19 @@ class UserController {
         }
     }
     
-    func modify(user: User, withUsername username: String?, profileImage: UIImage?, completion: @escaping (Bool) -> Void) {
+    func modify(user: User, withUsername username: String?, password: String?, profileImage: UIImage?, invitedEvent: CKRecord.Reference?, completion: ((Bool) -> Void)?) {
         //Update local user object
         if username != nil {
             user.username = username!
         }
+        if password != nil {
+            user.password = password!
+        }
         if profileImage != nil {
             user.profileImage = profileImage!
+        }
+        if invitedEvent != nil {
+            user.invitedEvents.append(invitedEvent!)
         }
         
         guard let record = CKRecord(user: user) else { return }
@@ -183,11 +197,15 @@ class UserController {
         CloudKitManager.shared.modifyRecords([record], perRecordCompletion: nil) { (_, error) in
             if let error = error {
                 print("Error modifying the user: \(user.username ?? ""); \(error.localizedDescription)")
-                completion(false)
+                if completion != nil {
+                    completion!(false)
+                }
                 return
             }
         }
-        completion(true)
+        if completion != nil {
+            completion!(true)
+        }
     }
 
     func delete(user: User, completion: @escaping (Bool) -> Void) {
