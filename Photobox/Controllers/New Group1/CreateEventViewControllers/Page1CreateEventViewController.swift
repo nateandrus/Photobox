@@ -26,6 +26,8 @@ class Page1CreateEventViewController: UIViewController {
     
     var selectedImage: UIImage?
     
+    var fromCreate: Bool = false
+    
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +36,23 @@ class Page1CreateEventViewController: UIViewController {
         formatKeyboard()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if fromCreate {
+            resetViews()
+            fromCreate = false
+            tabBarController?.selectedIndex = 0
+        }
+        
+    }
+    
     //MARK: - View Lifecycle Methods
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        eventThumbnailImageView.image = nil
-        selectImageButtonLabel.setTitle("Select Photo", for: .normal)
+        
     }
+    
+    
 
     
     @IBAction func selectImageButtonTapped(_ sender: UIButton) {
@@ -49,6 +62,13 @@ class Page1CreateEventViewController: UIViewController {
     
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
         self.tabBarController?.selectedIndex = 0
+    }
+    
+    func resetViews() {
+        eventThumbnailImageView.image = nil
+        selectImageButtonLabel.setTitle("Select Photo", for: .normal)
+        nameTextField.text = ""
+        locationTextField.text = ""
     }
     
     func formatKeyboard() {

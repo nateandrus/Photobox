@@ -21,13 +21,10 @@ class EventController {
     let publicDB = CKContainer.default().publicCloudDatabase
     
     // MARK: - CRUD Functions
-    func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String, invitedUsers: [CKRecord.Reference], completion: @escaping (Bool) -> Void) {
+    func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String, invitedUsers: [CKRecord.Reference]?, completion: @escaping (Bool) -> Void) {
         guard let loggedinInUser = UserController.shared.loggedInUser else { completion(false); return }
-
-        let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .none)
         
-//        let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, creatorReference: creatorReference, invitedUsers: invitedUsers)
-//        UserController.shared.events.append(newEvent)
+        let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .none)
         
         let defaultPhoto = Photo(image: eventImage, timestamp: Date(), eventReference: nil, userReference: creatorReference)
         
@@ -45,16 +42,16 @@ class EventController {
             UserController.shared.events.append(newEvent)
             self.sortEvents(completion: { (success) in
             })
-
+            
             guard let record = CKRecord(event: newEvent) else { completion(false); return }
-
+            
             CloudKitManager.shared.saveRecord(record) { (record, error) in
                 if let error = error {
                     print("Error saving record to CloudKit: \(error), \(error.localizedDescription)")
                     completion(false)
                     return
                 }
-            
+                
                 completion(true)
                 return
             }
@@ -66,9 +63,7 @@ class EventController {
         
         let reference = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
         let predicate = NSPredicate(format: "%@ IN attendees", reference)
-        
 
-        
         CloudKitManager.shared.fetchRecordsWithType(Event.typeKey, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
             if let error = error {
                 print("Error fetching user events: \(error), \(error.localizedDescription)")
@@ -77,18 +72,15 @@ class EventController {
             }
             
             guard let records = records else { completion(false); return }
-            
+            UserController.shared.events = []
             for record in records {
                 guard let event = Event(record: record) else { completion(false); return }
                 UserController.shared.events.append(event)
-            }
-        }
-        sortEvents { (success) in
-            if success {
-                completion(true)
-                return
-            } else {
-                completion(false)
+                if record == records.last {
+                    self.sortEvents(completion: { (_) in
+                        completion(true)
+                    })
+                }
             }
         }
     }
@@ -113,9 +105,7 @@ class EventController {
         if description != nil {
             event.description = description!
         }
-        
         guard let record = CKRecord(event: event) else { return }
-        
         //Update CloudKit
         CloudKitManager.shared.modifyRecords([record], perRecordCompletion: nil) { (_, error) in
             if let error = error {
