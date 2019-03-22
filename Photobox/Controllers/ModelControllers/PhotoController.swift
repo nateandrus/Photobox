@@ -15,9 +15,9 @@ class PhotoController {
     
     var collectionViewPhotos: [Photo] = []
     
-    func addPhoto(toEvent: CKRecord.Reference, withImage: UIImage, userReference: CKRecord.Reference, timestamp: Date, completion: @escaping (Bool) -> Void) {
+    func addPhoto(toEvent event: CKRecord.Reference, withImage: UIImage, userReference: CKRecord.Reference, timestamp: Date, completion: @escaping (Bool) -> Void) {
         
-        let photo = Photo(image: withImage, timestamp: timestamp, eventReference: toEvent, userReference: userReference)
+        let photo = Photo(image: withImage, timestamp: timestamp, eventReference: event, userReference: userReference)
         collectionViewPhotos.append(photo)
         let record = CKRecord(photo: photo)
         
@@ -29,6 +29,20 @@ class PhotoController {
                 completion(false)
                 return
             }
+            
+            guard let record = record else { completion(false); return }
+            let photoRecord = CKRecord.Reference(record: record, action: .deleteSelf)
+            CloudKitManager.shared.fetchRecord(withID: event.recordID, completion: { (record, error) in
+                if let error = error {
+                    print("Error fetching event record from cloudkit: \(error.localizedDescription)")
+                    completion(false)
+                    return
+                }
+                guard let record = record else { completion(false); return }
+                let event = Event(record: record)
+                event?.eventPhotos?.append(photoRecord)
+            })
+            
             completion(true)
             return 
         }

@@ -24,9 +24,10 @@ class FeedDetailViewController: UIViewController {
         didSet {
             guard let event = eventLandingPad,
                 let selectedImage = selectedImage,
-                let user = UserController.shared.loggedInUser?.creatorReference else { return }
+                let user = UserController.shared.loggedInUser else { return }
+            let userReference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
             let eventReference = CKRecord.Reference(recordID: event.ckrecordID, action: .none)
-            PhotoController.shared.addPhoto(toEvent: eventReference, withImage: selectedImage, userReference: user, timestamp: Date()) { (_) in
+            PhotoController.shared.addPhoto(toEvent: eventReference, withImage: selectedImage, userReference: userReference, timestamp: Date()) { (_) in
                 print("success saving to cloud")
             }
         }
