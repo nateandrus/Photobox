@@ -14,6 +14,18 @@ class UserProfileViewController: UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var pastEventsTableView: UITableView!
     
+    var selectedImage: UIImage? {
+        didSet {
+            guard let newProfilePic = selectedImage, let user = UserController.shared.loggedInUser else { return }
+            userProfileImageView.image = newProfilePic
+            UserController.shared.modify(user: user, withUsername: nil, password: nil, profileImage: newProfilePic, invitedEvent: nil) { (success) in
+                if success {
+                    print("success changing profile pic")
+                }
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadViewIfNeeded()
@@ -23,10 +35,16 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        userProfileImageView.layer.cornerRadius = userProfileImageView.frame.height / 2
         loadViewIfNeeded()
         pastEventsTableView.delegate = self
         pastEventsTableView.dataSource = self
     }
+    
+    @IBAction func changeUserProfileImage(_ sender: UIButton) {
+        presentImagePickerActionSheet()
+    }
+    
     
     func updateViews() {
         userProfileImageView.image = UserController.shared.loggedInUser?.profileImage
@@ -57,5 +75,37 @@ extension UserProfileViewController: UITableViewDelegate, UITableViewDataSource 
         let event = EventController.shared.pastEvents[indexPath.row]
         cell?.eventCellLanding = event
         return cell ?? UITableViewCell()
+    }
+}
+
+//MARK: - UIImagePickerDelegate
+extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        if let photo = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            selectedImage = photo
+        }
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    func presentImagePickerActionSheet() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        let actionSheet = UIAlertController(title: "Select a Photo", message: nil, preferredStyle: .actionSheet)
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            actionSheet.addAction(UIAlertAction(title: "Photos", style: .default, handler: { (_) in
+                imagePickerController.sourceType = UIImagePickerController.SourceType.photoLibrary
+                self.present(imagePickerController, animated: true, completion: nil)
+            }))
+        }
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (_) in
+                imagePickerController.sourceType = UIImagePickerController.SourceType.camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            }))
+        }
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(actionSheet, animated: true)
     }
 }
