@@ -27,7 +27,7 @@ class EventController {
         
         let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .none)
         
-        let defaultPhoto = Photo(image: eventImage, timestamp: Date(), eventReference: nil, userReference: creatorReference)
+        var defaultPhoto = Photo(image: eventImage, timestamp: Date(), eventReference: nil, userReference: creatorReference)
         
         guard let photoRecord = CKRecord(photo: defaultPhoto) else { completion(false, nil); return }
         CloudKitManager.shared.saveRecord(photoRecord) { (photoRecord, error) in
@@ -40,6 +40,7 @@ class EventController {
             guard let photoRecord = photoRecord else { completion(false, nil); return }
             let photoReference = CKRecord.Reference(record: photoRecord, action: .deleteSelf)
             let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, eventPhotos: [photoReference], creatorReference: creatorReference, invitedUsers: invitedUsers)
+            
             UserController.shared.events.append(newEvent)
             self.sortEvents(completion: { (success) in
             })
@@ -52,6 +53,19 @@ class EventController {
                     completion(false, nil)
                     return
                 }
+                
+                guard let record = record else { return }
+                let eventReference = CKRecord.Reference(record: record, action: .none)
+                
+                defaultPhoto.eventReference = eventReference
+                
+                guard let newPhotoRecord = CKRecord(photo: defaultPhoto) else { completion(false, nil); return }
+                CloudKitManager.shared.modifyRecords([newPhotoRecord], perRecordCompletion: nil, completion: { (_, error) in
+                    if let error = error {
+                        print("Error modifying photo record: \(error), \(error.localizedDescription)")
+                        completion(false, nil)
+                    }
+                })
                 
                 completion(true, newEvent)
                 return
@@ -86,7 +100,7 @@ class EventController {
         }
     }
     
-    func modify(event: Event, withTitle title: String?, image: UIImage?, location: String?, startTime: Date?, endTime: Date?, description: String?) {
+    func modify(event: Event, withTitle title: String?, image: UIImage?, location: String?, startTime: Date?, endTime: Date?, description: String?, eventPhotos: [CKRecord.Reference]?) {
         //Update local event object
         if title != nil {
             event.eventTitle = title!
@@ -106,6 +120,10 @@ class EventController {
         if description != nil {
             event.description = description!
         }
+        if eventPhotos != nil {
+            event.eventPhotos = eventPhotos!
+        }
+        
         guard let record = CKRecord(event: event) else { return }
         //Update CloudKit
         CloudKitManager.shared.modifyRecords([record], perRecordCompletion: nil) { (_, error) in

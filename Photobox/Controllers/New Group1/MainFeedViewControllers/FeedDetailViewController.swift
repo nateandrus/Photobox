@@ -29,6 +29,9 @@ class FeedDetailViewController: UIViewController {
             let eventReference = CKRecord.Reference(recordID: event.ckrecordID, action: .none)
             PhotoController.shared.addPhoto(toEvent: eventReference, withImage: selectedImage, userReference: userReference, timestamp: Date()) { (_) in
                 print("success saving to cloud")
+                DispatchQueue.main.async {
+                    self.photoCollectionView.reloadData()
+                }
             }
         }
     }
@@ -44,14 +47,15 @@ class FeedDetailViewController: UIViewController {
         super.viewDidLoad()
         photoCollectionView.delegate = self
         photoCollectionView.dataSource = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        
         guard let event = eventLandingPad else { return }
-        PhotoController.shared.fetchCollectionViewPhotos(event: event) { (_) in
+        PhotoController.shared.fetchCollectionViewPhotos(event: event) { (success) in
+            if success {
+                DispatchQueue.main.async {
+                    self.photoCollectionView.reloadData()
+                }
+            }
         }
-        self.photoCollectionView.reloadData()
     }
     
     @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
@@ -83,6 +87,7 @@ class FeedDetailViewController: UIViewController {
 extension FeedDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(PhotoController.shared.collectionViewPhotos.count)
         return PhotoController.shared.collectionViewPhotos.count
     }
     
