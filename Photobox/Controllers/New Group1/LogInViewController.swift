@@ -48,6 +48,7 @@ class LogInViewController: UIViewController {
         guard let username = usernameTextField.text else { return }
         let predicate = NSPredicate(format: "%K == %@", argumentArray: [User.usernameKey, username])
         
+        
         CloudKitManager.shared.fetchRecordsWithType(User.typeKey, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
             if let error = error {
                 print("Error fetching \(username) from cloudkit: \(error), \(error.localizedDescription)")
@@ -61,6 +62,7 @@ class LogInViewController: UIViewController {
             }
             
             guard let user = User(record: records.first!) else { return }
+            UserController.shared.loggedInUser = user
             DispatchQueue.main.async {
                 if self.passwordTextField.text == user.password {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
