@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="azx-vb-d12">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x73-qA-L2v">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -300,7 +300,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cLn-wF-aQ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-673" y="-159"/>
+            <point key="canvasLocation" x="-1521" y="-170"/>
         </scene>
         <!--MainFeed-->
         <scene sceneID="waa-I4-Red">
@@ -489,6 +489,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hwq-Cu-gIT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2294" y="-170"/>
+        </scene>
+        <!--ActivityIndicatorScreen-->
+        <scene sceneID="GtL-qq-5rn">
+            <objects>
+                <viewController title="ActivityIndicatorScreen" id="x73-qA-L2v" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0nG-3C-m90">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="fbD-m4-9Gn">
+                                <rect key="frame" x="91.5" y="286" width="192.5" height="95"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PhotoBOX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cO-0e-lYO">
+                                        <rect key="frame" x="0.0" y="0.0" width="192.5" height="48"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="T53-e9-em1">
+                                        <rect key="frame" x="86" y="75" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.70492940989999997" green="0.65154177189999996" blue="0.52873093849999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="fbD-m4-9Gn" firstAttribute="centerX" secondItem="0nG-3C-m90" secondAttribute="centerX" id="FBZ-dU-6AG"/>
+                            <constraint firstItem="fbD-m4-9Gn" firstAttribute="centerY" secondItem="0nG-3C-m90" secondAttribute="centerY" id="KCs-3W-HRj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="OJf-eV-x8f"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y2L-zu-ztX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3116" y="-170"/>
         </scene>
     </scenes>
 </document>

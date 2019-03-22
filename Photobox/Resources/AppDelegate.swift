@@ -19,9 +19,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UserController.shared.fetchLoggedInUser { (success) in
             if success {
-                DispatchQueue.main.async {                    
+                DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")
+                    self.window?.rootViewController = vc
+                    
+                }
+            } else {
+                DispatchQueue.main.async {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "LogInScreen")
                     self.window?.rootViewController = vc
                 }
             }
