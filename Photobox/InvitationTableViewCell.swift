@@ -24,11 +24,16 @@ class InvitationTableViewCell: UITableViewCell {
             
             let recordID = eventReference.recordID
             
-            let record = CKRecord(recordType: Event.typeKey, recordID: recordID)
-            
-            guard let event = Event(record: record) else { return }
-            
-            self.event = event
+            CloudKitManager.shared.fetchRecord(withID: recordID) { (record, error) in
+                if let error = error {
+                    print("Error fetching record from cloudkit: \(error), \(error.localizedDescription)")
+                    return
+                }
+                guard let record = record,
+                    let event = Event(record: record) else { return }
+                
+                self.event = event
+            }
         }
     }
     
