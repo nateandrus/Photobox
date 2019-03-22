@@ -131,6 +131,11 @@ class Page3CreateEventViewController: UIViewController {
             }
         } else {
             createEvent()
+            DispatchQueue.main.async {
+                let mainVC = self.navigationController?.viewControllers.first as? Page1CreateEventViewController
+                mainVC?.fromCreate = true
+                self.navigationController?.popToRootViewController(animated: true)
+            }
         }
         
     }
