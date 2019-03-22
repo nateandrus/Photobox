@@ -75,7 +75,6 @@ class PhotoController {
                 
                 self.collectionViewPhotos.append(photo)
                 dispatchGroup.leave()
-             
             }
         }
         dispatchGroup.notify(queue: .main) {
