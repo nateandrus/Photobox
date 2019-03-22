@@ -158,11 +158,6 @@ class Page3CreateEventViewController: UIViewController {
                     }
                 })
             }
-            DispatchQueue.main.async {
-                let mainVC = self.navigationController?.viewControllers.first as? Page1CreateEventViewController
-                mainVC?.fromCreate = true
-                self.navigationController?.popToRootViewController(animated: true)
-            }
         }
     }
 }
@@ -536,7 +531,13 @@ extension Page3CreateEventViewController: AddedFriendCollectionViewCellDelegate 
 extension Page3CreateEventViewController: MFMessageComposeViewControllerDelegate {
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.dismiss(animated: true) {
+            DispatchQueue.main.async {
+                let mainVC = self.navigationController?.viewControllers.first as? Page1CreateEventViewController
+                mainVC?.fromCreate = true
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        }
     }
     
     func displayMessageInterface(recipients: [String], body: String) {
