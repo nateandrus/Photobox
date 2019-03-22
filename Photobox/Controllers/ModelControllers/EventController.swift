@@ -27,7 +27,7 @@ class EventController {
         
         let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .none)
         
-        var defaultPhoto = Photo(image: eventImage, timestamp: Date(), eventReference: nil, userReference: creatorReference)
+        let defaultPhoto = Photo(image: eventImage, timestamp: Date(), eventReference: nil, userReference: creatorReference)
         
         guard let photoRecord = CKRecord(photo: defaultPhoto) else { completion(false, nil); return }
         CloudKitManager.shared.saveRecord(photoRecord) { (photoRecord, error) in

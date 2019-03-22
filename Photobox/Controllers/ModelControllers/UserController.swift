@@ -33,13 +33,13 @@ class UserController {
                 }
                 
                 guard let appleUserRecordID = appleUserRecordID,
-                    let phoneNumber = phoneNumber else { completion(false, nil); return }
+                    let phoneNumber = phoneNumber else { print(1); completion(false, nil); return }
                 
                 let reference = CKRecord.Reference(recordID: appleUserRecordID, action: .deleteSelf)
             
                 let newUser = User(username: username, password: password, creatorReference: reference, phoneNumber: phoneNumber)
                 
-                guard let record = CKRecord(user: newUser) else { completion(false, nil); return }
+                guard let record = CKRecord(user: newUser) else { print(2); completion(false, nil); return }
                 
                 CloudKitManager.shared.saveRecord(record, completion: { (record, error) in
                     if let error = error {
@@ -54,13 +54,13 @@ class UserController {
 //                    guard let recordID = newUser.ckRecord else { completion(false); return }
                     
                     CloudKitManager.shared.fetchDiscoverableUserWith(recordID: appleUserRecordID) { (userID) in
-                        guard let userID = userID else { return }
+                        guard let userID = userID else { print(3); completion(false, nil); return }
                         newUser.firstName = userID.nameComponents?.givenName
                         newUser.lastName = userID.nameComponents?.familyName
                     }
                     
                     // Update the record in CloudKit to include first and last name
-                    guard let newRecord = CKRecord(user: newUser) else { completion(false, nil); return }
+                    guard let newRecord = CKRecord(user: newUser) else { print(4); completion(false, nil); return }
                     CloudKitManager.shared.modifyRecords([newRecord], perRecordCompletion: nil, completion: { (record, error) in
                         if let error = error {
                             print("Error modifying record in CloudKit: \(error), \(error.localizedDescription)")
@@ -72,11 +72,10 @@ class UserController {
         }
         //If the user is created with only a phone number. This will happen if an event moderator invites someone from their contacts who isn't a registed member of photoBOX to join an event.
         else {
-            guard let phoneNumber = phoneNumber else { completion(false, nil); return }
+            guard let phoneNumber = phoneNumber else { print(5); completion(false, nil); return }
             
             let newUser = User(username: nil, password: nil, creatorReference: nil, phoneNumber: phoneNumber)
-            
-            guard let record = CKRecord(user: newUser) else { completion(false, nil); return }
+            guard let record = CKRecord(user: newUser) else { print(6); completion(false, nil); return }
             
             CloudKitManager.shared.saveRecord(record) { (record, error) in
                 if let error = error {

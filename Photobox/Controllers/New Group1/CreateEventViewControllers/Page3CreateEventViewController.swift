@@ -85,50 +85,70 @@ class Page3CreateEventViewController: UIViewController {
     
     @IBAction func createButtonTapped(_ sender: Any) {
         guard let name = name,
-            let location = location,
-            let image = image,
-            let startDate = startDate,
-            let endDate = endDate,
-            let eventDescription = descriptionTextView.text
-            else { return }
+            let startDate = startDate else { return }
         
         if !textMessageRecipients.isEmpty {
-            let composeVC = MFMessageComposeViewController()
-            
-            // Set delegate for MessageComposeViewController
-            composeVC.messageComposeDelegate = self
-            
-            // Configure the fields of the interface
-            composeVC.recipients = textMessageRecipients
-            composeVC.body = "Hey! Join me at \(name) on \(startDate.stringWith(dateStyle: .medium, timeStyle: .short))! Download PhotoBOX to accept my invitation: (URL)."
-            
-            // Present the view controller modally
-            if MFMessageComposeViewController.canSendText() {
-                self.present(composeVC, animated: true)
-            }
-            
             // Create accounts using their phone numbers
+            let dispatchGroup = DispatchGroup()
+            
             for phoneNumber in textMessageRecipients {
-                let formattedPhoneNumber = phoneNumber.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined()
-                print(formattedPhoneNumber)
+                dispatchGroup.enter()
+                var formattedPhoneNumber = phoneNumber.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined()
+                if formattedPhoneNumber.count > 10 {
+                    formattedPhoneNumber.removeFirst()
+                }
+                
                 UserController.shared.saveUserWith(username: nil, password: nil, phoneNumber: formattedPhoneNumber) { (success, user) in
                     if success {
-                        guard let recordID = user?.ckRecord else { return }
+                        guard let user = user else { return }
+                        
+                        let recordID = user.ckRecord
                         
                         let reference = CKRecord.Reference(recordID: recordID, action: .none)
                         
                         self.invitedUsers.append(reference)
+                        self.addedFriends.0.append(user)
+                        dispatchGroup.leave()
                     }
                 }
             }
+            dispatchGroup.notify(queue: .main) {
+                self.createEvent()
+                
+                let composeVC = MFMessageComposeViewController()
+                
+                // Set delegate for MessageComposeViewController
+                composeVC.messageComposeDelegate = self
+                
+                // Configure the fields of the interface
+                composeVC.recipients = self.textMessageRecipients
+                composeVC.body = "Hey! Join me at \(name) on \(startDate.stringWith(dateStyle: .medium, timeStyle: .short))! Download PhotoBOX to accept my invitation: (URL)."
+                
+                // Present the view controller modally
+                if MFMessageComposeViewController.canSendText() {
+                    self.navigationController?.present(composeVC, animated: true)
+                }
+            }
+        } else {
+            createEvent()
         }
+        
+    }
+    
+    func createEvent() {
+        guard let name = name,
+            let location = location,
+            let image = image,
+            let startDate = startDate,
+            let endDate = endDate,
+            let eventDescription = descriptionTextView.text else { return }
         
         EventController.shared.createEvent(eventImage: image, eventTitle: name, location: location, startTime: startDate, endTime: endDate, description: eventDescription, invitedUsers: invitedUsers) { (success, event)  in
             guard let event = event else { return }
             
+            let reference = CKRecord.Reference(recordID: event.ckrecordID, action: .none)
+            
             for user in self.addedFriends.0 {
-                let reference = CKRecord.Reference(recordID: event.ckrecordID, action: .none)
-                
                 // Update CloudKit
                 UserController.shared.modify(user: user, withUsername: nil, password: nil, profileImage: nil, invitedEvent: reference, completion: { (success) in
                     // If unsuccessful, print to console
@@ -138,7 +158,6 @@ class Page3CreateEventViewController: UIViewController {
                     }
                 })
             }
-            
             DispatchQueue.main.async {
                 let mainVC = self.navigationController?.viewControllers.first as? Page1CreateEventViewController
                 mainVC?.fromCreate = true
@@ -517,9 +536,7 @@ extension Page3CreateEventViewController: AddedFriendCollectionViewCellDelegate 
 extension Page3CreateEventViewController: MFMessageComposeViewControllerDelegate {
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "Page1CreateEvent") as? Page1CreateEventViewController
-        vc?.fromCreate = true
-        self.present(vc!, animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     func displayMessageInterface(recipients: [String], body: String) {
