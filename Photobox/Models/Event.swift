@@ -96,7 +96,7 @@ class Event {
         self.endTime = endTime
         self.description = description
         self.eventPhotos = eventPhotos
-        self.ckrecordID = CKRecord.ID(recordName: self.eventTitle)
+        self.ckrecordID = record.recordID
         self.creatorReference = creatorReference
         self.invitedUsers = invitedUsers
     }
