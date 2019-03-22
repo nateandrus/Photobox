@@ -87,7 +87,6 @@ class FeedDetailViewController: UIViewController {
 extension FeedDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(PhotoController.shared.collectionViewPhotos.count)
         return PhotoController.shared.collectionViewPhotos.count
     }
     

@@ -60,7 +60,7 @@ class PhotoController {
         collectionViewPhotos.removeAll()
         
         guard let eventPhotos = event.eventPhotos else { completion(false); return }
-        print(eventPhotos.count)
+        
         let dispatchGroup = DispatchGroup()
         for photoReference in eventPhotos {
             dispatchGroup.enter()

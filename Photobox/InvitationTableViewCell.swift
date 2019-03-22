@@ -60,15 +60,19 @@ class InvitationTableViewCell: UITableViewCell {
             let eventIndex = UserController.shared.loggedInUser?.invitedEvents.index(of: eventReference),
             let loggedInUser = UserController.shared.loggedInUser else { return }
         
-        let recordID = eventReference.recordID
-        
-        let record = CKRecord(recordType: Event.typeKey, recordID: recordID)
-        
-        guard let event = Event(record: record) else { return }
-        
-        UserController.shared.events.append(event)
-        
-        loggedInUser.invitedEvents.remove(at: eventIndex)
+        CloudKitManager.shared.fetchRecord(withID: eventReference.recordID) { (record, error) in
+            if let error = error {
+                print("Error fetching record from Cloud Kit: \(error), \(error.localizedDescription)")
+            }
+            
+            guard let record = record else { return }
+            
+            guard let event = Event(record: record) else { return }
+            
+            UserController.shared.events.append(event)
+            
+            loggedInUser.invitedEvents.remove(at: eventIndex)
+        }
     }
     
     @IBAction func declineButtonTapped(_ sender: Any) {
