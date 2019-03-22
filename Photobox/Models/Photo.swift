@@ -20,7 +20,7 @@ class Photo {
     
     var photoData: Data?
     let timestamp: Date
-    let eventReference: CKRecord.Reference?
+    var eventReference: CKRecord.Reference?
     let userReference: CKRecord.Reference
     let photoRecordID: CKRecord.ID
     var image: UIImage? {
