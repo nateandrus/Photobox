@@ -170,9 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				2FF7156722380E8D007C9B36 /* FeedDetailViewController.swift */,
-
 				ED2A51E12245993D00D51C34 /* ImageViewController.swift */,
-
 				2FF7156A22380E8D007C9B36 /* MainFeedTableViewController.swift */,
 				2FF7156C22380E8D007C9B36 /* EventPhotosCollectionViewController.swift */,
 				2FF7156D22380E8D007C9B36 /* AttendeeEditViewController.swift */,
