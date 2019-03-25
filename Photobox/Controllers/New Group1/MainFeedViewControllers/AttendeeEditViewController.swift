@@ -319,7 +319,7 @@ extension AttendeeEditViewController: UITableViewDataSource {
         
         var contact: CNContact
         
-        if searchResults != nil {
+        if searchResults == nil {
             contact = ContactController.shared.contacts[indexPath.row]
         } else {
             contact = searchResults!.0[indexPath.row]
