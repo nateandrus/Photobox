@@ -54,9 +54,9 @@ class User {
     let ckRecord: CKRecord.ID
     let creatorReference: CKRecord.Reference?
     var phoneNumber: String
-    var invitedEvents: [CKRecord.Reference]
+    var invitedEvents: [CKRecord.Reference]?
     
-    init(username: String?, password: String?, firstName: String? = nil, lastName: String? = nil, profileImage: UIImage = #imageLiteral(resourceName: "default user icon"), ckRecord: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), creatorReference: CKRecord.Reference?, phoneNumber: String, invitedEvents: [CKRecord.Reference] = []) {
+    init(username: String?, password: String?, firstName: String? = nil, lastName: String? = nil, profileImage: UIImage = #imageLiteral(resourceName: "default user icon"), ckRecord: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), creatorReference: CKRecord.Reference?, phoneNumber: String, invitedEvents: [CKRecord.Reference]? = nil) {
         self.firstName = firstName
         self.lastName = lastName
         self.username = username
@@ -106,7 +106,7 @@ extension CKRecord {
         setValue(user.imageAsset, forKey: User.profileImageKey)
         setValue(user.phoneNumber, forKey: User.phoneNumberKey)
         setValue(user.creatorReference, forKey: User.creatorReferenceKey)
-        if !user.invitedEvents.isEmpty {
+        if user.invitedEvents != nil {
             setValue(user.invitedEvents, forKey: User.invitedEventsKey)
         }
     }

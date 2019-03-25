@@ -44,7 +44,6 @@ class ContactTableViewCell: UITableViewCell {
                 self.updateViews()
             }
         })
-      
     }
     
     func updateViews() {
@@ -52,7 +51,7 @@ class ContactTableViewCell: UITableViewCell {
         if contact != nil {
             guard let contact = contact else { return }
             nameLabel.text = contact.givenName + " " + contact.familyName
-            usernameLabel.text = contact.givenName
+            usernameLabel.text = contact.phoneNumbers.first?.value.stringValue
         } else if user != nil {
             guard let user = user,
             let username = user.username else { return }

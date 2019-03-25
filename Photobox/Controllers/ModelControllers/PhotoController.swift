@@ -48,7 +48,7 @@ class PhotoController {
                 
                 event.eventPhotos?.append(photoReference)
                 
-                EventController.shared.modify(event: event, withTitle: nil, image: nil, location: nil, startTime: nil, endTime: nil, description: nil, eventPhotos: event.eventPhotos)
+                EventController.shared.modify(event: event, withTitle: nil, image: nil, location: nil, startTime: nil, endTime: nil, description: nil, invitedUsers: nil, eventPhotos: event.eventPhotos, attendees: nil)
                 
                 completion(true)
                 return

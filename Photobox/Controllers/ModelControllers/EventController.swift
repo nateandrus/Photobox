@@ -100,7 +100,7 @@ class EventController {
         }
     }
     
-    func modify(event: Event, withTitle title: String?, image: UIImage?, location: String?, startTime: Date?, endTime: Date?, description: String?, eventPhotos: [CKRecord.Reference]?) {
+    func modify(event: Event, withTitle title: String?, image: UIImage?, location: String?, startTime: Date?, endTime: Date?, description: String?, invitedUsers: [CKRecord.Reference]?, eventPhotos: [CKRecord.Reference]?, attendees: [CKRecord.Reference]?) {
         //Update local event object
         if title != nil {
             event.eventTitle = title!
@@ -120,15 +120,21 @@ class EventController {
         if description != nil {
             event.description = description!
         }
+        if invitedUsers != nil {
+            event.invitedUsers = invitedUsers!
+        }
         if eventPhotos != nil {
             event.eventPhotos = eventPhotos!
+        }
+        if attendees != nil {
+            event.attendees = attendees!
         }
         
         guard let record = CKRecord(event: event) else { return }
         //Update CloudKit
         CloudKitManager.shared.modifyRecords([record], perRecordCompletion: nil) { (_, error) in
             if let error = error {
-                print("Error modifying the event: \(event.eventTitle); \(error.localizedDescription)")
+                print("Error modifying the event: \(event.eventTitle); \(error), \(error.localizedDescription)")
                 return
             }
         }

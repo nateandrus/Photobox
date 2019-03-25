@@ -30,7 +30,6 @@ class Page3CreateEventViewController: UIViewController {
     var endDate: Date?
     
     // MARK: - Properties
-
     var invitedUsers: [CKRecord.Reference] = []
     var textMessageRecipients: [String] = []
     
@@ -60,7 +59,7 @@ class Page3CreateEventViewController: UIViewController {
         addedFriendsCollectionView.dataSource = self
         
         descriptionTextView.layer.borderWidth = 1
-        descriptionTextView.layer.cornerRadius = descriptionTextView.frame.width / 16
+        descriptionTextView.layer.cornerRadius = descriptionTextView.frame.width / 32
         
         ContactController.shared.fetchContacts { (success) in
             if success {
@@ -73,7 +72,9 @@ class Page3CreateEventViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-
+        DispatchQueue.main.async {
+            self.resultsTableView.reloadData()
+        }
     }
     
     // MARK: - IBActions
@@ -151,11 +152,11 @@ class Page3CreateEventViewController: UIViewController {
         EventController.shared.createEvent(eventImage: image, eventTitle: name, location: location, startTime: startDate, endTime: endDate, description: eventDescription, invitedUsers: invitedUsers) { (success, event)  in
             guard let event = event else { return }
             
-            let reference = CKRecord.Reference(recordID: event.ckrecordID, action: .none)
+            let reference = CKRecord.Reference(recordID: event.ckrecordID, action: .deleteSelf)
             
             for user in self.addedFriends.0 {
                 // Update CloudKit
-                UserController.shared.modify(user: user, withUsername: nil, password: nil, profileImage: nil, invitedEvent: reference, completion: { (success) in
+                UserController.shared.modify(user: user, withUsername: nil, password: nil, profileImage: nil, invitedEvents: [reference], completion: { (success) in
                     // If unsuccessful, print to console
                     if !success {
                         print("Unable to modify user")
@@ -181,6 +182,7 @@ extension Page3CreateEventViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
 }
+
 extension Page3CreateEventViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -351,7 +353,18 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
     }
 }
 extension Page3CreateEventViewController: ContactTableViewCellDelegate {
+    
     func addButtonTapped(_ cell: ContactTableViewCell, contact: CNContact?, user: User?, completion: @escaping (Bool) -> Void) {
+        addPersonToEvent(cell, contact: contact, user: user) { (didAdd) in
+            if didAdd {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
+    func addPersonToEvent(_ cell: ContactTableViewCell, contact: CNContact?, user: User?, completion: @escaping (Bool) -> Void) {
         // If the cell is a contact
         if contact != nil {
             guard let contact = contact else { completion(false); return }
@@ -431,10 +444,10 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
                 self.present(alertController, animated: true)
             }
         }
-        // If the cell is a user
+            // If the cell is a user
         else {
             guard let user = user,
-            !addedFriends.0.contains(user) else { completion(false); return }
+                !addedFriends.0.contains(user) else { completion(false); return }
             
             let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
             
@@ -544,23 +557,4 @@ extension Page3CreateEventViewController: MFMessageComposeViewControllerDelegate
             }
         }
     }
-    
-    func displayMessageInterface(recipients: [String], body: String) {
-        let composeVC = MFMessageComposeViewController()
-        composeVC.messageComposeDelegate = self
-        
-        // Configure the fields of the interface.
-        composeVC.recipients = recipients
-        composeVC.body = body
-        
-        // Present the view controller modally.
-        if MFMessageComposeViewController.canSendText() {
-            self.present(composeVC, animated: true, completion: nil)
-        } else {
-            print("Can't send messages.")
-        }
-    }
-    
-    
-    
 }

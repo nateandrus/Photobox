@@ -175,7 +175,7 @@ class UserController {
         }
     }
     
-    func modify(user: User, withUsername username: String?, password: String?, profileImage: UIImage?, invitedEvent: CKRecord.Reference?, completion: ((Bool) -> Void)?) {
+    func modify(user: User, withUsername username: String?, password: String?, profileImage: UIImage?, invitedEvents: [CKRecord.Reference]?, completion: ((Bool) -> Void)?) {
         //Update local user object
         if username != nil {
             user.username = username!
@@ -186,8 +186,8 @@ class UserController {
         if profileImage != nil {
             user.profileImage = profileImage!
         }
-        if invitedEvent != nil {
-            user.invitedEvents.append(invitedEvent!)
+        if invitedEvents != nil {
+            user.invitedEvents = invitedEvents!
         }
         
         guard let record = CKRecord(user: user) else { return }

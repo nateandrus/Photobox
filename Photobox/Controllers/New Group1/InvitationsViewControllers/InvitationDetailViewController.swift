@@ -63,8 +63,8 @@ class InvitationDetailViewController: UIViewController {
     
     @IBAction func acceptButtonTapped(_ sender: Any) {
         guard let eventReference = invitedEventReference,
-            let eventIndex = UserController.shared.loggedInUser?.invitedEvents.index(of: eventReference),
-            let loggedInUser = UserController.shared.loggedInUser else { return }
+            var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
+            let eventIndex = invitedEvents.index(of: eventReference) else { return }
         
         CloudKitManager.shared.fetchRecord(withID: eventReference.recordID) { (record, error) in
             if let error = error {
@@ -77,15 +77,15 @@ class InvitationDetailViewController: UIViewController {
             
             UserController.shared.events.append(event)
             
-            loggedInUser.invitedEvents.remove(at: eventIndex)
+            invitedEvents.remove(at: eventIndex)
         }
     }
     
     @IBAction func declineButtonTapped(_ sender: Any) {
         guard let eventReference = invitedEventReference,
-            let eventIndex = UserController.shared.loggedInUser?.invitedEvents.index(of: eventReference),
-            let loggedInUser = UserController.shared.loggedInUser else { return }
+            var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
+            let eventIndex = invitedEvents.index(of: eventReference) else { return }
         
-        loggedInUser.invitedEvents.remove(at: eventIndex)
+        invitedEvents.remove(at: eventIndex)
     }
 }

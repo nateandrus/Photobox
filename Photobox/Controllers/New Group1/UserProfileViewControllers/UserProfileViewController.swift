@@ -18,7 +18,7 @@ class UserProfileViewController: UIViewController {
         didSet {
             guard let newProfilePic = selectedImage, let user = UserController.shared.loggedInUser else { return }
             userProfileImageView.image = newProfilePic
-            UserController.shared.modify(user: user, withUsername: nil, password: nil, profileImage: newProfilePic, invitedEvent: nil) { (success) in
+            UserController.shared.modify(user: user, withUsername: nil, password: nil, profileImage: newProfilePic, invitedEvents: nil) { (success) in
                 if success {
                     print("success changing profile pic")
                 }

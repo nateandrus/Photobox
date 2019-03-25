@@ -26,7 +26,6 @@
 		2FF7157B2238393B007C9B36 /* Page2CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157A2238393A007C9B36 /* Page2CreateEventViewController.swift */; };
 		2FF7157D22383A11007C9B36 /* Page3CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157C22383A11007C9B36 /* Page3CreateEventViewController.swift */; };
 		2FF7157F22384F32007C9B36 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7157E22384F32007C9B36 /* ContactTableViewCell.swift */; };
-		2FF7158122397738007C9B36 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7158022397738007C9B36 /* OnboardingViewController.swift */; };
 		ED07648E223819AA00D8307F /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED07648D223819AA00D8307F /* UserProfileViewController.swift */; };
 		ED076490223819BE00D8307F /* UserProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED07648F223819BE00D8307F /* UserProfileDetailViewController.swift */; };
 		ED0764942238209C00D8307F /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0764932238209C00D8307F /* Photo.swift */; };
@@ -65,7 +64,6 @@
 		2FF7155C22380DF7007C9B36 /* EventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		2FF7155D22380DF7007C9B36 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2FF7156722380E8D007C9B36 /* FeedDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
-		2FF7156922380E8D007C9B36 /* ActivityLogTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLogTableViewController.swift; sourceTree = "<group>"; };
 		2FF7156A22380E8D007C9B36 /* MainFeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedTableViewController.swift; sourceTree = "<group>"; };
 		2FF7156B22380E8D007C9B36 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		2FF7156C22380E8D007C9B36 /* EventPhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPhotosCollectionViewController.swift; sourceTree = "<group>"; };
@@ -76,7 +74,6 @@
 		2FF7157A2238393A007C9B36 /* Page2CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page2CreateEventViewController.swift; sourceTree = "<group>"; };
 		2FF7157C22383A11007C9B36 /* Page3CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page3CreateEventViewController.swift; sourceTree = "<group>"; };
 		2FF7157E22384F32007C9B36 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
-		2FF7158022397738007C9B36 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		ED07648D223819AA00D8307F /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		ED07648F223819BE00D8307F /* UserProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDetailViewController.swift; sourceTree = "<group>"; };
 		ED0764932238209C00D8307F /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
@@ -108,6 +105,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F76B74F224925E600F8F214 /* InvitationsViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F18D9CC2239933B001E1765 /* InvitationsListTableViewController.swift */,
+				2FA406BF2244489800562693 /* InvitationDetailViewController.swift */,
+			);
+			path = InvitationsViewControllers;
+			sourceTree = "<group>";
+		};
+		2F76B750224925F700F8F214 /* OnboardingViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F18D9CE223AC357001E1765 /* LogInViewController.swift */,
+				2F18D9D0223AC385001E1765 /* SignUpViewController.swift */,
+				2F18D9D2223B03C9001E1765 /* PhoneNumberViewController.swift */,
+			);
+			path = OnboardingViewControllers;
+			sourceTree = "<group>";
+		};
 		2FF71531223702F2007C9B36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,8 +170,9 @@
 			isa = PBXGroup;
 			children = (
 				2FF7156722380E8D007C9B36 /* FeedDetailViewController.swift */,
+
 				ED2A51E12245993D00D51C34 /* ImageViewController.swift */,
-				2FF7156922380E8D007C9B36 /* ActivityLogTableViewController.swift */,
+
 				2FF7156A22380E8D007C9B36 /* MainFeedTableViewController.swift */,
 				2FF7156C22380E8D007C9B36 /* EventPhotosCollectionViewController.swift */,
 				2FF7156D22380E8D007C9B36 /* AttendeeEditViewController.swift */,
@@ -170,12 +187,8 @@
 				2FF715822239774A007C9B36 /* CreateEventViewControllers */,
 				2FF7156622380E8D007C9B36 /* MainFeedViewControllers */,
 				ED076491223819C500D8307F /* UserProfileViewControllers */,
-				2FF7158022397738007C9B36 /* OnboardingViewController.swift */,
-				2F18D9CC2239933B001E1765 /* InvitationsListTableViewController.swift */,
-				2FA406BF2244489800562693 /* InvitationDetailViewController.swift */,
-				2F18D9CE223AC357001E1765 /* LogInViewController.swift */,
-				2F18D9D0223AC385001E1765 /* SignUpViewController.swift */,
-				2F18D9D2223B03C9001E1765 /* PhoneNumberViewController.swift */,
+				2F76B74F224925E600F8F214 /* InvitationsViewControllers */,
+				2F76B750224925F700F8F214 /* OnboardingViewControllers */,
 			);
 			name = ViewControllers;
 			path = "New Group1";
@@ -358,7 +371,6 @@
 				ED0764942238209C00D8307F /* Photo.swift in Sources */,
 				EDE117892242B2860038DE5B /* DateFormatter.swift in Sources */,
 				EDCF4AD2223AAFF90061E8FF /* ContactsController.swift in Sources */,
-				2FF7158122397738007C9B36 /* OnboardingViewController.swift in Sources */,
 				2FA406BA2242EC2E00562693 /* AddedFriendCollectionViewCell.swift in Sources */,
 				2FF7157B2238393B007C9B36 /* Page2CreateEventViewController.swift in Sources */,
 				2FF7155F22380DF7007C9B36 /* UserController.swift in Sources */,
