@@ -17,6 +17,8 @@ class Photo {
     static let userReferenceKey = "userReference"
     static let imageAssetKey = "imageAsset"
     static let recordID = "photoRecordID"
+    static let numTimesReportedKey = "numberOfTimesReported"
+    static let usersThatReportedKey = "usersThatReported"
     
     var photoData: Data?
     let timestamp: Date
@@ -47,11 +49,16 @@ class Photo {
         }
     }
     
-    init(image: UIImage, timestamp: Date = Date(), eventReference: CKRecord.Reference?, userReference: CKRecord.Reference, photoRecordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString)) {
+    var numberOfTimesReported: Int
+    var usersThatReported: [CKRecord.Reference]?
+    
+    init(image: UIImage, timestamp: Date = Date(), eventReference: CKRecord.Reference?, userReference: CKRecord.Reference, photoRecordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), numberOfTimesReported: Int = 0, usersThatReported: [CKRecord.Reference]? = []) {
         self.timestamp = timestamp
         self.eventReference = eventReference
         self.userReference = userReference
         self.photoRecordID = photoRecordID
+        self.numberOfTimesReported = numberOfTimesReported
+        self.usersThatReported = usersThatReported
         self.image = image
     }
     
@@ -59,17 +66,22 @@ class Photo {
         guard let timestamp = ckRecord[Photo.timestampKey] as? Date,
 
             let userReference = ckRecord[Photo.userReferenceKey] as? CKRecord.Reference,
-            let imageAsset = ckRecord[Photo.imageAssetKey] as? CKAsset else { return nil }
+            let imageAsset = ckRecord[Photo.imageAssetKey] as? CKAsset,
+            let numberOfTimesReported = ckRecord[Photo.numTimesReportedKey] as? Int else { return nil }
         
-        guard let photoData = try? Data(contentsOf: imageAsset.fileURL) else { return nil }
+        guard let photoData = try? Data(contentsOf: imageAsset.fileURL!) else { return nil }
         
         let eventReference = ckRecord[Photo.eventReferenceKey] as? CKRecord.Reference
+        let usersThatReported = ckRecord[Photo.usersThatReportedKey] as? [CKRecord.Reference]
+        
         
         self.photoData = photoData
         self.timestamp = timestamp
         self.photoRecordID = ckRecord.recordID
         self.eventReference = eventReference
         self.userReference = userReference
+        self.numberOfTimesReported = numberOfTimesReported
+        self.usersThatReported = usersThatReported
     }
 }
 extension CKRecord {
@@ -79,6 +91,10 @@ extension CKRecord {
         setValue(photo.timestamp, forKey: Photo.timestampKey)
         setValue(photo.eventReference, forKey: Photo.eventReferenceKey)
         setValue(photo.userReference, forKey: Photo.userReferenceKey)
+        setValue(photo.numberOfTimesReported, forKey: Photo.numTimesReportedKey)
+        if photo.usersThatReported != nil && !photo.usersThatReported!.isEmpty {
+            setValue(photo.usersThatReported, forKey: Photo.usersThatReportedKey)
+        }
     }
 }
 

@@ -209,7 +209,7 @@ class UserController {
 
     func delete(user: User, completion: @escaping (Bool) -> Void) {
         //Delete the local instance
-        guard let indexToRemove = users.index(of: user) else { completion(false); return }
+        guard let indexToRemove = users.firstIndex(of: user) else { completion(false); return }
         users.remove(at: indexToRemove)
         
         //Delete from CloudKit

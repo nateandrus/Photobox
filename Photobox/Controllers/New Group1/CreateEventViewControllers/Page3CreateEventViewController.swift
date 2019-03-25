@@ -521,7 +521,7 @@ extension Page3CreateEventViewController: UICollectionViewDataSource, UICollecti
 extension Page3CreateEventViewController: AddedFriendCollectionViewCellDelegate {
     func removeButtonTapped(_ cell: AddedFriendCollectionViewCell, contact: CNContact?, user: User?) {
         if contact != nil {
-            guard let friendsIndex = addedFriends.1.index(of: contact!),
+            guard let friendsIndex = addedFriends.1.firstIndex(of: contact!),
             let phoneNumbers = contact?.phoneNumbers else { return }
             
             let phoneNumbersStrings = phoneNumbers.compactMap { (phoneNumber) -> String? in
@@ -529,7 +529,7 @@ extension Page3CreateEventViewController: AddedFriendCollectionViewCellDelegate 
             }
             
             for phoneNum in phoneNumbersStrings {
-                guard let index = textMessageRecipients.index(of: phoneNum) else { continue }
+                guard let index = textMessageRecipients.firstIndex(of: phoneNum) else { continue }
                
                 textMessageRecipients.remove(at: index)
                 break
@@ -537,12 +537,12 @@ extension Page3CreateEventViewController: AddedFriendCollectionViewCellDelegate 
             
             addedFriends.1.remove(at: friendsIndex)
         } else {
-            guard let friendsIndex = addedFriends.0.index(of: user!),
+            guard let friendsIndex = addedFriends.0.firstIndex(of: user!),
                 let recordID = user?.ckRecord else { return }
             addedFriends.0.remove(at: friendsIndex)
             
             let reference = CKRecord.Reference(recordID: recordID, action: .none)
-            guard let invitedUserIndex = invitedUsers.index(of: reference) else { return }
+            guard let invitedUserIndex = invitedUsers.firstIndex(of: reference) else { return }
             invitedUsers.remove(at: invitedUserIndex)
         }
     }
