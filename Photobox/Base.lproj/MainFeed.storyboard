@@ -575,6 +575,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButtonOutlet" destination="eAw-5u-Ycr" id="oBP-g0-QYZ"/>
                         <outlet property="dateAndTimeLabel" destination="smg-n3-y2c" id="W7C-Zn-F2m"/>
                         <outlet property="descriptionLabel" destination="qE4-ub-PWt" id="GhU-AF-PoS"/>
                         <outlet property="endDateandTimeLabel" destination="doJ-5a-5jA" id="VZn-dI-jr3"/>

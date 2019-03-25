@@ -64,7 +64,7 @@ class InvitationDetailViewController: UIViewController {
         guard let eventReference = invitedEventReference,
             let event = event,
             var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
-            let eventIndex = invitedEvents.firstIndex(of: eventReference),
+            let eventIndex = invitedEvents.index(of: eventReference),
             let loggedInUser = UserController.shared.loggedInUser,
             let invitedUsers = event.invitedUsers else { return }
         
@@ -73,11 +73,15 @@ class InvitationDetailViewController: UIViewController {
         // Add the user to the event's attendees list
         event.attendees.append(userRef)
         
-        guard let userIndex = invitedUsers.firstIndex(of: userRef) else { return }
+        guard let userIndex = invitedUsers.index(of: userRef) else { return }
         
         UserController.shared.events.append(event)
+<<<<<<< HEAD
         EventController.shared.scheduleUserNotification24HRSBefore(for: event)
         EventController.shared.scheduleUserNotificationForStartTime(for: event)
+=======
+        EventController.shared.scheduleUserNotifications(for: event)
+>>>>>>> 9ce3e7c5913502f1486b8a43b2426ccfbe3652cf
         
         // Remove the event from the user's invited events
         invitedEvents.remove(at: eventIndex)
@@ -97,13 +101,13 @@ class InvitationDetailViewController: UIViewController {
         guard let eventReference = invitedEventReference,
             let event = event,
             var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
-            let eventIndex = invitedEvents.firstIndex(of: eventReference),
+            let eventIndex = invitedEvents.index(of: eventReference),
             let loggedInUser = UserController.shared.loggedInUser,
             let invitedUsers = event.invitedUsers else { return }
         
         let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
         
-        guard let userIndex = invitedUsers.firstIndex(of: userRef) else { return }
+        guard let userIndex = invitedUsers.index(of: userRef) else { return }
         
         UserController.shared.events.append(event)
         

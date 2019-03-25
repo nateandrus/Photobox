@@ -19,6 +19,7 @@ class FeedDetailViewController: UIViewController {
     @IBOutlet weak var numberOfAttendeesLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var photoCollectionView: UICollectionView!
+    @IBOutlet weak var addButtonOutlet: UIButton!
     
     var selectedImage: UIImage? {
         didSet {
@@ -40,6 +41,12 @@ class FeedDetailViewController: UIViewController {
         didSet {
             loadViewIfNeeded()
             updateViews()
+        }
+    }
+    
+    var isFutureEvent: Bool? {
+        didSet {
+            addButtonOutlet.isHidden = true
         }
     }
     

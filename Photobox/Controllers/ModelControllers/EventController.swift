@@ -43,7 +43,8 @@ class EventController {
             let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, eventPhotos: [photoReference], creatorReference: creatorReference, invitedUsers: invitedUsers)
             
             UserController.shared.events.append(newEvent)
-            self.scheduleUserNotifications(for: newEvent)
+            self.scheduleUserNotificationForStartTime(for: newEvent)
+            self.scheduleUserNotification24HRSBefore(for: newEvent)
             self.sortEvents(completion: { (success) in
             })
             
@@ -196,12 +197,13 @@ class EventController {
 }
 
 protocol EventNotifications {
-    func scheduleUserNotifications(for event: Event)
+    func scheduleUserNotificationForStartTime(for event: Event)
+    func scheduleUserNotification24HRSBefore(for event: Event)
     func cancelUserNotifications(for event: Event)
 }
 
 extension EventController: EventNotifications {
-    func scheduleUserNotifications(for event: Event) {
+    func scheduleUserNotificationForStartTime(for event: Event) {
         let notificationContent = UNMutableNotificationContent()
         notificationContent.title = event.eventTitle
         notificationContent.body = "Upcoming event!"
@@ -219,9 +221,25 @@ extension EventController: EventNotifications {
         }
     }
     
+    func scheduleUserNotification24HRSBefore(for event: Event) {
+        let notificationContent = UNMutableNotificationContent()
+        notificationContent.title = "24 hours until \(event.eventTitle)"
+        notificationContent.body = "It's coming up fast!"
+        notificationContent.badge = 1
+        notificationContent.sound = UNNotificationSound.default
+        
+        let date = Date(timeInterval: -86400, since: event.startTime)
+        let components = Calendar.current.dateComponents([.hour, .minute, .second], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
+        let notificationRequest = UNNotificationRequest(identifier: event.eventTitle, content: notificationContent, trigger: trigger)
+        UNUserNotificationCenter.current().add(notificationRequest) { (error) in
+            if let error = error {
+                print(error, error.localizedDescription)
+            }
+        }
+    }
+    
     func cancelUserNotifications(for event: Event) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [event.eventTitle])
     }
-    
-    
 }
