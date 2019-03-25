@@ -34,7 +34,7 @@ class PhotoController {
             
             guard let record = record else { completion(false); return }
             
-            let photoReference = CKRecord.Reference(record: record, action: .deleteSelf)
+            let photoReference = CKRecord.Reference(record: record, action: .none)
             
             CloudKitManager.shared.fetchRecord(withID: event.recordID, completion: { (record, error) in
                 if let error = error {
@@ -80,6 +80,27 @@ class PhotoController {
         dispatchGroup.notify(queue: .main) {
             self.collectionViewPhotos.sort(by: { $0.timestamp < $1.timestamp })
             completion(true)
+        }
+    }
+    
+    func deletePhoto(photo: Photo, completion: @escaping (Bool) -> Void) {
+        guard let user = UserController.shared.loggedInUser else { return }
+        let userReference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
+        if photo.userReference == userReference {
+            // Delete Locally
+            guard let indexOfPhoto = collectionViewPhotos.index(of: photo) else { return }
+            collectionViewPhotos.remove(at: indexOfPhoto)
+            //Delete in cloud
+            let photoRecord = photo.photoRecordID
+            CloudKitManager.shared.deleteRecordWithID(photoRecord) { (record, error) in
+                if let error = error {
+                    print("Error deleting photo: \(error) :: \(error.localizedDescription)")
+                    completion(false)
+                    return
+                }
+            }
+            completion(true)
+            return
         }
     }
 }

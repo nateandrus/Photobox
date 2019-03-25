@@ -58,6 +58,11 @@ class FeedDetailViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.photoCollectionView.reloadData()
+    }
+    
     @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
         presentImagePickerActionSheet()
     }
@@ -81,6 +86,18 @@ class FeedDetailViewController: UIViewController {
             let destination = segue.destination as? AttendeeEditViewController
             destination?.eventLandingPad = event
         }
+        if segue.identifier == "toImageView" {
+            let eventPhoto = PhotoController.shared.collectionViewPhotos
+            if let imageIndex = photoCollectionView.indexPathsForSelectedItems?.first {
+                if let destinationVC = segue.destination as? ImageViewController {
+                    let photoToSend = eventPhoto[imageIndex.row]
+                    destinationVC.photoLanding = photoToSend
+                    if imageIndex.row == 0 {
+                        destinationVC.isFirstIndex = true
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -94,6 +111,8 @@ extension FeedDetailViewController: UICollectionViewDelegate, UICollectionViewDa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath)
         let photo = PhotoController.shared.collectionViewPhotos[indexPath.row]
         let imageView = UIImageView()
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.image = photo.image
         
         cell.backgroundView = imageView
