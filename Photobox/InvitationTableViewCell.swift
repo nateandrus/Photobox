@@ -9,6 +9,11 @@
 import UIKit
 import CloudKit
 
+protocol InvitationTableViewCellDelegate: class {
+    func acceptButtonTapped(_ cell: InvitationTableViewCell, eventReference: CKRecord.Reference?, event: Event?, completion: ((Bool) -> Void)?)
+    func declineButtonTapped(_ cell: InvitationTableViewCell, eventReference: CKRecord.Reference?, event: Event?, completion: ((Bool) -> Void)?)
+}
+
 class InvitationTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
@@ -16,6 +21,9 @@ class InvitationTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var startDateLabel: UILabel!
+    
+    // MARK: - weak var optional delegate
+    weak var delegate: InvitationTableViewCellDelegate?
     
     // Landing Pad
     var eventReference: CKRecord.Reference? {
@@ -56,30 +64,10 @@ class InvitationTableViewCell: UITableViewCell {
 
     // MARK: - IBActions
     @IBAction func acceptButtonTapped(_ sender: Any) {
-        guard let eventReference = eventReference,
-            let eventIndex = UserController.shared.loggedInUser?.invitedEvents.index(of: eventReference),
-            let loggedInUser = UserController.shared.loggedInUser else { return }
-        
-        CloudKitManager.shared.fetchRecord(withID: eventReference.recordID) { (record, error) in
-            if let error = error {
-                print("Error fetching record from Cloud Kit: \(error), \(error.localizedDescription)")
-            }
-            
-            guard let record = record else { return }
-            
-            guard let event = Event(record: record) else { return }
-            
-            UserController.shared.events.append(event)
-            
-            loggedInUser.invitedEvents.remove(at: eventIndex)
-        }
+        delegate?.acceptButtonTapped(self, eventReference: eventReference, event: event, completion: nil)
     }
     
     @IBAction func declineButtonTapped(_ sender: Any) {
-        guard let eventReference = eventReference,
-            let eventIndex = UserController.shared.loggedInUser?.invitedEvents.index(of: eventReference),
-            let loggedInUser = UserController.shared.loggedInUser else { return }
-        
-        loggedInUser.invitedEvents.remove(at: eventIndex)
+        delegate?.declineButtonTapped(self, eventReference: eventReference, event: event, completion: nil)
     }
 }

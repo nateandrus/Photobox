@@ -32,7 +32,7 @@ class SettingsViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let changeUsernameAction = UIAlertAction(title: "Change", style: .default) { (_) in
             guard let newUsername = usernameTextField?.text, !newUsername.isEmpty, let user = UserController.shared.loggedInUser else { return }
-            UserController.shared.modify(user: user, withUsername: newUsername, password: nil, profileImage: nil, invitedEvent: nil, completion: { (success) in
+            UserController.shared.modify(user: user, withUsername: newUsername, password: nil, profileImage: nil, invitedEvents: nil, completion: { (success) in
                 if success {
                     self.navigationController?.popViewController(animated: true)
                 }
