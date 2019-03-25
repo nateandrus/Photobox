@@ -170,9 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				2FF7156722380E8D007C9B36 /* FeedDetailViewController.swift */,
-
 				ED2A51E12245993D00D51C34 /* ImageViewController.swift */,
-
 				2FF7156A22380E8D007C9B36 /* MainFeedTableViewController.swift */,
 				2FF7156C22380E8D007C9B36 /* EventPhotosCollectionViewController.swift */,
 				2FF7156D22380E8D007C9B36 /* AttendeeEditViewController.swift */,
@@ -554,7 +552,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Photobox/Photobox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = T4C65R2UFW;
+				DEVELOPMENT_TEAM = SUD83636UR;
 				INFOPLIST_FILE = "$(SRCROOT)/Photobox/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -573,7 +571,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Photobox/Photobox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = T4C65R2UFW;
+				DEVELOPMENT_TEAM = SUD83636UR;
 				INFOPLIST_FILE = "$(SRCROOT)/Photobox/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
