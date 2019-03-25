@@ -37,22 +37,34 @@ class PhoneNumberViewController: UIViewController {
                     user?.username = username
                     user?.password = password
                     
-                    //Update CloudKit
-                    guard let userRecord = CKRecord(user: user!) else { return }
-                    
-                    CloudKitManager.shared.modifyRecords([userRecord], perRecordCompletion: nil, completion: { (_, error) in
+                    CKContainer.default().fetchUserRecordID { (appleUserRecordID, error) in
                         if let error = error {
-                            print("Error modifying record: \(error), \(error.localizedDescription)")
+                            print("Error fetching user's apple ID: \(error.localizedDescription)")
+                            return
                         }
                         
-                        DispatchQueue.main.async {
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")
-                            self.present(vc, animated: true)
-                        }
-                    })
+                        guard let appleUserRecordID = appleUserRecordID else { return }
+                        
+                        let reference = CKRecord.Reference(recordID: appleUserRecordID, action: .deleteSelf)
+                        
+                        user?.creatorReference = reference
+                    
+                        //Update CloudKit
+                        guard let userRecord = CKRecord(user: user!) else { return }
+                        
+                        CloudKitManager.shared.modifyRecords([userRecord], perRecordCompletion: nil, completion: { (_, error) in
+                            if let error = error {
+                                print("Error modifying record: \(error), \(error.localizedDescription)")
+                            }
+                            
+                            DispatchQueue.main.async {
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")
+                                self.present(vc, animated: true)
+                            }
+                        })
+                    }
                 }
-                return
             } else {
                 UserController.shared.saveUserWith(username: username, password: password, phoneNumber: phoneNumber) { (success, _) in
                     if success {
