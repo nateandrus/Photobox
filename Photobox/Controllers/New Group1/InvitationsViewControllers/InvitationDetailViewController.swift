@@ -63,29 +63,60 @@ class InvitationDetailViewController: UIViewController {
     
     @IBAction func acceptButtonTapped(_ sender: Any) {
         guard let eventReference = invitedEventReference,
+            let event = event,
             var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
-            let eventIndex = invitedEvents.index(of: eventReference) else { return }
+            let eventIndex = invitedEvents.index(of: eventReference),
+            let loggedInUser = UserController.shared.loggedInUser,
+            let invitedUsers = event.invitedUsers else { return }
         
-        CloudKitManager.shared.fetchRecord(withID: eventReference.recordID) { (record, error) in
-            if let error = error {
-                print("Error fetching record from Cloud Kit: \(error), \(error.localizedDescription)")
-            }
-            
-            guard let record = record else { return }
-            
-            guard let event = Event(record: record) else { return }
-            
-            UserController.shared.events.append(event)
-            
-            invitedEvents.remove(at: eventIndex)
+        let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
+        
+        // Add the user to the event's attendees list
+        event.attendees.append(userRef)
+        
+        guard let userIndex = invitedUsers.index(of: userRef) else { return }
+        
+        UserController.shared.events.append(event)
+        
+        // Remove the event from the user's invited events
+        invitedEvents.remove(at: eventIndex)
+        // Remove the user from the event's invited users
+        event.invitedUsers?.remove(at: userIndex)
+        
+        // Update CloudKit
+        UserController.shared.modify(user: loggedInUser, withUsername: nil, password: nil, profileImage: nil, invitedEvents: invitedEvents, completion: nil)
+        EventController.shared.modify(event: event, withTitle: nil, image: nil, location: nil, startTime: nil, endTime: nil, description: nil, invitedUsers: event.invitedUsers, eventPhotos: nil, attendees: event.attendees)
+        
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
     @IBAction func declineButtonTapped(_ sender: Any) {
         guard let eventReference = invitedEventReference,
+            let event = event,
             var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
-            let eventIndex = invitedEvents.index(of: eventReference) else { return }
+            let eventIndex = invitedEvents.index(of: eventReference),
+            let loggedInUser = UserController.shared.loggedInUser,
+            let invitedUsers = event.invitedUsers else { return }
         
+        let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
+        
+        guard let userIndex = invitedUsers.index(of: userRef) else { return }
+        
+        UserController.shared.events.append(event)
+        
+        // Remove the event from the user's invited events
         invitedEvents.remove(at: eventIndex)
+        // Remove the user from the event's invited users
+        event.invitedUsers?.remove(at: userIndex)
+        
+        // Update CloudKit
+        UserController.shared.modify(user: loggedInUser, withUsername: nil, password: nil, profileImage: nil, invitedEvents: invitedEvents, completion: nil)
+        EventController.shared.modify(event: event, withTitle: nil, image: nil, location: nil, startTime: nil, endTime: nil, description: nil, invitedUsers: event.invitedUsers, eventPhotos: nil, attendees: nil)
+        
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }

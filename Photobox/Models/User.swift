@@ -52,7 +52,7 @@ class User {
         }
     }
     let ckRecord: CKRecord.ID
-    let creatorReference: CKRecord.Reference?
+    var creatorReference: CKRecord.Reference?
     var phoneNumber: String
     var invitedEvents: [CKRecord.Reference]?
     

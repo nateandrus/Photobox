@@ -14,13 +14,17 @@ class InvitationsListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     // MARK: - Table view data source
@@ -64,9 +68,8 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
             let event = event,
             var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
             let eventIndex = invitedEvents.index(of: eventReference),
-            let loggedInUser = UserController.shared.loggedInUser else { return }
-        
-        guard let invitedUsers = event.invitedUsers else { return }
+            let loggedInUser = UserController.shared.loggedInUser,
+            let invitedUsers = event.invitedUsers else { return }
         
         let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
         
@@ -83,7 +86,7 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
         event.invitedUsers?.remove(at: userIndex)
         
         // Update CloudKit
-        UserController.shared.modify(user: loggedInUser, withUsername: nil, password: nil, profileImage: nil, invitedEvents: loggedInUser.invitedEvents, completion: nil)
+        UserController.shared.modify(user: loggedInUser, withUsername: nil, password: nil, profileImage: nil, invitedEvents: invitedEvents, completion: nil)
         EventController.shared.modify(event: event, withTitle: nil, image: nil, location: nil, startTime: nil, endTime: nil, description: nil, invitedUsers: event.invitedUsers, eventPhotos: nil, attendees: event.attendees)
         
         DispatchQueue.main.async {
@@ -96,9 +99,8 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
             let event = event,
             var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
             let eventIndex = invitedEvents.index(of: eventReference),
-            let loggedInUser = UserController.shared.loggedInUser else { return }
-        
-        guard let invitedUsers = event.invitedUsers else { return }
+            let loggedInUser = UserController.shared.loggedInUser,
+            let invitedUsers = event.invitedUsers else { return } 
         
         let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
         
@@ -112,7 +114,7 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
         event.invitedUsers?.remove(at: userIndex)
         
         // Update CloudKit
-        UserController.shared.modify(user: loggedInUser, withUsername: nil, password: nil, profileImage: nil, invitedEvents: loggedInUser.invitedEvents, completion: nil)
+        UserController.shared.modify(user: loggedInUser, withUsername: nil, password: nil, profileImage: nil, invitedEvents: invitedEvents, completion: nil)
         EventController.shared.modify(event: event, withTitle: nil, image: nil, location: nil, startTime: nil, endTime: nil, description: nil, invitedUsers: event.invitedUsers, eventPhotos: nil, attendees: nil)
         
         DispatchQueue.main.async {
