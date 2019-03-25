@@ -86,7 +86,7 @@ class Event {
             let invitedUsers = record[Event.invitedUsersKey] as? [CKRecord.Reference]?
             else { return nil }
         
-        guard let photoData = try? Data(contentsOf: imageAsset.fileURL) else { return nil }
+        guard let photoData = try? Data(contentsOf: imageAsset.fileURL!) else { return nil }
         
         self.eventPhotoData = photoData
         self.eventTitle = eventTitle

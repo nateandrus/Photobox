@@ -67,7 +67,7 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
         guard let eventReference = eventReference,
             let event = event,
             var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
-            let eventIndex = invitedEvents.index(of: eventReference),
+            let eventIndex = invitedEvents.firstIndex(of: eventReference),
             let loggedInUser = UserController.shared.loggedInUser,
             let invitedUsers = event.invitedUsers else { return }
         
@@ -76,7 +76,7 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
         // Add the user to the event's attendees list
         event.attendees.append(userRef)
         
-        guard let userIndex = invitedUsers.index(of: userRef) else { return }
+        guard let userIndex = invitedUsers.firstIndex(of: userRef) else { return }
         
         UserController.shared.events.append(event)
         EventController.shared.scheduleUserNotifications(for: event)
@@ -99,13 +99,13 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
         guard let eventReference = eventReference,
             let event = event,
             var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
-            let eventIndex = invitedEvents.index(of: eventReference),
+            let eventIndex = invitedEvents.firstIndex(of: eventReference),
             let loggedInUser = UserController.shared.loggedInUser,
             let invitedUsers = event.invitedUsers else { return } 
         
         let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
         
-        guard let userIndex = invitedUsers.index(of: userRef) else { return }
+        guard let userIndex = invitedUsers.firstIndex(of: userRef) else { return }
         
         UserController.shared.events.append(event)
         

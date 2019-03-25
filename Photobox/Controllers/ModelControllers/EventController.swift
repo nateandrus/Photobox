@@ -144,7 +144,7 @@ class EventController {
     
     func delete(event: Event, completion: @escaping (Bool) -> Void) {
         //Delete local instance
-        guard let indexToDelete = UserController.shared.events.index(of: event) else { completion(false); return }
+        guard let indexToDelete = UserController.shared.events.firstIndex(of: event) else { completion(false); return }
         UserController.shared.events.remove(at: indexToDelete)
         //Delete from CloudKit
         let recordID = event.ckrecordID
@@ -160,7 +160,7 @@ class EventController {
     
     func removeAttendee(creatorReference: CKRecord.Reference, fromEvent event: Event, completion: @escaping (Bool) -> Void) {
         //Remove local attendee
-        guard let attendeeIndex = event.attendees.index(of: creatorReference) else { completion(false); return }
+        guard let attendeeIndex = event.attendees.firstIndex(of: creatorReference) else { completion(false); return }
         event.attendees.remove(at: attendeeIndex)
         
         //Remove from CloudKit

@@ -71,9 +71,21 @@ class PhotoController {
                 }
                 
                 guard let record = record,
-                    let photo = Photo(ckRecord: record) else { completion(false); return }
+                    let photo = Photo(ckRecord: record),
+                    let user = UserController.shared.loggedInUser else { completion(false); return }
                 
-                self.collectionViewPhotos.append(photo)
+                let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
+                
+                var usersThatReported: [CKRecord.Reference] = []
+                
+                if photo.usersThatReported != nil {
+                    usersThatReported = photo.usersThatReported!
+                }
+                
+                if !usersThatReported.contains(reference) {
+                    self.collectionViewPhotos.append(photo)
+                }
+                
                 dispatchGroup.leave()
             }
         }
@@ -88,7 +100,7 @@ class PhotoController {
         let userReference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
         if photo.userReference == userReference {
             // Delete Locally
-            guard let indexOfPhoto = collectionViewPhotos.index(of: photo) else { return }
+            guard let indexOfPhoto = collectionViewPhotos.firstIndex(of: photo) else { return }
             collectionViewPhotos.remove(at: indexOfPhoto)
             //Delete in cloud
             let photoRecord = photo.photoRecordID
@@ -100,7 +112,29 @@ class PhotoController {
                 }
             }
             completion(true)
-            return
+        } else {
+            print("user references don't match")
+        }
+    }
+    
+    func modifyPhoto(photo: Photo, numberOfTimesReported: Int?, usersThatReported: [CKRecord.Reference]?, completion: @escaping (Bool) -> Void) {
+        if numberOfTimesReported != nil {
+            photo.numberOfTimesReported = numberOfTimesReported!
+        }
+        if usersThatReported != nil {
+            photo.usersThatReported = usersThatReported!
+        }
+        
+        guard let record = CKRecord(photo: photo) else { completion(false); return }
+        
+        CloudKitManager.shared.modifyRecords([record], perRecordCompletion: nil) { (_, error) in
+            if let error = error {
+                print("Error modifying photo: \(error), \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+            
+            completion(true)
         }
     }
 }
