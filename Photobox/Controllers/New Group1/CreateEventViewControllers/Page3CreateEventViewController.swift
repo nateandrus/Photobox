@@ -146,8 +146,9 @@ class Page3CreateEventViewController: UIViewController {
             let location = location,
             let image = image,
             let startDate = startDate,
-            let endDate = endDate,
-            let eventDescription = descriptionTextView.text else { return }
+            let endDate = endDate else { return }
+        
+        let eventDescription = descriptionTextView.text
         
         EventController.shared.createEvent(eventImage: image, eventTitle: name, location: location, startTime: startDate, endTime: endDate, description: eventDescription, invitedUsers: invitedUsers) { (success, event)  in
             guard let event = event else { return }
