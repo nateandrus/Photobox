@@ -58,6 +58,8 @@ class PhoneNumberViewController: UIViewController {
                             }
                             UserController.shared.loggedInUser = user
                             
+                            UserController.shared.loggedInUser = user
+                            
                             DispatchQueue.main.async {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")
@@ -69,7 +71,9 @@ class PhoneNumberViewController: UIViewController {
             } else {
                 UserController.shared.saveUserWith(username: username, password: password, phoneNumber: phoneNumber) { (success, _) in
                     if success {
+                        
                         UserController.shared.loggedInUser = user
+                        
                         DispatchQueue.main.async {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabBarController")

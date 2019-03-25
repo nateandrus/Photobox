@@ -54,7 +54,7 @@ class LogInViewController: UIViewController {
                 print("Error fetching \(username) from cloudkit: \(error), \(error.localizedDescription)")
                 return
             }
-            guard let records = records else { return }
+            guard let records = records, !records.isEmpty else { return }
             
             if records.count > 1 {
                 print("ERROR: Multiple users with name: \(username)")

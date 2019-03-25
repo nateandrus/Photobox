@@ -552,7 +552,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Photobox/Photobox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = T4C65R2UFW;
+				DEVELOPMENT_TEAM = SUD83636UR;
 				INFOPLIST_FILE = "$(SRCROOT)/Photobox/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -571,7 +571,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Photobox/Photobox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = T4C65R2UFW;
+				DEVELOPMENT_TEAM = SUD83636UR;
 				INFOPLIST_FILE = "$(SRCROOT)/Photobox/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

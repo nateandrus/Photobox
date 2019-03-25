@@ -60,7 +60,7 @@ class SignUpViewController: UIViewController {
             
             guard let records = records else { return }
             
-            if records.count > 0 {
+            guard records.isEmpty else {
                 DispatchQueue.main.async {
                     self.usernameTextField.layer.borderWidth = 2
                     self.usernameTextField.layer.cornerRadius = 4
@@ -70,7 +70,7 @@ class SignUpViewController: UIViewController {
                 return
             }
             
-            if password != confirmPassword {
+            guard password == confirmPassword else {
                 DispatchQueue.main.async {
                     self.passwordTextField.layer.borderWidth = 2
                     self.passwordTextField.layer.cornerRadius = 4
@@ -81,8 +81,8 @@ class SignUpViewController: UIViewController {
                     
                     self.passwordErrorLabel.text = "Passwords do not match"
                     self.confirmPasswordErrorLabel.text = "Passwords do not match"
-                    return
                 }
+                return
             } 
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)

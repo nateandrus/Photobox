@@ -116,7 +116,9 @@ extension CKRecord {
         self.setValue(event.location, forKey: Event.locationKey)
         self.setValue(event.startTime, forKey: Event.startTimeKey)
         self.setValue(event.endTime, forKey: Event.endTimeKey)
-        self.setValue(event.description, forKey: Event.descriptionKey)
+        if event.description != nil {
+            self.setValue(event.description, forKey: Event.descriptionKey)
+        }
         self.setValue(event.eventPhotos, forKey: Event.eventPhotosKey)
         self.setValue(event.creatorReference, forKey: Event.creatorReferenceKey)
         self.setValue(event.invitedUsers, forKey: Event.invitedUsersKey)
