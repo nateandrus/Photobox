@@ -56,6 +56,7 @@ class PhoneNumberViewController: UIViewController {
                             if let error = error {
                                 print("Error modifying record: \(error), \(error.localizedDescription)")
                             }
+                            UserController.shared.loggedInUser = user
                             
                             UserController.shared.loggedInUser = user
                             

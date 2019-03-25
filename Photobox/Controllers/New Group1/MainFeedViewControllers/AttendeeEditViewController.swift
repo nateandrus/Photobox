@@ -42,6 +42,16 @@ class AttendeeEditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ContactController.shared.fetchContacts { (success) in
+            if success {
+                self.searchResultsTableView.reloadData()
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchResultsTableView.reloadData()
     }
     
     @IBAction func leaveEventButtonTapped(_ sender: UIButton) {
@@ -50,8 +60,10 @@ class AttendeeEditViewController: UIViewController {
         
         if event.creatorReference == reference {
             alertControllerForEventCreator()
+            EventController.shared.cancelUserNotifications(for: event)
         } else {
             alertControllerForAttendee()
+            EventController.shared.cancelUserNotifications(for: event)
         }
     }
     
