@@ -11,7 +11,7 @@ import CloudKit
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -47,20 +47,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Request permission for discoverability
         CloudKitManager.shared.requestDiscoverabilityPermission()
         
-        //TODO: Request permission to send notifications
-//        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
-//            if let error = error {
-//                print(error)
-//            }
-//            if granted == false {
-//                print("User did not grant permission for notifications")
-//            }
-//        }
-//        UNUserNotificationCenter.current().delegate = self
-//        
+//        TODO: Request permission to send notifications
+        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
+            if let error = error {
+                print(error)
+            }
+            if granted == false {
+                print("User did not grant permission for notifications")
+            }
+        }
+        UNUserNotificationCenter.current().delegate = self
         return true
     }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound])
+    }
     
     
     func applicationWillResignActive(_ application: UIApplication) {
