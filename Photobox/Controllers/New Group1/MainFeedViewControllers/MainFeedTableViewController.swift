@@ -117,6 +117,7 @@ class MainFeedTableViewController: UITableViewController {
                     if let destinationVC = segue.destination as? FeedDetailViewController {
                         let eventToSend = EventController.shared.futureEvents[index.row]
                         destinationVC.eventLandingPad = eventToSend
+                        destinationVC.isFutureEvent = true
                     }
                 } else if index.section == 0 {
                     if let destinationVC = segue.destination as? FeedDetailViewController {
@@ -127,6 +128,7 @@ class MainFeedTableViewController: UITableViewController {
                     if let destinationVC = segue.destination as? FeedDetailViewController {
                         let eventToSend = EventController.shared.futureEvents[index.row]
                         destinationVC.eventLandingPad = eventToSend
+                        destinationVC.isFutureEvent = true
                     }
                 }
             }

@@ -79,6 +79,8 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
         guard let userIndex = invitedUsers.index(of: userRef) else { return }
         
         UserController.shared.events.append(event)
+        EventController.shared.scheduleUserNotification24HRSBefore(for: event)
+        EventController.shared.scheduleUserNotificationForStartTime(for: event)
         
         // Remove the event from the user's invited events
         invitedEvents.remove(at: eventIndex)

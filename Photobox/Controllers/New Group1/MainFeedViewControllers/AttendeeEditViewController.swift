@@ -60,7 +60,7 @@ class AttendeeEditViewController: UIViewController {
         
         if !textMessageRecipients.isEmpty {
             // Create accounts using their phone numbers
-            let dispatchGroup = DispatchGroup()
+            let dispatchGroup = DispatchGroup() 
             
             for phoneNumber in textMessageRecipients {
                 dispatchGroup.enter()
