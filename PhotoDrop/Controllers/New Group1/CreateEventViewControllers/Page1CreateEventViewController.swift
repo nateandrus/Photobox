@@ -44,6 +44,9 @@ class Page1CreateEventViewController: UIViewController {
             tabBarController?.selectedIndex = 0
         }
         
+        let offSetPoint = CGPoint(x: self.contentView.frame.origin.x, y: 0)
+        
+        self.scrollView.setContentOffset(offSetPoint, animated: true)
     }
     
     //MARK: - View Lifecycle Methods

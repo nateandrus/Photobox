@@ -20,44 +20,44 @@ class InvitationsListTableViewController: UITableViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
+    // MARK: - Life Cycle Methods
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         
-        UserController.shared.fetchLoggedInUser { (didFetch) in
-            if didFetch {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        }
+        self.navigationController?.popToRootViewController(animated: false)
     }
     
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let invitedEvents = invites else { return 0 }
+        if invitedEvents.count == 0 {
+            return 1
+        }
         return invitedEvents.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "invitationCell", for: indexPath) as? InvitationTableViewCell
-        
         guard let invitedEvents = invites else { return UITableViewCell() }
         
-        cell?.eventReference = invitedEvents[indexPath.row]
+        if invitedEvents.count == 0 {
+            let cell = UITableViewCell()
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.text = "No pending invitations"
+            
+            return cell
+        } else {
         
-        //Set delegate to self
-        cell?.delegate = self
+            let cell = tableView.dequeueReusableCell(withIdentifier: "invitationCell", for: indexPath) as? InvitationTableViewCell
+        
+            cell?.eventReference = invitedEvents[indexPath.row]
+            
+            //Set delegate to self
+            cell?.delegate = self
 
-        return cell ?? UITableViewCell()
+            return cell ?? UITableViewCell()
+        }
     }
 
     // MARK: - Navigation
@@ -97,16 +97,13 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
         
         // Remove the event from the user's invited events
         invitedEvents.remove(at: eventIndex)
+        self.invites = invitedEvents
         // Remove the user from the event's invited users
         event.invitedUsers?.remove(at: userIndex)
         
         // Update CloudKit
         UserController.shared.modify(user: loggedInUser, withUsername: nil, password: nil, profileImage: nil, invitedEvents: invitedEvents, completion: nil)
         EventController.shared.modify(event: event, withTitle: nil, image: nil, location: nil, startTime: nil, endTime: nil, description: nil, invitedUsers: event.invitedUsers, eventPhotos: nil, attendees: event.attendees)
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
     }
     
     func declineButtonTapped(_ cell: InvitationTableViewCell, eventReference: CKRecord.Reference?, event: Event?, completion: ((Bool) -> Void)?) {

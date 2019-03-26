@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import UserNotifications
 
 class SettingsViewController: UIViewController {
 
+    @IBOutlet weak var notificationsSwitch: UISwitch!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        UNUserNotificationCenter.current().
     }
     
     @IBAction func changeUsernameButtonTapped(_ sender: UIButton) {
@@ -20,6 +25,10 @@ class SettingsViewController: UIViewController {
     
     @IBAction func deleteAccountButtonTapped(_ sender: UIButton) {
         deleteAccountAlertController()
+    }
+    
+    @IBAction func switchToggled(_ sender: Any) {
+        
     }
     
     func changeUsernameAlertController() {

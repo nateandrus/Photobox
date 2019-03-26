@@ -13,7 +13,7 @@
         <!--User Profile View Controller-->
         <scene sceneID="ygj-VY-h76">
             <objects>
-                <viewController id="6Jl-BI-MPd" customClass="UserProfileViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6Jl-BI-MPd" customClass="UserProfileViewController" customModule="PhotoDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LCh-UN-OSX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -40,7 +40,7 @@
                                 <rect key="frame" x="0.0" y="269" width="375" height="398"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pastEventCell" rowHeight="150" id="9wV-k3-ntS" customClass="EventTableViewCell" customModule="Photobox" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pastEventCell" rowHeight="150" id="9wV-k3-ntS" customClass="EventTableViewCell" customModule="PhotoDrop" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9wV-k3-ntS" id="YxE-JX-Har">
@@ -184,7 +184,7 @@
         <!--(eventTitle)-->
         <scene sceneID="xhD-R9-j2z">
             <objects>
-                <viewController id="O8P-dq-rbG" customClass="UserProfileDetailViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="O8P-dq-rbG" customClass="UserProfileDetailViewController" customModule="PhotoDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2z2-F5-nF2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -308,7 +308,7 @@
         <!--Image View View Controller-->
         <scene sceneID="AnP-tJ-s20">
             <objects>
-                <viewController id="pQL-vo-rNm" customClass="ImageViewViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pQL-vo-rNm" customClass="ImageViewViewController" customModule="PhotoDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hFz-dN-F0l">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -369,7 +369,7 @@
         <!--Settings-->
         <scene sceneID="Re5-lH-U9R">
             <objects>
-                <viewController id="EI6-mG-Leg" customClass="SettingsViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="EI6-mG-Leg" customClass="SettingsViewController" customModule="PhotoDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bhu-sg-9wr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -390,6 +390,7 @@
                                                 <rect key="frame" x="266" y="0.0" width="51" height="31"/>
                                                 <connections>
                                                     <action selector="notificationToggle:" destination="MMo-7j-797" eventType="valueChanged" id="2FO-Lp-aEe"/>
+                                                    <action selector="switchToggled:" destination="EI6-mG-Leg" eventType="valueChanged" id="GUQ-JO-ZQe"/>
                                                 </connections>
                                             </switch>
                                         </subviews>
@@ -422,6 +423,9 @@
                         <viewLayoutGuide key="safeArea" id="97T-y9-46h"/>
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="cCN-cQ-Vgv"/>
+                    <connections>
+                        <outlet property="notificationsSwitch" destination="54A-9x-9Hb" id="IoN-4e-0We"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m1Y-Ep-0xx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="MMo-7j-797" userLabel="Exit" sceneMemberID="exit"/>
