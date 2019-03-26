@@ -11,6 +11,15 @@ import CloudKit
 
 class InvitationsListTableViewController: UITableViewController {
     
+    // Landing Pad
+    var invites: [CKRecord.Reference]? {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,22 +31,26 @@ class InvitationsListTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        UserController.shared.fetchLoggedInUser { (didFetch) in
+            if didFetch {
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
         }
     }
     
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let invitedEvents = UserController.shared.loggedInUser?.invitedEvents else { return 0 }
+        guard let invitedEvents = invites else { return 0 }
         return invitedEvents.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "invitationCell", for: indexPath) as? InvitationTableViewCell
         
-        guard let invitedEvents = UserController.shared.loggedInUser?.invitedEvents else { return UITableViewCell() }
+        guard let invitedEvents = invites else { return UITableViewCell() }
         
         cell?.eventReference = invitedEvents[indexPath.row]
         
@@ -54,7 +67,7 @@ class InvitationsListTableViewController: UITableViewController {
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let destinationVC = segue.destination as? InvitationDetailViewController
             
-            guard let invitedEvents = UserController.shared.loggedInUser?.invitedEvents else { return }
+            guard let invitedEvents = invites else { return }
             
             destinationVC?.invitedEventReference = invitedEvents[indexPath.row]
         }
@@ -66,7 +79,7 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
     func acceptButtonTapped(_ cell: InvitationTableViewCell, eventReference: CKRecord.Reference?, event: Event?, completion: ((Bool) -> Void)?) {
         guard let eventReference = eventReference,
             let event = event,
-            var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
+            var invitedEvents = invites,
             let eventIndex = invitedEvents.firstIndex(of: eventReference),
             let loggedInUser = UserController.shared.loggedInUser,
             let invitedUsers = event.invitedUsers else { return }
@@ -99,7 +112,7 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
     func declineButtonTapped(_ cell: InvitationTableViewCell, eventReference: CKRecord.Reference?, event: Event?, completion: ((Bool) -> Void)?) {
         guard let eventReference = eventReference,
             let event = event,
-            var invitedEvents = UserController.shared.loggedInUser?.invitedEvents,
+            var invitedEvents = invites,
             let eventIndex = invitedEvents.firstIndex(of: eventReference),
             let loggedInUser = UserController.shared.loggedInUser,
             let invitedUsers = event.invitedUsers else { return } 

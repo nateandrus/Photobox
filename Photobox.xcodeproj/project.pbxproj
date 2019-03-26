@@ -12,6 +12,8 @@
 		2F18D9D1223AC385001E1765 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18D9D0223AC385001E1765 /* SignUpViewController.swift */; };
 		2F18D9D3223B03C9001E1765 /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18D9D2223B03C9001E1765 /* PhoneNumberViewController.swift */; };
 		2F18D9D5223B095E001E1765 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F18D9D4223B095E001E1765 /* CloudKit.framework */; };
+		2F1FC718224A92C9005CE5F6 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1FC717224A92C9005CE5F6 /* LoadingViewController.swift */; };
+		2F1FC71C224A97E0005CE5F6 /* NoPendingInvitesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1FC71B224A97E0005CE5F6 /* NoPendingInvitesViewController.swift */; };
 		2FA406BA2242EC2E00562693 /* AddedFriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA406B92242EC2E00562693 /* AddedFriendCollectionViewCell.swift */; };
 		2FA406BE22443EB300562693 /* InvitationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA406BD22443EB300562693 /* InvitationTableViewCell.swift */; };
 		2FA406C02244489800562693 /* InvitationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA406BF2244489800562693 /* InvitationDetailViewController.swift */; };
@@ -53,6 +55,8 @@
 		2F18D9D0223AC385001E1765 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2F18D9D2223B03C9001E1765 /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		2F18D9D4223B095E001E1765 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		2F1FC717224A92C9005CE5F6 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		2F1FC71B224A97E0005CE5F6 /* NoPendingInvitesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPendingInvitesViewController.swift; sourceTree = "<group>"; };
 		2FA406B92242EC2E00562693 /* AddedFriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedFriendCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FA406BD22443EB300562693 /* InvitationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationTableViewCell.swift; sourceTree = "<group>"; };
 		2FA406BF2244489800562693 /* InvitationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationDetailViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +112,8 @@
 		2F76B74F224925E600F8F214 /* InvitationsViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2F1FC717224A92C9005CE5F6 /* LoadingViewController.swift */,
+				2F1FC71B224A97E0005CE5F6 /* NoPendingInvitesViewController.swift */,
 				2F18D9CC2239933B001E1765 /* InvitationsListTableViewController.swift */,
 				2FA406BF2244489800562693 /* InvitationDetailViewController.swift */,
 			);
@@ -362,6 +368,7 @@
 			files = (
 				2FA406BE22443EB300562693 /* InvitationTableViewCell.swift in Sources */,
 				2FF7155E22380DF7007C9B36 /* Event.swift in Sources */,
+				2F1FC71C224A97E0005CE5F6 /* NoPendingInvitesViewController.swift in Sources */,
 				EDFF2FB02238315B00DF725C /* EventTableViewCell.swift in Sources */,
 				ED07648E223819AA00D8307F /* UserProfileViewController.swift in Sources */,
 				2FF7153522370323007C9B36 /* CloudKitManager.swift in Sources */,
@@ -385,6 +392,7 @@
 				EDCE63882242F18200A5EC77 /* AttendeeEditViewController.swift in Sources */,
 				EDA4C6C522455A670071B1FC /* SettingsViewController.swift in Sources */,
 				ED2ADD50223ABE9E009668F1 /* MainFeedTableViewController.swift in Sources */,
+				2F1FC718224A92C9005CE5F6 /* LoadingViewController.swift in Sources */,
 				2F18D9CF223AC357001E1765 /* LogInViewController.swift in Sources */,
 				ED90F6262243FE7400CCAFA1 /* PhotoController.swift in Sources */,
 				2FF7156122380DF7007C9B36 /* User.swift in Sources */,

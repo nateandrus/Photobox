@@ -51,7 +51,7 @@ class UserController {
                     self.loggedInUser = newUser
                     
                     // Fetch the new user's first and last name from Cloud Kit
-//                    guard let recordID = newUser.ckRecord else { completion(false); return }
+                    // guard let recordID = newUser.ckRecord else { completion(false); return }
                     
                     CloudKitManager.shared.fetchDiscoverableUserWith(recordID: appleUserRecordID) { (userID) in
                         guard let userID = userID else { completion(false, nil); return }

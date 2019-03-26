@@ -116,15 +116,44 @@
                             <outlet property="delegate" destination="90v-oR-amM" id="nrU-lX-cES"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="PhotoBOX" id="6ro-RU-Rct">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="gear icon" id="dVV-Yc-sOz">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="PhotoBOX" id="6ro-RU-Rct"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o2B-NZ-4E2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="925.19531249999989" y="-195.02196193265007"/>
+            <point key="canvasLocation" x="866" y="-403"/>
+        </scene>
+        <!--No Pending Invites View Controller-->
+        <scene sceneID="DNH-M0-rGT">
+            <objects>
+                <viewController id="aMq-R8-6HO" customClass="NoPendingInvitesViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5f2-Mw-idc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No pending invitiations" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Wy-oQ-HX5">
+                                <rect key="frame" x="10" y="79" width="355" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ja7-zr-Lgf" firstAttribute="trailing" secondItem="4Wy-oQ-HX5" secondAttribute="trailing" constant="10" id="DPw-iK-rrC"/>
+                            <constraint firstItem="4Wy-oQ-HX5" firstAttribute="leading" secondItem="Ja7-zr-Lgf" secondAttribute="leading" constant="10" id="KmS-OB-7gT"/>
+                            <constraint firstItem="4Wy-oQ-HX5" firstAttribute="top" secondItem="Ja7-zr-Lgf" secondAttribute="top" constant="15" id="ave-Ee-wg8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ja7-zr-Lgf"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="XwW-iN-RRF">
+                        <barButtonItem key="leftBarButtonItem" id="lKi-57-UHc">
+                            <color key="tintColor" red="0.70492940989999997" green="0.65154177189999996" blue="0.52873093849999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c3J-Ws-ybT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="867" y="258"/>
         </scene>
         <!--PhotoBOX-->
         <scene sceneID="eXb-5T-yPr">
@@ -287,7 +316,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ER0-MV-wY2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1647.2" y="-194.75262368815595"/>
+            <point key="canvasLocation" x="1658" y="-403"/>
         </scene>
         <!--Invitations-->
         <scene sceneID="wx4-Ec-tc6">
@@ -306,16 +335,49 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="90v-oR-amM" kind="relationship" relationship="rootViewController" id="P7b-qi-OcN"/>
+                        <segue destination="oNq-yd-IwE" kind="relationship" relationship="rootViewController" id="ae7-05-dsE"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GBI-Uy-6bY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="205.59999999999999" y="-193.85307346326837"/>
+            <point key="canvasLocation" x="-1132" y="-195"/>
+        </scene>
+        <!--Loading View Controller-->
+        <scene sceneID="bRz-sw-dQv">
+            <objects>
+                <viewController id="oNq-yd-IwE" customClass="LoadingViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SzS-fm-kLq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="BSg-xP-dYN">
+                                <rect key="frame" x="167.5" y="313.5" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="71q-Eb-2b6"/>
+                                    <constraint firstAttribute="height" constant="40" id="GQ1-0H-y41"/>
+                                </constraints>
+                                <color key="color" red="0.70492940989999997" green="0.65154177189999996" blue="0.52873093849999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="BSg-xP-dYN" firstAttribute="centerY" secondItem="SzS-fm-kLq" secondAttribute="centerY" id="YY7-zj-xH0"/>
+                            <constraint firstItem="BSg-xP-dYN" firstAttribute="centerX" secondItem="SzS-fm-kLq" secondAttribute="centerX" id="syi-6u-kez"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gno-L1-Qgm"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="bQK-9i-nY7"/>
+                    <connections>
+                        <segue destination="90v-oR-amM" kind="show" identifier="toInvitationsList" id="yjU-Ce-ZTi"/>
+                        <segue destination="aMq-R8-6HO" kind="show" identifier="toNoInvitesVC" id="2Qg-4D-QNx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K5s-aI-0IO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-127" y="-196"/>
         </scene>
     </scenes>
     <resources>
-        <image name="gear icon" width="35" height="35"/>
         <image name="invitation icon" width="25" height="25"/>
     </resources>
 </document>
