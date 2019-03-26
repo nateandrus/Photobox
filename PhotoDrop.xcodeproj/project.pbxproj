@@ -60,6 +60,54 @@
 		2F1FC721224A9CC2005CE5F6 /* MainFeed.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainFeed.storyboard; sourceTree = "<group>"; };
 		2F1FC724224A9D11005CE5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = PhotoDrop/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		2F1FC726224A9F0B005CE5F6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		2F1FC769224AA08F005CE5F6 /* PhotoDrop.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = PhotoDrop.xcodeproj; sourceTree = "<group>"; };
+		2F1FC76D224AA08F005CE5F6 /* PhotoDrop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PhotoDrop.entitlements; sourceTree = "<group>"; };
+		2F1FC76E224AA08F005CE5F6 /* AddedFriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedFriendCollectionViewCell.swift; sourceTree = "<group>"; };
+		2F1FC770224AA08F005CE5F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2F1FC772224AA08F005CE5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2F1FC773224AA08F005CE5F6 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		2F1FC774224AA08F005CE5F6 /* CloudKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
+		2F1FC775224AA08F005CE5F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2F1FC776224AA08F005CE5F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F1FC777224AA08F005CE5F6 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		2F1FC779224AA08F005CE5F6 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		2F1FC77A224AA08F005CE5F6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		2F1FC77B224AA08F005CE5F6 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		2F1FC77D224AA08F005CE5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2F1FC77E224AA08F005CE5F6 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
+		2F1FC77F224AA08F005CE5F6 /* InvitationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationTableViewCell.swift; sourceTree = "<group>"; };
+		2F1FC783224AA08F005CE5F6 /* Page1CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page1CreateEventViewController.swift; sourceTree = "<group>"; };
+		2F1FC784224AA08F005CE5F6 /* Page3CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page3CreateEventViewController.swift; sourceTree = "<group>"; };
+		2F1FC785224AA08F005CE5F6 /* Page2CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page2CreateEventViewController.swift; sourceTree = "<group>"; };
+		2F1FC787224AA08F005CE5F6 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		2F1FC788224AA08F005CE5F6 /* PhoneNumberViewController.swift.orig */ = {isa = PBXFileReference; lastKnownFileType = text; path = PhoneNumberViewController.swift.orig; sourceTree = "<group>"; };
+		2F1FC789224AA08F005CE5F6 /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
+		2F1FC78A224AA08F005CE5F6 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		2F1FC78C224AA08F005CE5F6 /* FeedDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
+		2F1FC78D224AA08F005CE5F6 /* MainFeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedTableViewController.swift; sourceTree = "<group>"; };
+		2F1FC78E224AA08F005CE5F6 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		2F1FC78F224AA08F005CE5F6 /* EventPhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPhotosCollectionViewController.swift; sourceTree = "<group>"; };
+		2F1FC790224AA08F005CE5F6 /* AttendeeEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeEditViewController.swift; sourceTree = "<group>"; };
+		2F1FC791224AA08F005CE5F6 /* SegmentedControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlViewController.swift; sourceTree = "<group>"; };
+		2F1FC793224AA08F005CE5F6 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		2F1FC794224AA08F005CE5F6 /* UserProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDetailViewController.swift; sourceTree = "<group>"; };
+		2F1FC795224AA08F005CE5F6 /* ImageViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewViewController.swift; sourceTree = "<group>"; };
+		2F1FC796224AA08F005CE5F6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		2F1FC798224AA08F005CE5F6 /* InvitationDetailViewController.swift.orig */ = {isa = PBXFileReference; lastKnownFileType = text; path = InvitationDetailViewController.swift.orig; sourceTree = "<group>"; };
+		2F1FC799224AA08F005CE5F6 /* InvitationsListTableViewController.swift.orig */ = {isa = PBXFileReference; lastKnownFileType = text; path = InvitationsListTableViewController.swift.orig; sourceTree = "<group>"; };
+		2F1FC79A224AA08F005CE5F6 /* InvitationsListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationsListTableViewController.swift; sourceTree = "<group>"; };
+		2F1FC79B224AA08F005CE5F6 /* NoPendingInvitesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPendingInvitesViewController.swift; sourceTree = "<group>"; };
+		2F1FC79C224AA08F005CE5F6 /* InvitationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationDetailViewController.swift; sourceTree = "<group>"; };
+		2F1FC79D224AA08F005CE5F6 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		2F1FC79F224AA08F005CE5F6 /* ContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsController.swift; sourceTree = "<group>"; };
+		2F1FC7A0224AA08F005CE5F6 /* EventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
+		2F1FC7A1224AA08F005CE5F6 /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
+		2F1FC7A2224AA08F005CE5F6 /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
+		2F1FC7A3224AA08F005CE5F6 /* UserProfile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UserProfile.storyboard; sourceTree = "<group>"; };
+		2F1FC7A4224AA08F005CE5F6 /* MainFeed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainFeed.storyboard; sourceTree = "<group>"; };
+		2F1FC7A5224AA08F005CE5F6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		2F1FC7A6224AA08F005CE5F6 /* CreateEvent.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateEvent.storyboard; sourceTree = "<group>"; };
+		2F1FC7A7224AA08F005CE5F6 /* Invitations.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Invitations.storyboard; sourceTree = "<group>"; };
 		2FA406B92242EC2E00562693 /* AddedFriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedFriendCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FA406BD22443EB300562693 /* InvitationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationTableViewCell.swift; sourceTree = "<group>"; };
 		2FA406BF2244489800562693 /* InvitationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationDetailViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +157,154 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F1FC768224AA08F005CE5F6 /* Photobox */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC769224AA08F005CE5F6 /* PhotoDrop.xcodeproj */,
+				2F1FC76C224AA08F005CE5F6 /* PhotoDrop */,
+				2F1FC7A3224AA08F005CE5F6 /* UserProfile.storyboard */,
+				2F1FC7A4224AA08F005CE5F6 /* MainFeed.storyboard */,
+				2F1FC7A5224AA08F005CE5F6 /* .gitignore */,
+				2F1FC7A6224AA08F005CE5F6 /* CreateEvent.storyboard */,
+				2F1FC7A7224AA08F005CE5F6 /* Invitations.storyboard */,
+			);
+			name = Photobox;
+			sourceTree = SOURCE_ROOT;
+		};
+		2F1FC76A224AA08F005CE5F6 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2F1FC76C224AA08F005CE5F6 /* PhotoDrop */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC76D224AA08F005CE5F6 /* PhotoDrop.entitlements */,
+				2F1FC76E224AA08F005CE5F6 /* AddedFriendCollectionViewCell.swift */,
+				2F1FC76F224AA08F005CE5F6 /* Resources */,
+				2F1FC777224AA08F005CE5F6 /* EventTableViewCell.swift */,
+				2F1FC778224AA08F005CE5F6 /* Models */,
+				2F1FC77C224AA08F005CE5F6 /* Main.storyboard */,
+				2F1FC77E224AA08F005CE5F6 /* ContactTableViewCell.swift */,
+				2F1FC77F224AA08F005CE5F6 /* InvitationTableViewCell.swift */,
+				2F1FC780224AA08F005CE5F6 /* Controllers */,
+			);
+			path = PhotoDrop;
+			sourceTree = "<group>";
+		};
+		2F1FC76F224AA08F005CE5F6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC770224AA08F005CE5F6 /* Assets.xcassets */,
+				2F1FC771224AA08F005CE5F6 /* LaunchScreen.storyboard */,
+				2F1FC773224AA08F005CE5F6 /* DateFormatter.swift */,
+				2F1FC774224AA08F005CE5F6 /* CloudKitManager.swift */,
+				2F1FC775224AA08F005CE5F6 /* AppDelegate.swift */,
+				2F1FC776224AA08F005CE5F6 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2F1FC778224AA08F005CE5F6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC779224AA08F005CE5F6 /* Event.swift */,
+				2F1FC77A224AA08F005CE5F6 /* User.swift */,
+				2F1FC77B224AA08F005CE5F6 /* Photo.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2F1FC780224AA08F005CE5F6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC781224AA08F005CE5F6 /* New Group1 */,
+				2F1FC79E224AA08F005CE5F6 /* ModelControllers */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		2F1FC781224AA08F005CE5F6 /* New Group1 */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC782224AA08F005CE5F6 /* CreateEventViewControllers */,
+				2F1FC786224AA08F005CE5F6 /* OnboardingViewControllers */,
+				2F1FC78B224AA08F005CE5F6 /* MainFeedViewControllers */,
+				2F1FC792224AA08F005CE5F6 /* UserProfileViewControllers */,
+				2F1FC797224AA08F005CE5F6 /* InvitationsViewControllers */,
+			);
+			path = "New Group1";
+			sourceTree = "<group>";
+		};
+		2F1FC782224AA08F005CE5F6 /* CreateEventViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC783224AA08F005CE5F6 /* Page1CreateEventViewController.swift */,
+				2F1FC784224AA08F005CE5F6 /* Page3CreateEventViewController.swift */,
+				2F1FC785224AA08F005CE5F6 /* Page2CreateEventViewController.swift */,
+			);
+			path = CreateEventViewControllers;
+			sourceTree = "<group>";
+		};
+		2F1FC786224AA08F005CE5F6 /* OnboardingViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC787224AA08F005CE5F6 /* SignUpViewController.swift */,
+				2F1FC788224AA08F005CE5F6 /* PhoneNumberViewController.swift.orig */,
+				2F1FC789224AA08F005CE5F6 /* PhoneNumberViewController.swift */,
+				2F1FC78A224AA08F005CE5F6 /* LogInViewController.swift */,
+			);
+			path = OnboardingViewControllers;
+			sourceTree = "<group>";
+		};
+		2F1FC78B224AA08F005CE5F6 /* MainFeedViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC78C224AA08F005CE5F6 /* FeedDetailViewController.swift */,
+				2F1FC78D224AA08F005CE5F6 /* MainFeedTableViewController.swift */,
+				2F1FC78E224AA08F005CE5F6 /* ImageViewController.swift */,
+				2F1FC78F224AA08F005CE5F6 /* EventPhotosCollectionViewController.swift */,
+				2F1FC790224AA08F005CE5F6 /* AttendeeEditViewController.swift */,
+				2F1FC791224AA08F005CE5F6 /* SegmentedControlViewController.swift */,
+			);
+			path = MainFeedViewControllers;
+			sourceTree = "<group>";
+		};
+		2F1FC792224AA08F005CE5F6 /* UserProfileViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC793224AA08F005CE5F6 /* UserProfileViewController.swift */,
+				2F1FC794224AA08F005CE5F6 /* UserProfileDetailViewController.swift */,
+				2F1FC795224AA08F005CE5F6 /* ImageViewViewController.swift */,
+				2F1FC796224AA08F005CE5F6 /* SettingsViewController.swift */,
+			);
+			path = UserProfileViewControllers;
+			sourceTree = "<group>";
+		};
+		2F1FC797224AA08F005CE5F6 /* InvitationsViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC798224AA08F005CE5F6 /* InvitationDetailViewController.swift.orig */,
+				2F1FC799224AA08F005CE5F6 /* InvitationsListTableViewController.swift.orig */,
+				2F1FC79A224AA08F005CE5F6 /* InvitationsListTableViewController.swift */,
+				2F1FC79B224AA08F005CE5F6 /* NoPendingInvitesViewController.swift */,
+				2F1FC79C224AA08F005CE5F6 /* InvitationDetailViewController.swift */,
+				2F1FC79D224AA08F005CE5F6 /* LoadingViewController.swift */,
+			);
+			path = InvitationsViewControllers;
+			sourceTree = "<group>";
+		};
+		2F1FC79E224AA08F005CE5F6 /* ModelControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F1FC79F224AA08F005CE5F6 /* ContactsController.swift */,
+				2F1FC7A0224AA08F005CE5F6 /* EventController.swift */,
+				2F1FC7A1224AA08F005CE5F6 /* PhotoController.swift */,
+				2F1FC7A2224AA08F005CE5F6 /* UserController.swift */,
+			);
+			path = ModelControllers;
+			sourceTree = "<group>";
+		};
 		2F76B74F224925E600F8F214 /* InvitationsViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +471,7 @@
 				2FF71530223702EF007C9B36 /* PhotoDrop.entitlements */,
 				2FF7156222380DFE007C9B36 /* Models */,
 				ED07649222381B9400D8307F /* Views */,
+				2F1FC768224AA08F005CE5F6 /* Photobox */,
 				2FF7157622381029007C9B36 /* Storyboards */,
 				2FF7157222380EC2007C9B36 /* Controllers */,
 				2FF7156422380E25007C9B36 /* Resources */,
@@ -337,6 +534,12 @@
 			mainGroup = EDC459282236D26200B49392;
 			productRefGroup = EDC459322236D26200B49392 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2F1FC76A224AA08F005CE5F6 /* Products */;
+					ProjectRef = 2F1FC769224AA08F005CE5F6 /* PhotoDrop.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				EDC459302236D26200B49392 /* PhotoDrop */,
@@ -408,6 +611,22 @@
 			isa = PBXVariantGroup;
 			children = (
 				2F1FC724224A9D11005CE5F6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		2F1FC771224AA08F005CE5F6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F1FC772224AA08F005CE5F6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		2F1FC77C224AA08F005CE5F6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F1FC77D224AA08F005CE5F6 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
