@@ -11,12 +11,12 @@
 		2F18D9CF223AC357001E1765 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18D9CE223AC357001E1765 /* LogInViewController.swift */; };
 		2F18D9D1223AC385001E1765 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18D9D0223AC385001E1765 /* SignUpViewController.swift */; };
 		2F18D9D3223B03C9001E1765 /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18D9D2223B03C9001E1765 /* PhoneNumberViewController.swift */; };
-		2F18D9D5223B095E001E1765 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F18D9D4223B095E001E1765 /* CloudKit.framework */; };
 		2F1FC718224A92C9005CE5F6 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1FC717224A92C9005CE5F6 /* LoadingViewController.swift */; };
 		2F1FC71C224A97E0005CE5F6 /* NoPendingInvitesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1FC71B224A97E0005CE5F6 /* NoPendingInvitesViewController.swift */; };
 		2F1FC720224A9C7F005CE5F6 /* CreateEvent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F1FC71F224A9C7F005CE5F6 /* CreateEvent.storyboard */; };
 		2F1FC722224A9CC2005CE5F6 /* MainFeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F1FC721224A9CC2005CE5F6 /* MainFeed.storyboard */; };
 		2F1FC725224A9D11005CE5F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F1FC723224A9D11005CE5F6 /* Main.storyboard */; };
+		2F1FC727224A9F0B005CE5F6 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F1FC726224A9F0B005CE5F6 /* CloudKit.framework */; };
 		2FA406BA2242EC2E00562693 /* AddedFriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA406B92242EC2E00562693 /* AddedFriendCollectionViewCell.swift */; };
 		2FA406BE22443EB300562693 /* InvitationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA406BD22443EB300562693 /* InvitationTableViewCell.swift */; };
 		2FA406C02244489800562693 /* InvitationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA406BF2244489800562693 /* InvitationDetailViewController.swift */; };
@@ -54,12 +54,12 @@
 		2F18D9CE223AC357001E1765 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		2F18D9D0223AC385001E1765 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2F18D9D2223B03C9001E1765 /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
-		2F18D9D4223B095E001E1765 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		2F1FC717224A92C9005CE5F6 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		2F1FC71B224A97E0005CE5F6 /* NoPendingInvitesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPendingInvitesViewController.swift; sourceTree = "<group>"; };
 		2F1FC71F224A9C7F005CE5F6 /* CreateEvent.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CreateEvent.storyboard; sourceTree = "<group>"; };
 		2F1FC721224A9CC2005CE5F6 /* MainFeed.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainFeed.storyboard; sourceTree = "<group>"; };
 		2F1FC724224A9D11005CE5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = PhotoDrop/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		2F1FC726224A9F0B005CE5F6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		2FA406B92242EC2E00562693 /* AddedFriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedFriendCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FA406BD22443EB300562693 /* InvitationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationTableViewCell.swift; sourceTree = "<group>"; };
 		2FA406BF2244489800562693 /* InvitationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationDetailViewController.swift; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F18D9D5223B095E001E1765 /* CloudKit.framework in Frameworks */,
+				2F1FC727224A9F0B005CE5F6 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +133,7 @@
 		2FF71531223702F2007C9B36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2F18D9D4223B095E001E1765 /* CloudKit.framework */,
+				2F1FC726224A9F0B005CE5F6 /* CloudKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -543,7 +543,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Photobox/Photobox.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PhotoDrop/PhotoDrop.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SUD83636UR;
 				INFOPLIST_FILE = "$(SRCROOT)/PhotoDrop/Resources/Info.plist";
@@ -562,7 +562,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Photobox/Photobox.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PhotoDrop/PhotoDrop.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SUD83636UR;
 				INFOPLIST_FILE = "$(SRCROOT)/PhotoDrop/Resources/Info.plist";
