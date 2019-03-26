@@ -20,15 +20,10 @@ class LoadingViewController: UIViewController {
             if didFetch {
                 guard let invites = UserController.shared.loggedInUser?.invitedEvents else { return }
                 
-                if invites.isEmpty {
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "toNoInvitesVC", sender: self)
-                    }
-                } else {
-                    self.invites = invites
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "toInvitationsList", sender: self)
-                    }
+                self.invites = invites
+                
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "toInvitationsList", sender: self)
                 }
             }
         }

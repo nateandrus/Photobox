@@ -21,6 +21,8 @@ class InvitationTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var startDateLabel: UILabel!
+    @IBOutlet weak var acceptButton: UIButton!
+    @IBOutlet weak var declineButton: UIButton!
     
     // MARK: - weak var optional delegate
     weak var delegate: InvitationTableViewCellDelegate?
@@ -51,6 +53,16 @@ class InvitationTableViewCell: UITableViewCell {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        titleLabel.text = ""
+        locationLabel.text = ""
+        startDateLabel.text = ""
+        acceptButton.isHidden = true
+        declineButton.isHidden = true
+    }
+    
     func updateViews() {
         guard let event = event else { return }
         
@@ -59,6 +71,8 @@ class InvitationTableViewCell: UITableViewCell {
             self.titleLabel.text = event.eventTitle
             self.locationLabel.text = "Location: \(event.location)"
             self.startDateLabel.text = event.startTime.stringWith(dateStyle: .medium, timeStyle: .short)
+            self.acceptButton.isHidden = false
+            self.declineButton.isHidden = false
         }
     }
 
