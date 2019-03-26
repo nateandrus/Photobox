@@ -31,7 +31,7 @@
             </objects>
             <point key="canvasLocation" x="-20" y="-662"/>
         </scene>
-        <!--PhotoBox-->
+        <!--PhotoDrop-->
         <scene sceneID="rMh-ZY-usQ">
             <objects>
                 <tableViewController id="dpg-rd-qiv" customClass="MainFeedTableViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
@@ -108,7 +108,7 @@
                             <outlet property="delegate" destination="dpg-rd-qiv" id="QXr-xD-aDt"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="PhotoBox" id="QVT-Ko-eqM"/>
+                    <navigationItem key="navigationItem" title="PhotoDrop" id="QVT-Ko-eqM"/>
                 </tableViewController>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Xe7-3z-QH8">
                     <rect key="frame" x="0.0" y="0.0" width="112" height="112"/>
