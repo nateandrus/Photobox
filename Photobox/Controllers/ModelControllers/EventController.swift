@@ -44,7 +44,10 @@ class EventController {
             
             UserController.shared.events.append(newEvent)
             self.scheduleUserNotificationForStartTime(for: newEvent)
-            self.scheduleUserNotification24HRSBefore(for: newEvent)
+            let date = Date(timeInterval: 86400, since: Date())
+            if newEvent.startTime > date {
+                self.scheduleUserNotification24HRSBefore(for: newEvent)
+            }
             self.sortEvents(completion: { (success) in
             })
             
@@ -206,7 +209,7 @@ extension EventController: EventNotifications {
     func scheduleUserNotificationForStartTime(for event: Event) {
         let notificationContent = UNMutableNotificationContent()
         notificationContent.title = event.eventTitle
-        notificationContent.body = "Upcoming event!"
+        notificationContent.body = "Your event has begun!"
         notificationContent.badge = 1
         notificationContent.sound = UNNotificationSound.default
         
