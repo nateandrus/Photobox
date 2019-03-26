@@ -76,7 +76,7 @@ class UserProfileDetailViewController: UIViewController {
         eventImageView.image = pastEvent.eventImage
         eventTitleLabel.text = pastEvent.eventTitle
         eventLocationLabel.text = pastEvent.location
-        dateAndTimeLabel.text = "Ended: \(pastEvent.endTime.stringWith(dateStyle: .medium, timeStyle: .short))"
+        dateAndTimeLabel.text = "Ended: \(pastEvent.endTime.stringWith(dateStyle: .medium, timeStyle: .none))"
         numberOfAttendeesLabel.text = "Number of attendees: \(pastEvent.attendees.count)"
         self.title = pastEvent.eventTitle
     }

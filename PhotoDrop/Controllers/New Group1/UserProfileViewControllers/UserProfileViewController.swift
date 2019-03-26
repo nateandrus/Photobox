@@ -70,6 +70,11 @@ extension UserProfileViewController: UITableViewDelegate, UITableViewDataSource 
         return EventController.shared.pastEvents.count
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let height = CGFloat(tableView.frame.height / 3)
+        return height
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "pastEventCell", for: indexPath) as? EventTableViewCell
         let event = EventController.shared.pastEvents[indexPath.row]

@@ -39,6 +39,11 @@ class MainFeedTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let height = CGFloat(tableView.frame.height / 6)
+        return height
+    }
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if tableView.numberOfSections == 2 {
             if section == 0 {
