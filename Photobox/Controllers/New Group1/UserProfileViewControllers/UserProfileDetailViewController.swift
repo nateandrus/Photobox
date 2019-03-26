@@ -61,6 +61,11 @@ class UserProfileDetailViewController: UIViewController {
         self.eventImagesCollectionView.reloadData()
     }
     
+    @IBAction func deleteEventButtonTapped(_ sender: UIBarButtonItem) {
+        alertController()
+    }
+    
+    
     @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
         presentImagePickerActionSheet()
     }
@@ -92,6 +97,25 @@ class UserProfileDetailViewController: UIViewController {
             }
         }
      }
+    
+    func alertController() {
+        let alertController = UIAlertController(title: "Leave event?", message: "By leaving the event you will no longer have access to the event photos.", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let leaveEventAction = UIAlertAction(title: "Leave", style: .destructive) { (_) in
+            guard let user = UserController.shared.loggedInUser, let event = self.pastEventLanding else { return }
+            let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
+            EventController.shared.removeAttendee(creatorReference: reference, fromEvent: event, completion: { (success) in
+                if success {
+                    guard let index = EventController.shared.pastEvents.firstIndex(of: event) else { return }
+                    EventController.shared.pastEvents.remove(at: index)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            })
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(leaveEventAction)
+        present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension UserProfileDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
