@@ -53,29 +53,29 @@
                                                         <constraint firstAttribute="width" secondItem="E6z-Dn-EPd" secondAttribute="height" multiplier="1:1" id="oH1-Je-5pW"/>
                                                     </constraints>
                                                 </imageView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2bp-Bq-eyB">
-                                                    <rect key="frame" x="150" y="19" width="202" height="112"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="2bp-Bq-eyB">
+                                                    <rect key="frame" x="150" y="8" width="202" height="134"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="(title for event)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="if8-Bd-KPW">
-                                                            <rect key="frame" x="0.0" y="0.0" width="202" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="202" height="33.5"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(location)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tby-cq-mnP">
-                                                            <rect key="frame" x="0.0" y="40" width="202" height="18"/>
+                                                            <rect key="frame" x="0.0" y="33.5" width="202" height="33.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(date and time)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyX-B9-7MJ">
-                                                            <rect key="frame" x="0.0" y="68" width="202" height="18"/>
+                                                            <rect key="frame" x="0.0" y="67" width="202" height="33.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(# of attendees)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yaU-Pe-KyW">
-                                                            <rect key="frame" x="0.0" y="96" width="202" height="16"/>
+                                                            <rect key="frame" x="0.0" y="100.5" width="202" height="33.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -86,12 +86,12 @@
                                             <constraints>
                                                 <constraint firstItem="2bp-Bq-eyB" firstAttribute="leading" secondItem="E6z-Dn-EPd" secondAttribute="trailing" constant="8" id="Kdc-60-TBo"/>
                                                 <constraint firstItem="E6z-Dn-EPd" firstAttribute="leading" secondItem="YxE-JX-Har" secondAttribute="leading" constant="8" id="TJ3-mX-5w2"/>
+                                                <constraint firstItem="2bp-Bq-eyB" firstAttribute="bottom" secondItem="E6z-Dn-EPd" secondAttribute="bottom" id="UW3-wY-CLH"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="2bp-Bq-eyB" secondAttribute="trailing" constant="8" id="Vr6-6V-Swd"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="2bp-Bq-eyB" secondAttribute="bottom" constant="8" id="jpC-sH-t3q"/>
+                                                <constraint firstItem="2bp-Bq-eyB" firstAttribute="top" secondItem="E6z-Dn-EPd" secondAttribute="top" id="gYV-fs-qnR"/>
                                                 <constraint firstAttribute="bottom" secondItem="E6z-Dn-EPd" secondAttribute="bottom" constant="8" id="nxE-uQ-xm8"/>
                                                 <constraint firstItem="2bp-Bq-eyB" firstAttribute="leading" secondItem="E6z-Dn-EPd" secondAttribute="trailing" constant="8" id="u9b-22-bfa"/>
                                                 <constraint firstItem="E6z-Dn-EPd" firstAttribute="top" secondItem="YxE-JX-Har" secondAttribute="top" constant="8" id="wpL-uC-bET"/>
-                                                <constraint firstItem="2bp-Bq-eyB" firstAttribute="top" secondItem="YxE-JX-Har" secondAttribute="topMargin" constant="8" id="yrI-zS-mKh"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
