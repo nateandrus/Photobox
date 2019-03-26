@@ -12,6 +12,7 @@ class MainFeedTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.applicationIconBadgeNumber = 0 
     }
     
     override func viewWillAppear(_ animated: Bool) {
