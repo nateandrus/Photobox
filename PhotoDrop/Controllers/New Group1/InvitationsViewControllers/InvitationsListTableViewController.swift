@@ -30,14 +30,6 @@ class InvitationsListTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        UserController.shared.fetchLoggedInUser { (didFetch) in
-            if didFetch {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        }
     }
     
     // MARK: - Table view data source
@@ -92,6 +84,7 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
         guard let userIndex = invitedUsers.firstIndex(of: userRef) else { return }
         
         UserController.shared.events.append(event)
+        EventController.shared.sortByTimeStamp()
         EventController.shared.scheduleUserNotification24HRSBefore(for: event)
         EventController.shared.scheduleUserNotificationForStartTime(for: event)
         
