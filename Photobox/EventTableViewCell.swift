@@ -29,5 +29,5 @@ class EventTableViewCell: UITableViewCell {
         eventLocationLabel.text = event.location
         eventDateTimeLabel.text = event.startTime.stringWith(dateStyle: .medium, timeStyle: .short)
         numberOfAttendeesLabel.text = "Number of attendees: \(event.attendees.count)"
-    }
+        eventImageView.layer.cornerRadius = eventImageView.frame.height / 2    }
 }

@@ -39,6 +39,8 @@ class MainFeedTableViewController: UITableViewController {
         }
     }
     
+   
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if tableView.numberOfSections == 2 {
             if section == 0 {
