@@ -47,13 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //Request permission for discoverability
         CloudKitManager.shared.requestDiscoverabilityPermission()
         
-//        TODO: Request permission to send notifications
+        // Request permission to send notifications
         UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
             if let error = error {
                 print(error)
             }
             if granted == false {
                 print("User did not grant permission for notifications")
+//                SettingsViewController.self.notifi
             }
         }
         UNUserNotificationCenter.current().delegate = self

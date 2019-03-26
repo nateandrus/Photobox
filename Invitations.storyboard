@@ -13,13 +13,13 @@
         <!--PhotoDrop-->
         <scene sceneID="9hk-aM-ApH">
             <objects>
-                <tableViewController id="90v-oR-amM" customClass="InvitationsListTableViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="90v-oR-amM" customClass="InvitationsListTableViewController" customModule="PhotoDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" sectionIndexMinimumDisplayRowCount="1" rowHeight="265" estimatedRowHeight="265" sectionHeaderHeight="28" sectionFooterHeight="28" id="7s4-pX-PlJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="invitationCell" rowHeight="265" id="XRN-XO-NBP" customClass="InvitationTableViewCell" customModule="Photobox" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="invitationCell" rowHeight="265" id="XRN-XO-NBP" customClass="InvitationTableViewCell" customModule="PhotoDrop" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="265"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XRN-XO-NBP" id="Ebt-oH-hfV">
@@ -103,6 +103,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="acceptButton" destination="qkR-tT-z08" id="oAb-R7-uMz"/>
+                                    <outlet property="declineButton" destination="ayW-ln-v0K" id="88Z-v6-cTJ"/>
                                     <outlet property="eventImageView" destination="wf6-c9-QtX" id="kYe-4g-29D"/>
                                     <outlet property="locationLabel" destination="Tdo-9Q-R8v" id="n8O-tV-ywI"/>
                                     <outlet property="startDateLabel" destination="edq-rY-m6k" id="8hB-Sf-PcC"/>
@@ -116,49 +118,18 @@
                             <outlet property="delegate" destination="90v-oR-amM" id="nrU-lX-cES"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="PhotoDrop" id="6ro-RU-Rct"/>
+                    <navigationItem key="navigationItem" title="PhotoDrop" id="1VX-ao-H6K">
+                        <barButtonItem key="leftBarButtonItem" id="lPv-Ms-8fF"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o2B-NZ-4E2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="866" y="-403"/>
-        </scene>
-        <!--PhotoDrop-->
-        <scene sceneID="DNH-M0-rGT">
-            <objects>
-                <viewController id="aMq-R8-6HO" customClass="NoPendingInvitesViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5f2-Mw-idc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No pending invitiations" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Wy-oQ-HX5">
-                                <rect key="frame" x="10" y="79" width="355" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="Ja7-zr-Lgf" firstAttribute="trailing" secondItem="4Wy-oQ-HX5" secondAttribute="trailing" constant="10" id="DPw-iK-rrC"/>
-                            <constraint firstItem="4Wy-oQ-HX5" firstAttribute="leading" secondItem="Ja7-zr-Lgf" secondAttribute="leading" constant="10" id="KmS-OB-7gT"/>
-                            <constraint firstItem="4Wy-oQ-HX5" firstAttribute="top" secondItem="Ja7-zr-Lgf" secondAttribute="top" constant="15" id="ave-Ee-wg8"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Ja7-zr-Lgf"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="PhotoDrop" id="XwW-iN-RRF">
-                        <barButtonItem key="leftBarButtonItem" id="lKi-57-UHc">
-                            <color key="tintColor" red="0.70492940989999997" green="0.65154177189999996" blue="0.52873093849999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="c3J-Ws-ybT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="867" y="258"/>
+            <point key="canvasLocation" x="857" y="-196"/>
         </scene>
         <!--PhotoDrop-->
         <scene sceneID="eXb-5T-yPr">
             <objects>
-                <viewController id="98b-wa-SEF" customClass="InvitationDetailViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="98b-wa-SEF" customClass="InvitationDetailViewController" customModule="PhotoDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iWk-Sb-KBu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -316,7 +287,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ER0-MV-wY2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1658" y="-403"/>
+            <point key="canvasLocation" x="1799" y="-197"/>
         </scene>
         <!--Invitations-->
         <scene sceneID="wx4-Ec-tc6">
@@ -345,7 +316,7 @@
         <!--PhotoDrop-->
         <scene sceneID="bRz-sw-dQv">
             <objects>
-                <viewController id="oNq-yd-IwE" customClass="LoadingViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="oNq-yd-IwE" customClass="LoadingViewController" customModule="PhotoDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SzS-fm-kLq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -369,7 +340,6 @@
                     <navigationItem key="navigationItem" title="PhotoDrop" id="bQK-9i-nY7"/>
                     <connections>
                         <segue destination="90v-oR-amM" kind="show" identifier="toInvitationsList" id="yjU-Ce-ZTi"/>
-                        <segue destination="aMq-R8-6HO" kind="show" identifier="toNoInvitesVC" id="2Qg-4D-QNx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K5s-aI-0IO" userLabel="First Responder" sceneMemberID="firstResponder"/>
