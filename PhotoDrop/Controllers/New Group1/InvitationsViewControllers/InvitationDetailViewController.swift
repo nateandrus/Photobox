@@ -76,6 +76,7 @@ class InvitationDetailViewController: UIViewController {
         guard let userIndex = invitedUsers.firstIndex(of: userRef) else { return }
         
         UserController.shared.events.append(event)
+        EventController.shared.sortByTimeStamp()
         EventController.shared.scheduleUserNotification24HRSBefore(for: event)
         EventController.shared.scheduleUserNotificationForStartTime(for: event)
         

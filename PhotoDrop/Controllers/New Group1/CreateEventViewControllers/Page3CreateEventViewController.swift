@@ -114,7 +114,8 @@ class Page3CreateEventViewController: UIViewController {
                 }
             }
             dispatchGroup.notify(queue: .main) {
-                self.createEvent()
+                self.createEvent(completion: { (_) in
+                })
                 
                 let composeVC = MFMessageComposeViewController()
                 
@@ -131,17 +132,19 @@ class Page3CreateEventViewController: UIViewController {
                 }
             }
         } else {
-            createEvent()
-            DispatchQueue.main.async {
-                let mainVC = self.navigationController?.viewControllers.first as? Page1CreateEventViewController
-                mainVC?.fromCreate = true
-                self.navigationController?.popToRootViewController(animated: true)
+            createEvent { (success ) in
+                if success {
+                    DispatchQueue.main.async {
+                        let mainVC = self.navigationController?.viewControllers.first as? Page1CreateEventViewController
+                        mainVC?.fromCreate = true
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
+                }
             }
         }
-        
     }
     
-    func createEvent() {
+    func createEvent(completion: @escaping (Bool) -> Void) {
         guard let name = name,
             let location = location,
             let image = image,
@@ -151,7 +154,7 @@ class Page3CreateEventViewController: UIViewController {
         let eventDescription = descriptionTextView.text
         
         EventController.shared.createEvent(eventImage: image, eventTitle: name, location: location, startTime: startDate, endTime: endDate, description: eventDescription, invitedUsers: invitedUsers) { (success, event)  in
-            guard let event = event else { return }
+            guard let event = event else { completion(false); return }
             
             let reference = CKRecord.Reference(recordID: event.ckrecordID, action: .deleteSelf)
             
@@ -161,10 +164,12 @@ class Page3CreateEventViewController: UIViewController {
                     // If unsuccessful, print to console
                     if !success {
                         print("Unable to modify user")
+                        completion(false)
                         return
                     }
                 })
             }
+            completion(true)
         }
     }
 }

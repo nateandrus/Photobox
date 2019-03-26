@@ -64,6 +64,7 @@ class Page1CreateEventViewController: UIViewController {
     
     
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        resetViews()
         self.tabBarController?.selectedIndex = 0
     }
     

@@ -49,6 +49,7 @@ class EventController {
                 self.scheduleUserNotification24HRSBefore(for: newEvent)
             }
             self.sortEvents(completion: { (success) in
+                self.sortByTimeStamp()
             })
             
             guard let record = CKRecord(event: newEvent) else { completion(false, nil); return }
@@ -99,6 +100,7 @@ class EventController {
                 UserController.shared.events.append(event)
                 if record == records.last {
                     self.sortEvents(completion: { (_) in
+                        self.sortByTimeStamp()
                         completion(true)
                     })
                 }
@@ -196,6 +198,12 @@ class EventController {
                 completion(true)
             }
         }
+    }
+    
+    func sortByTimeStamp() {
+        self.futureEvents.sort(by: { $0.startTime < $1.startTime })
+        self.pastEvents.sort(by: { $0.startTime < $1.startTime })
+        self.currentEvents.sort(by: { $0.endTime < $1.endTime })
     }
 }
 
