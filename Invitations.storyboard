@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--PhotoBOX-->
+        <!--PhotoDrop-->
         <scene sceneID="9hk-aM-ApH">
             <objects>
                 <tableViewController id="90v-oR-amM" customClass="InvitationsListTableViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
@@ -116,13 +116,13 @@
                             <outlet property="delegate" destination="90v-oR-amM" id="nrU-lX-cES"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="PhotoBOX" id="6ro-RU-Rct"/>
+                    <navigationItem key="navigationItem" title="PhotoDrop" id="6ro-RU-Rct"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o2B-NZ-4E2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="866" y="-403"/>
         </scene>
-        <!--No Pending Invites View Controller-->
+        <!--PhotoDrop-->
         <scene sceneID="DNH-M0-rGT">
             <objects>
                 <viewController id="aMq-R8-6HO" customClass="NoPendingInvitesViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
@@ -145,7 +145,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ja7-zr-Lgf"/>
                     </view>
-                    <navigationItem key="navigationItem" id="XwW-iN-RRF">
+                    <navigationItem key="navigationItem" title="PhotoDrop" id="XwW-iN-RRF">
                         <barButtonItem key="leftBarButtonItem" id="lKi-57-UHc">
                             <color key="tintColor" red="0.70492940989999997" green="0.65154177189999996" blue="0.52873093849999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
@@ -155,7 +155,7 @@
             </objects>
             <point key="canvasLocation" x="867" y="258"/>
         </scene>
-        <!--PhotoBOX-->
+        <!--PhotoDrop-->
         <scene sceneID="eXb-5T-yPr">
             <objects>
                 <viewController id="98b-wa-SEF" customClass="InvitationDetailViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
@@ -301,7 +301,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Fmh-jV-VTG"/>
                     </view>
-                    <navigationItem key="navigationItem" title="PhotoBOX" id="6d8-zG-UCx">
+                    <navigationItem key="navigationItem" title="PhotoDrop" id="6d8-zG-UCx">
                         <barButtonItem key="leftBarButtonItem" title="←" id="hDp-jc-vtr">
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
@@ -342,7 +342,7 @@
             </objects>
             <point key="canvasLocation" x="-1132" y="-195"/>
         </scene>
-        <!--Loading View Controller-->
+        <!--PhotoDrop-->
         <scene sceneID="bRz-sw-dQv">
             <objects>
                 <viewController id="oNq-yd-IwE" customClass="LoadingViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
@@ -366,7 +366,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gno-L1-Qgm"/>
                     </view>
-                    <navigationItem key="navigationItem" id="bQK-9i-nY7"/>
+                    <navigationItem key="navigationItem" title="PhotoDrop" id="bQK-9i-nY7"/>
                     <connections>
                         <segue destination="90v-oR-amM" kind="show" identifier="toInvitationsList" id="yjU-Ce-ZTi"/>
                         <segue destination="aMq-R8-6HO" kind="show" identifier="toNoInvitesVC" id="2Qg-4D-QNx"/>
