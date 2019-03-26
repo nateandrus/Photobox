@@ -285,7 +285,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="urP-ev-CrK"/>
                     </view>
-                    <navigationItem key="navigationItem" title="(eventTitle)" id="TuW-wb-CK5"/>
+                    <navigationItem key="navigationItem" title="(eventTitle)" id="TuW-wb-CK5">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="8kL-wq-wTM">
+                            <connections>
+                                <action selector="deleteEventButtonTapped:" destination="O8P-dq-rbG" id="SSv-M5-bvj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="dateAndTimeLabel" destination="B6j-7S-fnF" id="4Pg-MV-K9p"/>
                         <outlet property="eventImageView" destination="IKC-uA-6Kn" id="wDx-ve-YK1"/>
