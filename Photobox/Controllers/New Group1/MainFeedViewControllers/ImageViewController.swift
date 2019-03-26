@@ -36,9 +36,9 @@ class ImageViewController: UIViewController {
         let userReference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
         
         if photo.userReference == userReference {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: nil, action: #selector(deletePhotoButtonTapped(_:)))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deletePhotoButtonTapped(_:)))
         } else {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Report Photo", style: .plain, target: nil, action: #selector(reportPhotoButtonTapped(_:)))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Report Photo", style: .plain, target: self, action: #selector(reportPhotoButtonTapped(_:)))
         }
     }
     
@@ -84,7 +84,9 @@ class ImageViewController: UIViewController {
             // Update in CloudKit
             PhotoController.shared.modifyPhoto(photo: photo, numberOfTimesReported: photo.numberOfTimesReported, usersThatReported: usersThatReported) { (didModify) in
                 if didModify {
-                    self.navigationController?.popViewController(animated: true)
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
                 }
             }
         }
