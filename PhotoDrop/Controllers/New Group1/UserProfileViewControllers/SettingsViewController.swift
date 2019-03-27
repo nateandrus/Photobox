@@ -67,12 +67,25 @@ class SettingsViewController: UIViewController {
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let changeUsernameAction = UIAlertAction(title: "Change", style: .default) { (_) in
-            guard let newUsername = usernameTextField?.text, !newUsername.isEmpty, let user = UserController.shared.loggedInUser else { return }
-            UserController.shared.modify(user: user, withUsername: newUsername, password: nil, profileImage: nil, invitedEvents: nil, completion: { (success) in
-                if success {
-                    self.navigationController?.popViewController(animated: true)
+            guard let newUsername = usernameTextField?.text, !newUsername.isEmpty, let loggedInUser = UserController.shared.loggedInUser else { return }
+            
+            let users = UserController.shared.users
+            
+            for user in users {
+                if user.username == newUsername {
+                    let alertController = UIAlertController(title: "Username already taken", message: "Username has already been taken. Try a different username.", preferredStyle: .alert)
+                    let okayAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
+                    alertController.addAction(okayAction)
+                    self.present(alertController, animated: true, completion: nil)
+                    return 
+                } else {
+                    UserController.shared.modify(user: loggedInUser, withUsername: newUsername, password: nil, profileImage: nil, invitedEvents: nil, completion: { (success) in
+                        if success {
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    })
                 }
-            })
+            }
         }
         alertController.addAction(cancelAction)
         alertController.addAction(changeUsernameAction)
