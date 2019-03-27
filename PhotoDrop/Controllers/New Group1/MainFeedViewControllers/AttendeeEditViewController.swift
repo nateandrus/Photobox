@@ -346,6 +346,7 @@ extension AttendeeEditViewController: UITableViewDataSource {
         }
         
         // Check to see if the contact is a user
+        // For each phone number connected to the contact, if the phone number isn't connected to a user, continue looping through the phone numbers until it is verified that each number isn't connected to a user
         for phoneNumber in contact.phoneNumbers {
             var stringPhoneNumber = phoneNumber.value.stringValue.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined()
             if stringPhoneNumber.count > 10 {
@@ -356,17 +357,16 @@ extension AttendeeEditViewController: UITableViewDataSource {
                 return user.phoneNumber == stringPhoneNumber
             }
             
-            // If the phone number isn't connected to a user, continue looping through the phone numbers until it is verified that each number isn't connected to a user
-            if filteredUsers.count == 0 {
-                continue
-            } else {
             // If the phone number is a user, check if it is in the attendees array
+            if filteredUsers.count > 0 {
                 guard let recordID = filteredUsers.first?.ckRecord else { return UITableViewCell() }
                 
                 let reference = CKRecord.Reference(recordID: recordID, action: .none)
                 
                 if event.attendees.contains(reference) {
                     cell?.addButton.titleLabel?.text = "✓"
+                    cell?.addButton.isEnabled = false
+                    break
                 }
             }
         }
@@ -375,6 +375,7 @@ extension AttendeeEditViewController: UITableViewDataSource {
         
         if addedFriends.1.contains(contact) {
             cell?.addButton.setTitle("✓", for: .normal)
+            cell?.addButton.isEnabled = false
         }
         
         //Set delegate to self
@@ -389,16 +390,26 @@ extension AttendeeEditViewController: UITableViewDataSource {
     }
     
     func userCell(cell: ContactTableViewCell?, indexPath: IndexPath, searchResults: ([CNContact], [User])?) -> UITableViewCell {
-        guard let searchResults = searchResults else { return UITableViewCell() }
+        guard let searchResults = searchResults,
+            let event = eventLandingPad else { return UITableViewCell() }
         
         cell?.addButton.setTitle("+", for: .normal)
         let user = searchResults.1[indexPath.row]
+        
+        let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
+        
+        // If the user is already in the attendees list, mark the button as checked
+        if event.attendees.contains(reference) {
+            cell?.addButton.setTitle("✓", for: .normal)
+            cell?.addButton.isEnabled = false
+        }
         
         // TODO: Find a user's name
         // cell?.nameLabel = user.name
         
         if addedFriends.0.contains(user) {
             cell?.addButton.setTitle("✓", for: .normal)
+            cell?.addButton.isEnabled = false
         }
         
         cell?.user = user
@@ -412,13 +423,11 @@ extension AttendeeEditViewController: UITableViewDataSource {
 
 // MARK: - Table View Cell Delegate
 extension AttendeeEditViewController: ContactTableViewCellDelegate {
-    func addButtonTapped(_ sender: UIButton, _ cell: ContactTableViewCell, contact: CNContact?, user: User?, completion: @escaping (Bool) -> Void) {
+    func addButtonTapped(_ sender: UIButton, _ cell: ContactTableViewCell, contact: CNContact?, user: User?) {
         if sender.titleLabel?.text == "+" {
             addPersonToEvent(cell, contact: contact, user: user) { (didAdd) in
                 if didAdd {
-                    completion(true)
-                } else {
-                    completion(false)
+                    cell.addButton.titleLabel?.text = "✓"
                 }
             }
         }
