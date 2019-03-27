@@ -94,11 +94,13 @@ class FeedDetailViewController: UIViewController {
             destination?.eventLandingPad = event
         }
         if segue.identifier == "toImageView" {
+            guard let event = eventLandingPad else { return }
             let eventPhoto = PhotoController.shared.collectionViewPhotos
             if let imageIndex = photoCollectionView.indexPathsForSelectedItems?.first {
                 if let destinationVC = segue.destination as? ImageViewController {
                     let photoToSend = eventPhoto[imageIndex.row]
                     destinationVC.photoLanding = photoToSend
+                    destinationVC.eventLanding = event
                     if imageIndex.row == 0 {
                         destinationVC.isFirstIndex = true
                     }

@@ -20,6 +20,12 @@ class ImageViewController: UIViewController {
         }
     }
     
+    var eventLanding: Event? {
+        didSet {
+            updateRightBarButton()
+        }
+    }
+    
     var isFirstIndex: Bool? {
         didSet {
             self.navigationItem.setRightBarButton(nil, animated: false)
@@ -28,17 +34,19 @@ class ImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadViewIfNeeded()
-        
+        updateRightBarButton()
+    }
+    
+    func updateRightBarButton() {
         guard let photo = photoLanding,
-            let user = UserController.shared.loggedInUser else { return }
-        
+        let event = eventLanding,
+        let user = UserController.shared.loggedInUser  else { return }
         let userReference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
         
-        if photo.userReference == userReference {
+        if event.creatorReference == userReference || photo.userReference == userReference {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deletePhotoButtonTapped(_:)))
         } else {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Report Photo", style: .plain, target: self, action: #selector(reportPhotoButtonTapped(_:)))
+             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Report Photo", style: .plain, target: self, action: #selector(reportPhotoButtonTapped(_:)))
         }
     }
     
