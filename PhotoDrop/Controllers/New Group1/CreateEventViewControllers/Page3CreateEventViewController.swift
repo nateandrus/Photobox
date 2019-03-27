@@ -261,6 +261,7 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
             
             if addedFriends.1.contains(contact) {
                 cell?.addButton.setTitle("✓", for: .normal)
+                cell?.addButton.isEnabled = false
             }
             
             cell?.contact = contact
@@ -286,6 +287,7 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
                 
                 if addedFriends.1.contains(contact) {
                     cell?.addButton.setTitle("✓", for: .normal)
+                    cell?.addButton.isEnabled = false
                 }
                 
                 cell?.contact = contact
@@ -310,7 +312,8 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
                 cell?.user = user
                 
                 if addedFriends.0.contains(user) {
-                     cell?.addButton.setTitle("✓", for: .normal)
+                    cell?.addButton.setTitle("✓", for: .normal)
+                    cell?.addButton.isEnabled = false
                 }
                 
                 //Set delegate to self
@@ -328,6 +331,7 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
                 
                 if addedFriends.1.contains(contact) {
                      cell?.addButton.setTitle("✓", for: .normal)
+                    cell?.addButton.isEnabled = false
                 }
                 
                 //Set delegate to self
@@ -349,6 +353,7 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
                 
                 if addedFriends.0.contains(user) {
                     cell?.addButton.setTitle("✓", for: .normal)
+                    cell?.addButton.isEnabled = false
                 }
                 
                 cell?.user = user
@@ -365,13 +370,11 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
 // MARK: - Contact Table View Cell Delegate
 extension Page3CreateEventViewController: ContactTableViewCellDelegate {
     
-    func addButtonTapped(_ sender: UIButton, _ cell: ContactTableViewCell, contact: CNContact?, user: User?, completion: @escaping (Bool) -> Void) {
-        if sender.titleLabel?.text != "✓" {
+    func addButtonTapped(_ sender: UIButton, _ cell: ContactTableViewCell, contact: CNContact?, user: User?) {
+        if sender.titleLabel?.text == "+" {
             addPersonToEvent(cell, contact: contact, user: user) { (didAdd) in
                 if didAdd {
-                    completion(true)
-                } else {
-                    completion(false)
+                    cell.addButton.titleLabel?.text = "✓"
                 }
             }
         }
