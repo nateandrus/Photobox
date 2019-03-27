@@ -32,6 +32,7 @@ class ContactController {
                     try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
                         self.contacts.append(contact)
                         self.contacts.sort(by: { $0.givenName < $1.givenName })
+                        
                         completion(true)
                     })
                 }catch{

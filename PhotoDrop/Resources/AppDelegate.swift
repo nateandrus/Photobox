@@ -34,14 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         }
-        
-        UserController.shared.fetchAllUsers { (success) in
-            if success {
-                print("Fetched users from CloudKit")
-            } else {
-                print("Unable to fetch users")
-            }
-        }
         //Check if the user is logged into iCloud
         CloudKitManager.shared.checkCloudKitAvailability()
         //Request permission for discoverability

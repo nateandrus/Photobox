@@ -256,8 +256,31 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
         guard let searchResults = searchResults else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell
             cell?.addButton.setTitle("+", for: .normal)
+            cell?.addButton.isEnabled = true
             
             let contact = ContactController.shared.contacts[indexPath.row]
+            
+            // Check to see if the contact is a user
+            // For each phone number connected to the contact, if the phone number isn't connected to a user, continue looping through the phone numbers until it is verified that each number isn't connected to a user
+            for phoneNumber in contact.phoneNumbers {
+                var stringPhoneNumber = phoneNumber.value.stringValue.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined()
+                if stringPhoneNumber.count > 10 {
+                    stringPhoneNumber.removeFirst()
+                }
+                
+                let filteredUsers = UserController.shared.users.filter { (user) -> Bool in
+                    return user.phoneNumber == stringPhoneNumber
+                }
+                
+                // If the phone number is a user, check if it is in the addedUsers array
+                if filteredUsers.count > 0 {
+                    if addedFriends.0.contains(filteredUsers.first!) {
+                        cell?.addButton.isEnabled = false
+                        cell?.addButton.titleLabel?.text = "✓"
+                        break
+                    }
+                }
+            }
             
             if addedFriends.1.contains(contact) {
                 cell?.addButton.setTitle("✓", for: .normal)
@@ -283,7 +306,30 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
 
                 let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell
                 cell?.addButton.setTitle("+", for: .normal)
+                cell?.addButton.isEnabled = true
                 let contact = searchResults.0[indexPath.row]
+                
+                // Check to see if the contact is a user
+                // For each phone number connected to the contact, if the phone number isn't connected to a user, continue looping through the phone numbers until it is verified that each number isn't connected to a user
+                for phoneNumber in contact.phoneNumbers {
+                    var stringPhoneNumber = phoneNumber.value.stringValue.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined()
+                    if stringPhoneNumber.count > 10 {
+                        stringPhoneNumber.removeFirst()
+                    }
+                    
+                    let filteredUsers = UserController.shared.users.filter { (user) -> Bool in
+                        return user.phoneNumber == stringPhoneNumber
+                    }
+                    
+                    // If the phone number is a user, check if it is in the addedUsers array
+                    if filteredUsers.count > 0 {
+                        if addedFriends.0.contains(filteredUsers.first!) {
+                            cell?.addButton.titleLabel?.text = "✓"
+                            cell?.addButton.isEnabled = false
+                            break
+                        }
+                    }
+                }
                 
                 if addedFriends.1.contains(contact) {
                     cell?.addButton.setTitle("✓", for: .normal)
@@ -304,6 +350,7 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? ContactTableViewCell
                 cell?.addButton.setTitle("+", for: .normal)
+                cell?.addButton.isEnabled = true
                 let user = searchResults.1[indexPath.row]
                 
                 // TODO: Find a user's name
@@ -325,12 +372,35 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
             if searchResults.0.count > 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell
                 cell?.addButton.setTitle("+", for: .normal)
+                cell?.addButton.isEnabled = true
                 let contact = searchResults.0[indexPath.row]
+                
+                // Check to see if the contact is a user
+                // For each phone number connected to the contact, if the phone number isn't connected to a user, continue looping through the phone numbers until it is verified that each number isn't connected to a user
+                for phoneNumber in contact.phoneNumbers {
+                    var stringPhoneNumber = phoneNumber.value.stringValue.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined()
+                    if stringPhoneNumber.count > 10 {
+                        stringPhoneNumber.removeFirst()
+                    }
+                    
+                    let filteredUsers = UserController.shared.users.filter { (user) -> Bool in
+                        return user.phoneNumber == stringPhoneNumber
+                    }
+                    
+                    // If the phone number is a user, check if it is in the addedUsers array
+                    if filteredUsers.count > 0 {
+                        if addedFriends.0.contains(filteredUsers.first!) {
+                            cell?.addButton.titleLabel?.text = "✓"
+                            cell?.addButton.isEnabled = false
+                            break
+                        }
+                    }
+                }
                 
                 cell?.contact = contact
                 
                 if addedFriends.1.contains(contact) {
-                     cell?.addButton.setTitle("✓", for: .normal)
+                    cell?.addButton.setTitle("✓", for: .normal)
                     cell?.addButton.isEnabled = false
                 }
                 
@@ -346,6 +416,7 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? ContactTableViewCell
                 cell?.addButton.setTitle("+", for: .normal)
+                cell?.addButton.isEnabled = true
                 let user = searchResults.1[indexPath.row]
                 
                 // TODO: Find a user's name
@@ -375,6 +446,7 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
             addPersonToEvent(cell, contact: contact, user: user) { (didAdd) in
                 if didAdd {
                     cell.addButton.titleLabel?.text = "✓"
+                    cell.addButton.isEnabled = false
                 }
             }
         }
@@ -396,6 +468,8 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
                 if !phoneNumberIsAUser(phoneNumber: stringPhoneNumber) {
                     continue
                 } else {
+                    cell.addButton.titleLabel?.text = "✓"
+                    cell.addButton.isEnabled = false
                     completion(true)
                     return
                 }
@@ -446,6 +520,8 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
                     
                     // If the phone number is not a user, add the phone to a list of recipients to send a text message to download the app and join the event
                     if !self.phoneNumberIsAUser(phoneNumber: phoneNumber) {
+                        cell.addButton.titleLabel?.text = "✓"
+                        cell.addButton.isEnabled = false
                         self.textMessageRecipients.append(phoneNumber)
                         self.addedFriends.1.append(contact)
                         completion(true)
@@ -576,3 +652,4 @@ extension Page3CreateEventViewController: MFMessageComposeViewControllerDelegate
         }
     }
 }
+
