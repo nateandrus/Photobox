@@ -95,10 +95,7 @@ class PhotoController {
         }
     }
     
-    func deletePhoto(photo: Photo, completion: @escaping (Bool) -> Void) {
-        guard let user = UserController.shared.loggedInUser else { return }
-        let userReference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
-        if photo.userReference == userReference {
+    func deletePhoto(photo: Photo, completion: @escaping (Bool) -> Void) {        
             // Delete Locally
             guard let indexOfPhoto = collectionViewPhotos.firstIndex(of: photo) else { return }
             collectionViewPhotos.remove(at: indexOfPhoto)
@@ -112,9 +109,6 @@ class PhotoController {
                 }
             }
             completion(true)
-        } else {
-            print("user references don't match")
-        }
     }
     
     func modifyPhoto(photo: Photo, numberOfTimesReported: Int?, usersThatReported: [CKRecord.Reference]?, completion: @escaping (Bool) -> Void) {
