@@ -16,7 +16,9 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        UNUserNotificationCenter.current().
+        if !UserController.shared.notificationsAllowed {
+            notificationsSwitch.isOn = false
+        }
     }
     
     @IBAction func changeUsernameButtonTapped(_ sender: UIButton) {
@@ -28,7 +30,21 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func switchToggled(_ sender: Any) {
-        
+        if notificationsSwitch.isOn {
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            UserController.shared.notificationsAllowed = false
+        } else {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
+                if let error = error {
+                    print(error)
+                }
+                if granted == false {
+                    print("User did not grant permission for notifications")
+                    UserController.shared.notificationsAllowed = false
+                    self.notificationsSwitch.isOn = false
+                }
+            }
+        }
     }
     
     func changeUsernameAlertController() {

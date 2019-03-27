@@ -158,6 +158,8 @@ extension FeedDetailViewController: UIImagePickerControllerDelegate, UINavigatio
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         let actionSheet = UIAlertController(title: "Select a Photo", message: nil, preferredStyle: .actionSheet)
+        actionSheet.popoverPresentationController?.sourceView = self.view
+        actionSheet.popoverPresentationController?.sourceRect = CGRect(x: 50, y: self.view.frame.height - 100, width: self.view.frame.width - 100, height: 100)
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
             actionSheet.addAction(UIAlertAction(title: "Photos", style: .default, handler: { (_) in
                 imagePickerController.sourceType = UIImagePickerController.SourceType.photoLibrary
