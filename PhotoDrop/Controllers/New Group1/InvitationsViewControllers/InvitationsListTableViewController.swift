@@ -20,12 +20,22 @@ class InvitationsListTableViewController: UITableViewController {
         }
     }
     
+    var performingSegue = false
+    
     // MARK: - Life Cycle Methods
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        performingSegue = false
+    }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        self.navigationController?.popToRootViewController(animated: false)
+        if !performingSegue {
+            self.navigationController?.popToRootViewController(animated: false)
+        }
     }
     
     // MARK: - Table view data source
@@ -68,7 +78,7 @@ class InvitationsListTableViewController: UITableViewController {
             let destinationVC = segue.destination as? InvitationDetailViewController
             
             guard let invitedEvents = invites else { return }
-            
+            performingSegue = true
             destinationVC?.invitedEventReference = invitedEvents[indexPath.row]
         }
     }

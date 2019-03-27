@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -339,7 +338,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="PhotoDrop" id="bQK-9i-nY7"/>
                     <connections>
-                        <segue destination="90v-oR-amM" kind="show" identifier="toInvitationsList" id="yjU-Ce-ZTi"/>
+                        <segue destination="90v-oR-amM" kind="show" identifier="toInvitationsList" animates="NO" id="yjU-Ce-ZTi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K5s-aI-0IO" userLabel="First Responder" sceneMemberID="firstResponder"/>

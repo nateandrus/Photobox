@@ -77,14 +77,6 @@ class Page3CreateEventViewController: UIViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        DispatchQueue.main.async {
-            self.navigationController?.popToRootViewController(animated: false)
-        }
-    }
-    
     // MARK: - IBActions
     @IBAction func backButtonTapped(_ sender: Any) {
         DispatchQueue.main.async {

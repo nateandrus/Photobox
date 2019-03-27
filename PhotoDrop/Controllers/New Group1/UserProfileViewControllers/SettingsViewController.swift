@@ -34,16 +34,16 @@ class SettingsViewController: UIViewController {
             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
             UserController.shared.notificationsAllowed = false
         } else {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
-                if let error = error {
-                    print(error)
-                }
-                if granted == false {
-                    print("User did not grant permission for notifications")
-                    UserController.shared.notificationsAllowed = false
-                    self.notificationsSwitch.isOn = false
+            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+                switch settings.authorizationStatus {
+                case .authorized:
+                    return
+                default:
+                    // present alert controller
+                    return
                 }
             }
+            UserController.shared.notificationsAllowed = true
         }
     }
     
