@@ -123,11 +123,18 @@ class UserController {
             return
         }
         
+        guard let loggedInUser = loggedInUser else { completion(nil, nil); return }
+        
         //Search for username
         usernameSearchResults = users.filter({ (user) -> Bool in
             guard let username = user.username?.lowercased() else { return false }
             return username.starts(with: searchTerm)
         })
+        
+        if usernameSearchResults.contains(loggedInUser) {
+            guard let indexToRemove = usernameSearchResults.firstIndex(of: loggedInUser) else { completion(nil, nil); return }
+            usernameSearchResults.remove(at: indexToRemove)
+        }
         
         //Search for name in contacts
         contactsSearchResults = ContactController.shared.contacts.filter({ (contact) -> Bool in
@@ -135,7 +142,7 @@ class UserController {
             let lastName = contact.familyName.lowercased()
             return firstName.starts(with: searchTerm) || lastName.starts(with: searchTerm)
         })
-        
+    
         completion(contactsSearchResults, usernameSearchResults)
     }
     

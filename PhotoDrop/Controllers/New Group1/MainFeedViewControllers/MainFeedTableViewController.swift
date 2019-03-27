@@ -12,7 +12,14 @@ class MainFeedTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIApplication.shared.applicationIconBadgeNumber = 0 
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        UserController.shared.fetchAllUsers { (success) in
+            if success {
+                print("Fetched users from CloudKit")
+            } else {
+                print("Unable to fetch users")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

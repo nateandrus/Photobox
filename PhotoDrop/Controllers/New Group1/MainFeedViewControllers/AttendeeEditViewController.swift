@@ -336,6 +336,7 @@ extension AttendeeEditViewController: UITableViewDataSource {
         guard let event = eventLandingPad else { return UITableViewCell() }
         
         cell?.addButton.setTitle("+", for: .normal)
+        cell?.addButton.isEnabled = true
         
         var contact: CNContact
         
@@ -357,27 +358,43 @@ extension AttendeeEditViewController: UITableViewDataSource {
                 return user.phoneNumber == stringPhoneNumber
             }
             
-            // If the phone number is a user, check if it is in the attendees array
+            // If the phone number is a user, check if it is in the addedUsers and attendees arrays
             if filteredUsers.count > 0 {
+                print("\(contact.givenName) is a user")
+                if addedFriends.0.contains(filteredUsers.first!) {
+                    print("\(contact.givenName) is in the added users array")
+                    cell?.addButton.titleLabel?.text = "✓"
+                    cell?.addButton.isEnabled = false
+                }
                 guard let recordID = filteredUsers.first?.ckRecord else { return UITableViewCell() }
                 
                 let reference = CKRecord.Reference(recordID: recordID, action: .none)
                 
                 if event.attendees.contains(reference) {
+                    print("\(contact.givenName) is in the attendees array")
                     cell?.addButton.titleLabel?.text = "✓"
                     cell?.addButton.isEnabled = false
                     break
                 }
+                
+                cell?.contact = contact
+                
+                if addedFriends.1.contains(contact) {
+                    print("\(contact.givenName) is in the added contacts array")
+                    cell?.addButton.setTitle("✓", for: .normal)
+                    cell?.addButton.isEnabled = false
+                }
+                
+                if let invitedUsers = event.invitedUsers {
+                    if invitedUsers.contains(reference) {
+                        cell?.addButton.titleLabel?.text = "✓"
+                        cell?.addButton.isEnabled = false
+                        break
+                    }
+                }
             }
         }
-        
-        cell?.contact = contact
-        
-        if addedFriends.1.contains(contact) {
-            cell?.addButton.setTitle("✓", for: .normal)
-            cell?.addButton.isEnabled = false
-        }
-        
+    
         //Set delegate to self
         cell?.delegate = self
         
@@ -402,6 +419,13 @@ extension AttendeeEditViewController: UITableViewDataSource {
         if event.attendees.contains(reference) {
             cell?.addButton.setTitle("✓", for: .normal)
             cell?.addButton.isEnabled = false
+        }
+        
+        if let invitedUsers = event.invitedUsers {
+            if invitedUsers.contains(reference) {
+                cell?.addButton.setTitle("✓", for: .normal)
+                cell?.addButton.isEnabled = false
+            }
         }
         
         // TODO: Find a user's name
