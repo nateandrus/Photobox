@@ -164,6 +164,25 @@ class EventController {
         completion(true)
     }
     
+//    func fetchAttendeesFrom(event: Event, completion: @escaping ([User]?) -> Void) {
+//        var users: [User] = []
+//        
+//        let dispatchGroup = DispatchGroup()
+//        for attendee in event.attendees {
+//            dispatchGroup.enter()
+//            let userRecordID = attendee.recordID
+//            let userRecord = CKRecord(recordType: User.typeKey, recordID: userRecordID)
+//            guard let user = User(record: userRecord) else { completion(nil); return }
+//            users.append(user)
+//            
+//            dispatchGroup.leave()
+//        }
+//        
+//        dispatchGroup.notify(queue: .main) {
+//            completion(users)
+//        }
+//    }
+    
     func removeAttendee(creatorReference: CKRecord.Reference, fromEvent event: Event, completion: @escaping (Bool) -> Void) {
         //Remove local attendee
         guard let attendeeIndex = event.attendees.firstIndex(of: creatorReference) else { completion(false); return }

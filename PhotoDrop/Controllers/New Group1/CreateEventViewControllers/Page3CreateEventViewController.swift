@@ -173,6 +173,8 @@ class Page3CreateEventViewController: UIViewController {
         }
     }
 }
+
+// MARK: - Search Bar Delegate
 extension Page3CreateEventViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -189,6 +191,7 @@ extension Page3CreateEventViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - Text Field Delegate
 extension Page3CreateEventViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -196,6 +199,7 @@ extension Page3CreateEventViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: - Table View Data Source Methods
 extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let searchResults = searchResults else { return 1 }
@@ -357,14 +361,18 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
         }
     }
 }
+
+// MARK: - Contact Table View Cell Delegate
 extension Page3CreateEventViewController: ContactTableViewCellDelegate {
     
-    func addButtonTapped(_ cell: ContactTableViewCell, contact: CNContact?, user: User?, completion: @escaping (Bool) -> Void) {
-        addPersonToEvent(cell, contact: contact, user: user) { (didAdd) in
-            if didAdd {
-                completion(true)
-            } else {
-                completion(false)
+    func addButtonTapped(_ sender: UIButton, _ cell: ContactTableViewCell, contact: CNContact?, user: User?, completion: @escaping (Bool) -> Void) {
+        if sender.titleLabel?.text != "✓" {
+            addPersonToEvent(cell, contact: contact, user: user) { (didAdd) in
+                if didAdd {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
             }
         }
     }
@@ -415,14 +423,14 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
                 
                 self.present(alertController, animated: true)
             }
-                // If the contact only has one phone number, add it to the recipients for the text message
+            // If the contact only has one phone number, add it to the recipients for the text message
             else if contact.phoneNumbers.count == 1 {
                 guard let recipient = contact.phoneNumbers.first?.value.stringValue else { completion(false); return }
                 self.textMessageRecipients.append(recipient)
                 self.addedFriends.1.append(contact)
                 completion(true)
             }
-                // If there are no phone numbers associated with the contact, ask the user for a phone number
+            // If there are no phone numbers associated with the contact, ask the user for a phone number
             else {
                 let alertController = UIAlertController(title: "No phone number for \(contact.givenName)", message: nil, preferredStyle: .alert)
                 

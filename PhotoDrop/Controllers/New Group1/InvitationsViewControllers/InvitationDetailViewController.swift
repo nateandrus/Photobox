@@ -56,8 +56,17 @@ class InvitationDetailViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        DispatchQueue.main.async {
+            self.navigationController?.popToRootViewController(animated: false)
+        }
     }
     
     @IBAction func acceptButtonTapped(_ sender: Any) {
