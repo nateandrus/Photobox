@@ -30,8 +30,8 @@ class InvitationsListTableViewController: UITableViewController {
         performingSegue = false
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
         if !performingSegue {
             self.navigationController?.popToRootViewController(animated: false)

@@ -11,7 +11,7 @@ import CloudKit
 import Contacts
 
 protocol ContactTableViewCellDelegate: class {
-    func addButtonTapped(_ cell: ContactTableViewCell, contact: CNContact?, user: User?, completion: @escaping (Bool) -> Void)
+    func addButtonTapped(_ sender: UIButton, _ cell: ContactTableViewCell, contact: CNContact?, user: User?, completion: @escaping (Bool) -> Void)
 }
 
 class ContactTableViewCell: UITableViewCell {
@@ -37,8 +37,8 @@ class ContactTableViewCell: UITableViewCell {
     weak var delegate: ContactTableViewCellDelegate?
     
     // MARK: - IBActions
-    @IBAction func addButtonTapped(_ sender: Any) {
-        delegate?.addButtonTapped(self, contact: contact, user: user, completion: { (didAdd) in
+    @IBAction func addButtonTapped(_ sender: UIButton) {
+        delegate?.addButtonTapped(sender, self, contact: contact, user: user, completion: { (didAdd) in
             if didAdd {
                 self.addButton.setTitle("✓", for: .normal)
                 self.updateViews()
