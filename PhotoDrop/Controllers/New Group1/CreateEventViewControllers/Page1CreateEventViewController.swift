@@ -48,16 +48,8 @@ class Page1CreateEventViewController: UIViewController {
         
         self.scrollView.setContentOffset(offSetPoint, animated: true)
     }
-    
-    //MARK: - View Lifecycle Methods
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-    }
-    
-    
 
-    
+    // MARK: - IBActions
     @IBAction func selectImageButtonTapped(_ sender: UIButton) {
         presentImagePickerActionSheet()
     }
@@ -82,9 +74,6 @@ class Page1CreateEventViewController: UIViewController {
             
             self.bottomConstraint.constant += keyboardFrame.height + 50
             self.view.layoutSubviews()
-            
-//            let amountToOffset = (self.view.frame.height * 0.9) - self.stackView.frame.height - keyboardFrame.height
-//            print(amountToOffset)
             
             let frameInContentView = self.nameLabel.convert(self.nameLabel.bounds, to: self.contentView)
             
@@ -131,6 +120,7 @@ class Page1CreateEventViewController: UIViewController {
     }
 }
 
+// MARK: - Text Field Delegate
 extension Page1CreateEventViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         selectedTextField = textField
@@ -163,12 +153,16 @@ extension Page1CreateEventViewController: UIImagePickerControllerDelegate, UINav
         imagePickerController.delegate = self
         let actionSheet = UIAlertController(title: "Select a Photo", message: nil, preferredStyle: .actionSheet)
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            actionSheet.popoverPresentationController?.sourceView = self.view
+            actionSheet.popoverPresentationController?.sourceRect = CGRect(x: 50, y: self.view.frame.height - 100, width: self.view.frame.width - 100, height: 100)
             actionSheet.addAction(UIAlertAction(title: "Photos", style: .default, handler: { (_) in
                 imagePickerController.sourceType = UIImagePickerController.SourceType.photoLibrary
                 self.present(imagePickerController, animated: true, completion: nil)
             }))
         }
         if UIImagePickerController.isSourceTypeAvailable(.camera){
+            actionSheet.popoverPresentationController?.sourceView = self.view
+            actionSheet.popoverPresentationController?.sourceRect = CGRect(x: 50, y: self.view.frame.height - 100, width: self.view.frame.width - 100, height: 100)
             actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (_) in
                 imagePickerController.sourceType = UIImagePickerController.SourceType.camera
                 self.present(imagePickerController, animated: true, completion: nil)

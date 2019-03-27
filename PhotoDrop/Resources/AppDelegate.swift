@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
             if granted == false {
                 print("User did not grant permission for notifications")
-//                SettingsViewController.self.notifi
+                UserController.shared.notificationsAllowed = false
             }
         }
         UNUserNotificationCenter.current().delegate = self

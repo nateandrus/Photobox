@@ -35,7 +35,10 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userProfileImageView.layer.cornerRadius = userProfileImageView.frame.height / 2
+        userProfileImageView.layoutIfNeeded()
+        userProfileImageView.layer.masksToBounds = true
+        userProfileImageView.layer.cornerRadius = (userProfileImageView.frame.width / 2)
+        
         loadViewIfNeeded()
         pastEventsTableView.delegate = self
         pastEventsTableView.dataSource = self
@@ -94,12 +97,16 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
         imagePickerController.delegate = self
         let actionSheet = UIAlertController(title: "Select a Photo", message: nil, preferredStyle: .actionSheet)
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            actionSheet.popoverPresentationController?.sourceView = self.view
+            actionSheet.popoverPresentationController?.sourceRect = CGRect(x: 50, y: self.view.frame.height - 100, width: self.view.frame.width - 100, height: 100)
             actionSheet.addAction(UIAlertAction(title: "Photos", style: .default, handler: { (_) in
                 imagePickerController.sourceType = UIImagePickerController.SourceType.photoLibrary
                 self.present(imagePickerController, animated: true, completion: nil)
             }))
         }
         if UIImagePickerController.isSourceTypeAvailable(.camera){
+            actionSheet.popoverPresentationController?.sourceView = self.view
+            actionSheet.popoverPresentationController?.sourceRect = CGRect(x: 50, y: self.view.frame.height - 100, width: self.view.frame.width - 100, height: 100)
             actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (_) in
                 imagePickerController.sourceType = UIImagePickerController.SourceType.camera
                 self.present(imagePickerController, animated: true, completion: nil)

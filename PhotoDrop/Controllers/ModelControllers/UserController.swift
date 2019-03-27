@@ -18,8 +18,8 @@ class UserController {
     //MARK: - Sources of Truth
     var loggedInUser: User?
     var events: [Event] = []
-//    var invitedEvents: [Event] = []
     var users: [User] = []
+    var notificationsAllowed = true
     
     //MARK: - CRUD Functions
     func saveUserWith(username: String?, password: String?, phoneNumber: String?, completion: @escaping (Bool, User?) -> Void) {
