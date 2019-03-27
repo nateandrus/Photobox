@@ -394,6 +394,8 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
             // If the contact has more than one phone number, have the user select which phone number to send a text message invitation to
             if contact.phoneNumbers.count > 1 {
                 let alertController = UIAlertController(title: "Send invitation to join your event", message: "Which phone number would you like to send the invitation to?", preferredStyle: .actionSheet)
+                alertController.popoverPresentationController?.sourceView = self.view
+                alertController.popoverPresentationController?.sourceRect = CGRect(x: 50, y: self.view.frame.height - 100, width: self.view.frame.width - 100, height: 100)
                 
                 var actions: [UIAlertAction] = []
                 
