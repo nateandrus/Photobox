@@ -158,11 +158,15 @@ class AttendeeEditViewController: UIViewController {
         let alertController = UIAlertController(title: "Leave Event?", message: "Are you sure you want to leave the event?", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         let leaveAction = UIAlertAction(title: "Leave", style: .destructive) { (_) in
-            guard let reference = UserController.shared.loggedInUser?.creatorReference,
-            let event = self.eventLandingPad else { return }
+            guard let recordID = UserController.shared.loggedInUser?.ckRecord,
+                let event = self.eventLandingPad else { return }
+            
+            let reference = CKRecord.Reference(recordID: recordID, action: .none)
             EventController.shared.removeAttendee(creatorReference: reference, fromEvent: event, completion: { (success) in
                 if success {
-                    self.navigationController?.popToRootViewController(animated: true)
+                    DispatchQueue.main.async {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
                 }
             })
         }
