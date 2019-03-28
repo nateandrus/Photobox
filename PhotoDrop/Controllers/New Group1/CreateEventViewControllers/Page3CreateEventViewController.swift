@@ -105,7 +105,7 @@ class Page3CreateEventViewController: UIViewController {
                         
                         let recordID = user.ckRecord
                         
-                        let reference = CKRecord.Reference(recordID: recordID, action: .none)
+                        let reference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
                         
                         self.invitedUsers.append(reference)
                         self.addedFriends.0.append(user)
@@ -543,7 +543,7 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
             guard let user = user,
                 !addedFriends.0.contains(user) else { completion(false); return }
             
-            let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
+            let reference = CKRecord.Reference(recordID: user.ckRecord, action: .deleteSelf)
             
             self.invitedUsers.append(reference)
             self.addedFriends.0.append(user)
@@ -561,7 +561,7 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
         if filteredUsers.count > 0 {
             guard let recordID = filteredUsers.first?.ckRecord else { return false }
             
-            let reference = CKRecord.Reference(recordID: recordID, action: .none)
+            let reference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
             
             guard !addedFriends.0.contains(filteredUsers.first!) else { return true }
             self.invitedUsers.append(reference)
@@ -634,7 +634,7 @@ extension Page3CreateEventViewController: AddedFriendCollectionViewCellDelegate 
                 let recordID = user?.ckRecord else { return }
             addedFriends.0.remove(at: friendsIndex)
             
-            let reference = CKRecord.Reference(recordID: recordID, action: .none)
+            let reference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
             guard let invitedUserIndex = invitedUsers.firstIndex(of: reference) else { return }
             invitedUsers.remove(at: invitedUserIndex)
         }

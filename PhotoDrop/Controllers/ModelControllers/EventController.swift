@@ -26,7 +26,7 @@ class EventController {
     func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String?, invitedUsers: [CKRecord.Reference]?, completion: @escaping (Bool, Event?) -> Void) {
         guard let loggedinInUser = UserController.shared.loggedInUser else { completion(false, nil); return }
         
-        let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .none)
+        let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .deleteSelf)
         
         let defaultPhoto = Photo(image: eventImage, timestamp: Date(), eventReference: nil, userReference: creatorReference)
         
@@ -62,7 +62,7 @@ class EventController {
                 }
                 
                 guard let record = record else { return }
-                let eventReference = CKRecord.Reference(record: record, action: .none)
+                let eventReference = CKRecord.Reference(record: record, action: .deleteSelf)
                 
                 defaultPhoto.eventReference = eventReference
                 
@@ -83,7 +83,7 @@ class EventController {
     func fetchEvents(completion: @escaping (Bool) -> Void) {
         guard let loggedInUser = UserController.shared.loggedInUser else { completion(false); return }
         
-        let reference = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
+        let reference = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .deleteSelf)
         let predicate = NSPredicate(format: "%@ IN attendees", reference)
 
         CloudKitManager.shared.fetchRecordsWithType(Event.typeKey, predicate: predicate, recordFetchedBlock: nil) { (records, error) in

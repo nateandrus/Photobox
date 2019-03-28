@@ -94,7 +94,7 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
             let loggedInUser = UserController.shared.loggedInUser,
             let invitedUsers = event.invitedUsers else { return }
         
-        let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
+        let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .deleteSelf)
         
         // Add the user to the event's attendees list
         event.attendees.append(userRef)
@@ -128,7 +128,7 @@ extension InvitationsListTableViewController: InvitationTableViewCellDelegate {
             let loggedInUser = UserController.shared.loggedInUser,
             let invitedUsers = event.invitedUsers else { return } 
         
-        let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
+        let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .deleteSelf)
         
         guard let userIndex = invitedUsers.firstIndex(of: userRef) else { return }
         
