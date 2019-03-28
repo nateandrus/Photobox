@@ -205,12 +205,12 @@ class UserController {
                 print("Error modifying the user: \(user.username ?? ""); \(error.localizedDescription)")
                 if completion != nil {
                     completion!(false)
+                    return
                 }
-                return
             }
-        }
-        if completion != nil {
-            completion!(true)
+            if completion != nil {
+                completion!(true)
+            }
         }
     }
 

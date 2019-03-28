@@ -72,10 +72,10 @@ class EventController {
                         print("Error modifying photo record: \(error), \(error.localizedDescription)")
                         completion(false, nil)
                     }
+                    completion(true, newEvent)
+                    return
                 })
                 
-                completion(true, newEvent)
-                return
             }
         }
     }
@@ -85,7 +85,7 @@ class EventController {
         
         let reference = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
         let predicate = NSPredicate(format: "%@ IN attendees", reference)
-
+        
         CloudKitManager.shared.fetchRecordsWithType(Event.typeKey, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
             if let error = error {
                 print("Error fetching user events: \(error), \(error.localizedDescription)")
@@ -95,12 +95,19 @@ class EventController {
             
             guard let records = records else { completion(false); return }
             UserController.shared.events = []
+            if records.count == 0 {
+                EventController.shared.futureEvents = []
+                EventController.shared.currentEvents = []
+                EventController.shared.pastEvents = []
+                completion(true)
+            }
             for record in records {
                 guard let event = Event(record: record) else { completion(false); return }
                 UserController.shared.events.append(event)
                 if record == records.last {
                     self.sortEvents(completion: { (_) in
                         self.sortByTimeStamp()
+                        print(records.count)
                         completion(true)
                     })
                 }

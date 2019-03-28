@@ -10,28 +10,40 @@ import UIKit
 
 class MainFeedTableViewController: UITableViewController {
     
+    @IBOutlet weak var refreshAndReFetch: UIRefreshControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         UIApplication.shared.applicationIconBadgeNumber = 0
-        UserController.shared.fetchAllUsers { (success) in
-            if success {
-                print("Fetched users from CloudKit")
-            } else {
-                print("Unable to fetch users")
-            }
-        }
+        
+        fetchEventsAndRefresh()
+    }
+    
+    @IBAction func refreshFetchAction(_ sender: Any) {
+        fetchEventsAndRefresh()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        fetchEventsAndRefresh()
+    }
+    
+    func fetchEventsAndRefresh() {
+        refreshAndReFetch.beginRefreshing()
+        tableView.refreshControl?.beginRefreshing()
         EventController.shared.fetchEvents { (success) in
             if success {
                 DispatchQueue.main.async {
+                    self.refreshControl?.endRefreshing()
+                    self.tableView.refreshControl?.endRefreshing()
                     self.tableView.reloadData()
+                    print("Events fetched in Main VC")
                 }
             }
         }
     }
+    
+    
 
     //MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
