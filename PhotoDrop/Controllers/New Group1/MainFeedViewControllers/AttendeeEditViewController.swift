@@ -61,8 +61,16 @@ class AttendeeEditViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         searchResultsTableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        DispatchQueue.main.async {
+            self.navigationController?.popToRootViewController(animated: false)
+        }
     }
     
     @IBAction func leaveEventButtonTapped(_ sender: UIButton) {
