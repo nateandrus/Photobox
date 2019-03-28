@@ -460,7 +460,7 @@ extension AttendeeEditViewController: ContactTableViewCellDelegate {
         if sender.titleLabel?.text == "+" {
             addPersonToEvent(cell, contact: contact, user: user) { (didAdd) in
                 if didAdd {
-                    cell?.addButton.setTitle("✓", for: .normal)
+                    cell.addButton.setTitle("✓", for: .normal)
                 }
             }
         }

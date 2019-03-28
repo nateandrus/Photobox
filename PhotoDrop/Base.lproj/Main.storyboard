@@ -13,7 +13,7 @@
         <!--SignUpScreen-->
         <scene sceneID="cNr-P9-Slg">
             <objects>
-                <viewController title="SignUpScreen" id="rXk-lr-Mt4" customClass="SignUpViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="SignUpScreen" id="rXk-lr-Mt4" customClass="SignUpViewController" customModule="PhotoDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ntl-I9-RSx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -66,7 +66,7 @@
                                                         <color key="backgroundColor" red="0.8403196383" green="0.8403196383" blue="0.8403196383" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="rXk-lr-Mt4" id="vjr-I3-Cxl"/>
                                                         </connections>
@@ -88,7 +88,7 @@
                                                         <color key="backgroundColor" red="0.8403196383" green="0.8403196383" blue="0.8403196383" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="rXk-lr-Mt4" id="O1N-cY-nla"/>
                                                         </connections>
@@ -215,7 +215,7 @@
         <!--Phone Number View Controller-->
         <scene sceneID="MnS-Jq-o2u">
             <objects>
-                <viewController storyboardIdentifier="PhoneNumberViewController" id="3sn-NC-xZx" customClass="PhoneNumberViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhoneNumberViewController" id="3sn-NC-xZx" customClass="PhoneNumberViewController" customModule="PhotoDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="t2j-2i-bm8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -345,7 +345,7 @@
         <!--LoginScreen-->
         <scene sceneID="ZaK-IF-udc">
             <objects>
-                <viewController storyboardIdentifier="LogInScreen" title="LoginScreen" id="azx-vb-d12" customClass="LogInViewController" customModule="Photobox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LogInScreen" title="LoginScreen" id="azx-vb-d12" customClass="LogInViewController" customModule="PhotoDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZAp-Dg-hpR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -392,7 +392,7 @@
                                                         <color key="backgroundColor" red="0.8403196383" green="0.8403196383" blue="0.8403196383" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="azx-vb-d12" id="emH-Yr-GCH"/>
                                                         </connections>
