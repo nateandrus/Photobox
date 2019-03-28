@@ -69,6 +69,7 @@ class FeedDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        performingSegue = false
         self.photoCollectionView.reloadData()
     }
     
@@ -83,6 +84,7 @@ class FeedDetailViewController: UIViewController {
     }
     
     @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
+        performingSegue = true
         presentImagePickerActionSheet()
     }
     

@@ -17,6 +17,13 @@ class MainFeedTableViewController: UITableViewController {
         UIApplication.shared.applicationIconBadgeNumber = 0
         
         fetchEventsAndRefresh()
+        UserController.shared.fetchAllUsers { (didFetch) in
+            if didFetch {
+                print("Fetched all users from CloudKit")
+            } else {
+                print("Error fetching users from CloudKit")
+            }
+        }
     }
     
     @IBAction func refreshFetchAction(_ sender: Any) {

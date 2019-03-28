@@ -32,9 +32,27 @@ class ImageViewController: UIViewController {
         }
     }
     
+    var isPoppingVC = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateRightBarButton()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        isPoppingVC = false
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if !isPoppingVC {
+            DispatchQueue.main.async {
+                self.navigationController?.popToRootViewController(animated: false)
+            }
+        }
     }
     
     func updateRightBarButton() {
@@ -56,6 +74,7 @@ class ImageViewController: UIViewController {
         PhotoController.shared.deletePhoto(photo: photo) { (success) in
             if success {
                 print("Success deleting from cloudkit and locally")
+                self.isPoppingVC = true
                 self.navigationController?.popViewController(animated: true)
             }
         }
@@ -67,6 +86,10 @@ class ImageViewController: UIViewController {
         if photo.numberOfTimesReported == 2 {
             PhotoController.shared.deletePhoto(photo: photo) { (didDelete) in
                 if didDelete {
+                    self.isPoppingVC = true
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
                     print("Photo deleted from photoBOX")
                 }
             }
@@ -92,6 +115,7 @@ class ImageViewController: UIViewController {
             // Update in CloudKit
             PhotoController.shared.modifyPhoto(photo: photo, numberOfTimesReported: photo.numberOfTimesReported, usersThatReported: usersThatReported) { (didModify) in
                 if didModify {
+                    self.isPoppingVC = true
                     DispatchQueue.main.async {
                         self.navigationController?.popViewController(animated: true)
                     }
