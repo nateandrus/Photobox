@@ -133,4 +133,10 @@ class InvitationDetailViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
         }
     }
+    
+    @IBAction func backButtonTapped(_ sender: Any) {
+        DispatchQueue.main.async {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+    }
 }

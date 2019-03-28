@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -274,6 +275,9 @@
                     <navigationItem key="navigationItem" title="PhotoDrop" id="6d8-zG-UCx">
                         <barButtonItem key="leftBarButtonItem" title="←" id="hDp-jc-vtr">
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="backButtonTapped:" destination="98b-wa-SEF" id="hkR-A8-881"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

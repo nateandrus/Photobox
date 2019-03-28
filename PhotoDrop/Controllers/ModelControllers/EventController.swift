@@ -154,14 +154,56 @@ class EventController {
         UserController.shared.events.remove(at: indexToDelete)
         //Delete from CloudKit
         let recordID = event.ckrecordID
-        CloudKitManager.shared.deleteRecordWithID(recordID) { (_, error) in
-            if let error = error {
-                print("Unable to delete event: \(event.eventTitle); \(error.localizedDescription)")
-                completion(false)
-                return
+        let reference = CKRecord.Reference(recordID: recordID, action: .none)
+        
+        if let invitedUsers = event.invitedUsers {
+            // Modify the invitedEvents variable for each invited user
+            let dispatchGroup = DispatchGroup()
+            for userRef in invitedUsers {
+                dispatchGroup.enter()
+                let recordID = userRef.recordID
+                CloudKitManager.shared.fetchRecord(withID: recordID) { (record, error) in
+                    if let error = error {
+                        print("Error fetching record from CloudKit: \(error), \(error.localizedDescription)")
+                        completion(false)
+                        return
+                    }
+                    
+                    guard let record = record else { completion(false); return }
+                    
+                    guard let user = User(record: record),
+                        var invitedEvents = user.invitedEvents,
+                        let indexToRemove = invitedEvents.firstIndex(of: reference) else { completion(false); return }
+                    invitedEvents.remove(at: indexToRemove)
+                    
+                    UserController.shared.modify(user: user, withUsername: nil, password: nil, profileImage: nil, invitedEvents: invitedEvents, completion: nil)
+                    dispatchGroup.leave()
+                }
+                
             }
+            
+            dispatchGroup.notify(queue: .main) {
+                CloudKitManager.shared.deleteRecordWithID(recordID) { (_, error) in
+                    if let error = error {
+                        print("Unable to delete event: \(event.eventTitle); \(error.localizedDescription)")
+                        completion(false)
+                        return
+                    }
+                    
+                    completion(true)
+                    return
+                }
+            }
+        } else {
+            CloudKitManager.shared.deleteRecordWithID(recordID) { (_, error) in
+                if let error = error {
+                    print("Unable to delete event: \(event.eventTitle); \(error.localizedDescription)")
+                    completion(false)
+                    return
+                }
+            }
+            completion(true)
         }
-        completion(true)
     }
     
 //    func fetchAttendeesFrom(event: Event, completion: @escaping ([User]?) -> Void) {

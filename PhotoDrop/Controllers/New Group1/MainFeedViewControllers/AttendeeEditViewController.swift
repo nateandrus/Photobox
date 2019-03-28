@@ -167,12 +167,18 @@ class AttendeeEditViewController: UIViewController {
         let alertController = UIAlertController(title: "Delete Event?", message: "Are you sure you want to delete the event?", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         let leaveAction = UIAlertAction(title: "Delete", style: .destructive) { (_) in
-            guard let event = self.eventLandingPad else { return }
-            EventController.shared.delete(event: event, completion: { (success) in
-                if success {
-                    self.navigationController?.popToRootViewController(animated: true)
-                }
-            })
+            DispatchQueue.main.async {
+                guard let event = self.eventLandingPad else { return }
+                EventController.shared.delete(event: event, completion: { (success) in
+                    if success {
+                        DispatchQueue.main.async {
+                            self.navigationController?.popToRootViewController(animated: true)
+                        }
+                    } else {
+                        print("No success")
+                    }
+                })
+            }
         }
         alertController.addAction(cancelAction)
         alertController.addAction(leaveAction)
@@ -254,6 +260,9 @@ extension AttendeeEditViewController: AddedFriendCollectionViewCellDelegate {
             }
             
             addedFriends.1.remove(at: friendsIndex)
+            DispatchQueue.main.async {
+                self.searchResultsTableView.reloadData()
+            }
         } else {
             guard let friendsIndex = addedFriends.0.firstIndex(of: user!),
                 let recordID = user?.ckRecord else { return }
@@ -262,6 +271,10 @@ extension AttendeeEditViewController: AddedFriendCollectionViewCellDelegate {
             let reference = CKRecord.Reference(recordID: recordID, action: .none)
             guard let invitedUserIndex = invitedUsers.firstIndex(of: reference) else { return }
             invitedUsers.remove(at: invitedUserIndex)
+            
+            DispatchQueue.main.async {
+                self.searchResultsTableView.reloadData()
+            }
         }
     }
 }
@@ -461,6 +474,11 @@ extension AttendeeEditViewController: ContactTableViewCellDelegate {
             addPersonToEvent(cell, contact: contact, user: user) { (didAdd) in
                 if didAdd {
                     cell.addButton.setTitle("✓", for: .normal)
+                    cell.addButton.isEnabled = false
+                    
+                    DispatchQueue.main.async {
+                        self.searchResultsTableView.reloadData()
+                    }
                 }
             }
         }
