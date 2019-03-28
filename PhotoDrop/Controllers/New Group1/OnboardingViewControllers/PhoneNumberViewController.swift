@@ -45,7 +45,7 @@ class PhoneNumberViewController: UIViewController {
                         
                         guard let appleUserRecordID = appleUserRecordID else { return }
                         
-                        let reference = CKRecord.Reference(recordID: appleUserRecordID, action: .deleteSelf)
+                        let reference = CKRecord.Reference(recordID: appleUserRecordID, action: .none)
                         
                         user?.creatorReference = reference
                     
