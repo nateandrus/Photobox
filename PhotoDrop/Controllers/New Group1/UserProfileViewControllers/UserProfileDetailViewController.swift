@@ -23,8 +23,8 @@ class UserProfileDetailViewController: UIViewController {
             guard let event = pastEventLanding,
                 let selectedImage = selectedImage,
                 let user = UserController.shared.loggedInUser else { return }
-            let userReference = CKRecord.Reference(recordID: user.ckRecord, action: .deleteSelf)
-            let eventReference = CKRecord.Reference(recordID: event.ckrecordID, action: .deleteSelf)
+            let userReference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
+            let eventReference = CKRecord.Reference(recordID: event.ckrecordID, action: .none)
             PhotoController.shared.addPhoto(toEvent: eventReference, withImage: selectedImage, userReference: userReference, timestamp: Date()) { (_) in
                 print("success saving to cloud")
                 DispatchQueue.main.async {
@@ -103,7 +103,7 @@ class UserProfileDetailViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let leaveEventAction = UIAlertAction(title: "Leave", style: .destructive) { (_) in
             guard let user = UserController.shared.loggedInUser, let event = self.pastEventLanding else { return }
-            let reference = CKRecord.Reference(recordID: user.ckRecord, action: .deleteSelf)
+            let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
             EventController.shared.removeAttendee(creatorReference: reference, fromEvent: event, completion: { (success) in
                 if success {
                     guard let index = EventController.shared.pastEvents.firstIndex(of: event) else { return }

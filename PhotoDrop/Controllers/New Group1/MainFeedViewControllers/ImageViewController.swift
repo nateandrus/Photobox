@@ -41,7 +41,7 @@ class ImageViewController: UIViewController {
         guard let photo = photoLanding,
         let event = eventLanding,
         let user = UserController.shared.loggedInUser  else { return }
-        let userReference = CKRecord.Reference(recordID: user.ckRecord, action: .deleteSelf)
+        let userReference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
         
         if event.creatorReference == userReference || photo.userReference == userReference {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deletePhotoButtonTapped(_:)))
@@ -73,7 +73,7 @@ class ImageViewController: UIViewController {
         } else {
             guard let user = UserController.shared.loggedInUser else { return }
             
-            let reference = CKRecord.Reference(recordID: user.ckRecord, action: .deleteSelf)
+            let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
             
             var usersThatReported: [CKRecord.Reference] = []
             

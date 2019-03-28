@@ -40,7 +40,7 @@ class CloudKitManager {
             if let recordID = recordID,
                 let completion = completion {
                 
-                let creatorReference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
+                let creatorReference = CKRecord.Reference(recordID: recordID, action: .none)
                 
                 let predicate = NSPredicate(format: "%K == %@", argumentArray: [User.creatorReferenceKey, creatorReference])
                 self.fetchRecordsWithType(User.typeKey, predicate: predicate, recordFetchedBlock: nil, completion: { (records, error) in

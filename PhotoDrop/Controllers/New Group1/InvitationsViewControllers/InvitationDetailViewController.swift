@@ -77,7 +77,7 @@ class InvitationDetailViewController: UIViewController {
             let loggedInUser = UserController.shared.loggedInUser,
             let invitedUsers = event.invitedUsers else { return }
         
-        let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .deleteSelf)
+        let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
         
         // Add the user to the event's attendees list
         event.attendees.append(userRef)
@@ -114,7 +114,7 @@ class InvitationDetailViewController: UIViewController {
             let loggedInUser = UserController.shared.loggedInUser,
             let invitedUsers = event.invitedUsers else { return }
         
-        let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .deleteSelf)
+        let userRef = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
         
         guard let userIndex = invitedUsers.firstIndex(of: userRef) else { return }
         

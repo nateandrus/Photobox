@@ -26,7 +26,7 @@ class EventController {
     func createEvent(eventImage: UIImage, eventTitle: String, location: String, startTime: Date, endTime: Date, description: String?, invitedUsers: [CKRecord.Reference]?, completion: @escaping (Bool, Event?) -> Void) {
         guard let loggedinInUser = UserController.shared.loggedInUser else { completion(false, nil); return }
         
-        let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .deleteSelf)
+        let creatorReference = CKRecord.Reference(recordID: loggedinInUser.ckRecord, action: .none)
         
         let defaultPhoto = Photo(image: eventImage, timestamp: Date(), eventReference: nil, userReference: creatorReference)
         
@@ -39,7 +39,7 @@ class EventController {
             }
             
             guard let photoRecord = photoRecord else { completion(false, nil); return }
-            let photoReference = CKRecord.Reference(record: photoRecord, action: .deleteSelf)
+            let photoReference = CKRecord.Reference(record: photoRecord, action: .none)
             let newEvent = Event(attendees: [creatorReference], eventImage: eventImage, eventTitle: eventTitle, location: location, startTime: startTime, endTime: endTime, description: description, eventPhotos: [photoReference], creatorReference: creatorReference, invitedUsers: invitedUsers)
             
             UserController.shared.events.append(newEvent)
@@ -62,7 +62,7 @@ class EventController {
                 }
                 
                 guard let record = record else { return }
-                let eventReference = CKRecord.Reference(record: record, action: .deleteSelf)
+                let eventReference = CKRecord.Reference(record: record, action: .none)
                 
                 defaultPhoto.eventReference = eventReference
                 
@@ -83,7 +83,7 @@ class EventController {
     func fetchEvents(completion: @escaping (Bool) -> Void) {
         guard let loggedInUser = UserController.shared.loggedInUser else { completion(false); return }
         
-        let reference = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .deleteSelf)
+        let reference = CKRecord.Reference(recordID: loggedInUser.ckRecord, action: .none)
         let predicate = NSPredicate(format: "%@ IN attendees", reference)
 
         CloudKitManager.shared.fetchRecordsWithType(Event.typeKey, predicate: predicate, recordFetchedBlock: nil) { (records, error) in

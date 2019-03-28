@@ -35,7 +35,7 @@ class UserController {
                 guard let appleUserRecordID = appleUserRecordID,
                     let phoneNumber = phoneNumber else { completion(false, nil); return }
                 
-                let reference = CKRecord.Reference(recordID: appleUserRecordID, action: .deleteSelf)
+                let reference = CKRecord.Reference(recordID: appleUserRecordID, action: .none)
             
                 let newUser = User(username: username, password: password, creatorReference: reference, phoneNumber: phoneNumber)
                 

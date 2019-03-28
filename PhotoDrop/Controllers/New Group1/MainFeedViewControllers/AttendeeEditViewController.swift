@@ -51,7 +51,7 @@ class AttendeeEditViewController: UIViewController {
         }
         
         guard let event = eventLandingPad, let user = UserController.shared.loggedInUser else { return }
-        let reference = CKRecord.Reference(recordID: user.ckRecord, action: .deleteSelf)
+        let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
         if event.creatorReference == reference {
             DispatchQueue.main.async {
                 self.leaveEventLabel.setTitle("Delete Event", for: .normal)
@@ -67,7 +67,7 @@ class AttendeeEditViewController: UIViewController {
     
     @IBAction func leaveEventButtonTapped(_ sender: UIButton) {
         guard let event = eventLandingPad, let user = UserController.shared.loggedInUser else { return }
-        let reference = CKRecord.Reference(recordID: user.ckRecord, action: .deleteSelf)
+        let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
         
         if event.creatorReference == reference {
             alertControllerForEventCreator()
@@ -98,7 +98,7 @@ class AttendeeEditViewController: UIViewController {
                         
                         let recordID = user.ckRecord
                         
-                        let reference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
+                        let reference = CKRecord.Reference(recordID: recordID, action: .none)
                         
                         self.invitedUsers.append(reference)
                         self.addedFriends.0.append(user)
@@ -124,7 +124,7 @@ class AttendeeEditViewController: UIViewController {
             }
         }
         
-        let reference = CKRecord.Reference(recordID: event.ckrecordID, action: .deleteSelf)
+        let reference = CKRecord.Reference(recordID: event.ckrecordID, action: .none)
         
         for user in self.addedFriends.0 {
             // Update CloudKit
@@ -259,7 +259,7 @@ extension AttendeeEditViewController: AddedFriendCollectionViewCellDelegate {
                 let recordID = user?.ckRecord else { return }
             addedFriends.0.remove(at: friendsIndex)
             
-            let reference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
+            let reference = CKRecord.Reference(recordID: recordID, action: .none)
             guard let invitedUserIndex = invitedUsers.firstIndex(of: reference) else { return }
             invitedUsers.remove(at: invitedUserIndex)
         }
@@ -377,7 +377,7 @@ extension AttendeeEditViewController: UITableViewDataSource {
                 }
                 guard let recordID = filteredUsers.first?.ckRecord else { return UITableViewCell() }
                 
-                let reference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
+                let reference = CKRecord.Reference(recordID: recordID, action: .none)
                 
                 if event.attendees.contains(reference) {
                     print("\(contact.givenName) is in the attendees array")
@@ -422,7 +422,7 @@ extension AttendeeEditViewController: UITableViewDataSource {
         cell?.addButton.setTitle("+", for: .normal)
         let user = searchResults.1[indexPath.row]
         
-        let reference = CKRecord.Reference(recordID: user.ckRecord, action: .deleteSelf)
+        let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
         
         // If the user is already in the attendees list, mark the button as checked
         if event.attendees.contains(reference) {
@@ -460,7 +460,7 @@ extension AttendeeEditViewController: ContactTableViewCellDelegate {
         if sender.titleLabel?.text == "+" {
             addPersonToEvent(cell, contact: contact, user: user) { (didAdd) in
                 if didAdd {
-                    cell?.addButton.setTitle("✓", for: .normal)
+                    cell.addButton.setTitle("✓", for: .normal)
                 }
             }
         }
@@ -551,7 +551,7 @@ extension AttendeeEditViewController: ContactTableViewCellDelegate {
             guard let user = user,
                 !addedFriends.0.contains(user) else { completion(false); return }
             
-            let reference = CKRecord.Reference(recordID: user.ckRecord, action: .deleteSelf)
+            let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
             
             self.invitedUsers.append(reference)
             self.addedFriends.0.append(user)
@@ -569,7 +569,7 @@ extension AttendeeEditViewController: ContactTableViewCellDelegate {
         if filteredUsers.count > 0 {
             guard let recordID = filteredUsers.first?.ckRecord else { return false }
             
-            let reference = CKRecord.Reference(recordID: recordID, action: .deleteSelf)
+            let reference = CKRecord.Reference(recordID: recordID, action: .none)
             
             guard !addedFriends.0.contains(filteredUsers.first!) else { return true }
             self.invitedUsers.append(reference)

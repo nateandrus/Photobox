@@ -34,7 +34,7 @@ class PhotoController {
             
             guard let record = record else { completion(false); return }
             
-            let photoReference = CKRecord.Reference(record: record, action: .deleteSelf)
+            let photoReference = CKRecord.Reference(record: record, action: .none)
             
             CloudKitManager.shared.fetchRecord(withID: event.recordID, completion: { (record, error) in
                 if let error = error {
@@ -74,7 +74,7 @@ class PhotoController {
                     let photo = Photo(ckRecord: record),
                     let user = UserController.shared.loggedInUser else { completion(false); return }
                 
-                let reference = CKRecord.Reference(recordID: user.ckRecord, action: .deleteSelf)
+                let reference = CKRecord.Reference(recordID: user.ckRecord, action: .none)
                 
                 var usersThatReported: [CKRecord.Reference] = []
                 
