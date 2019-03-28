@@ -158,18 +158,23 @@ class Page3CreateEventViewController: UIViewController {
             
             let reference = CKRecord.Reference(recordID: event.ckrecordID, action: .none)
             
+            let dispatchGroup = DispatchGroup()
             for user in self.addedFriends.0 {
                 // Update CloudKit
+                dispatchGroup.enter()
                 UserController.shared.modify(user: user, withUsername: nil, password: nil, profileImage: nil, invitedEvents: [reference], completion: { (success) in
+                    dispatchGroup.leave()
                     // If unsuccessful, print to console
                     if !success {
                         print("Unable to modify user")
-                        completion(false)
-                        return
+                        dispatchGroup.leave()
                     }
                 })
             }
-            completion(true)
+            dispatchGroup.notify(queue: .main, execute: {
+                print("event created")
+                completion(true)
+            })
         }
     }
 }

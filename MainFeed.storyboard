@@ -109,6 +109,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="PhotoDrop" id="QVT-Ko-eqM"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="NzX-z8-Fe7">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="refreshFetchAction:" destination="dpg-rd-qiv" eventType="valueChanged" id="Chj-Wa-AUq"/>
+                        </connections>
+                    </refreshControl>
+                    <connections>
+                        <outlet property="refreshAndReFetch" destination="NzX-z8-Fe7" id="viW-G3-lvS"/>
+                    </connections>
                 </tableViewController>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Xe7-3z-QH8">
                     <rect key="frame" x="0.0" y="0.0" width="112" height="112"/>
