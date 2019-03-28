@@ -50,6 +50,8 @@ class FeedDetailViewController: UIViewController {
         }
     }
     
+    var performingSegue = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         photoCollectionView.delegate = self
@@ -68,6 +70,16 @@ class FeedDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.photoCollectionView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if !performingSegue {
+            DispatchQueue.main.async {
+                self.navigationController?.popToRootViewController(animated: false)
+            }
+        }
     }
     
     @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
@@ -90,6 +102,7 @@ class FeedDetailViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toLeaveEvent" {
             guard let event = eventLandingPad else { return }
+            performingSegue = true
             let destination = segue.destination as? AttendeeEditViewController
             destination?.eventLandingPad = event
         }
@@ -98,6 +111,7 @@ class FeedDetailViewController: UIViewController {
             let eventPhoto = PhotoController.shared.collectionViewPhotos
             if let imageIndex = photoCollectionView.indexPathsForSelectedItems?.first {
                 if let destinationVC = segue.destination as? ImageViewController {
+                    performingSegue = true
                     let photoToSend = eventPhoto[imageIndex.row]
                     destinationVC.photoLanding = photoToSend
                     destinationVC.eventLanding = event

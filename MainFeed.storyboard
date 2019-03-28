@@ -24,12 +24,12 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="dpg-rd-qiv" kind="relationship" relationship="rootViewController" id="w8W-rk-9Tq"/>
+                        <segue destination="dpg-rd-qiv" kind="relationship" relationship="rootViewController" id="jmn-au-pZV"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GXj-Z2-gKg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-20" y="-662"/>
+            <point key="canvasLocation" x="-230" y="-663"/>
         </scene>
         <!--PhotoDrop-->
         <scene sceneID="rMh-ZY-usQ">
@@ -213,7 +213,7 @@
                                     <outlet property="delegate" destination="0OP-WN-jEH" id="yr5-0I-Amk"/>
                                 </connections>
                             </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mW2-NN-aAq">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="60" estimatedRowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mW2-NN-aAq">
                                 <rect key="frame" x="19" y="230" width="337.5" height="357"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>

@@ -281,7 +281,7 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
                 if filteredUsers.count > 0 {
                     if addedFriends.0.contains(filteredUsers.first!) {
                         cell?.addButton.isEnabled = false
-                        cell?.addButton.titleLabel?.text = "✓"
+                        cell?.addButton.setTitle("✓", for: .normal)
                         break
                     }
                 }
@@ -329,7 +329,7 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
                     // If the phone number is a user, check if it is in the addedUsers array
                     if filteredUsers.count > 0 {
                         if addedFriends.0.contains(filteredUsers.first!) {
-                            cell?.addButton.titleLabel?.text = "✓"
+                            cell?.addButton.setTitle("✓", for: .normal)
                             cell?.addButton.isEnabled = false
                             break
                         }
@@ -395,7 +395,7 @@ extension Page3CreateEventViewController: UITableViewDataSource, UITableViewDele
                     // If the phone number is a user, check if it is in the addedUsers array
                     if filteredUsers.count > 0 {
                         if addedFriends.0.contains(filteredUsers.first!) {
-                            cell?.addButton.titleLabel?.text = "✓"
+                            cell?.addButton.setTitle("✓", for: .normal)
                             cell?.addButton.isEnabled = false
                             break
                         }
@@ -450,8 +450,11 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
         if sender.titleLabel?.text == "+" {
             addPersonToEvent(cell, contact: contact, user: user) { (didAdd) in
                 if didAdd {
-                    cell.addButton.titleLabel?.text = "✓"
+                    cell.addButton.setTitle("✓", for: .normal)
                     cell.addButton.isEnabled = false
+                    DispatchQueue.main.async {
+                        self.resultsTableView.reloadData()
+                    }
                 }
             }
         }
@@ -473,7 +476,7 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
                 if !phoneNumberIsAUser(phoneNumber: stringPhoneNumber) {
                     continue
                 } else {
-                    cell.addButton.titleLabel?.text = "✓"
+                    cell.addButton.setTitle("✓", for: .normal)
                     cell.addButton.isEnabled = false
                     completion(true)
                     return
@@ -525,7 +528,7 @@ extension Page3CreateEventViewController: ContactTableViewCellDelegate {
                     
                     // If the phone number is not a user, add the phone to a list of recipients to send a text message to download the app and join the event
                     if !self.phoneNumberIsAUser(phoneNumber: phoneNumber) {
-                        cell.addButton.titleLabel?.text = "✓"
+                        cell.addButton.setTitle("✓", for: .normal)
                         cell.addButton.isEnabled = false
                         self.textMessageRecipients.append(phoneNumber)
                         self.addedFriends.1.append(contact)
