@@ -159,6 +159,7 @@ class EventController {
         //Delete local instance
         guard let indexToDelete = UserController.shared.events.firstIndex(of: event) else { completion(false); return }
         UserController.shared.events.remove(at: indexToDelete)
+        EventController.shared.cancelUserNotifications(for: event)
         //Delete from CloudKit
         let recordID = event.ckrecordID
         let reference = CKRecord.Reference(recordID: recordID, action: .none)
